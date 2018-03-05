@@ -24,9 +24,8 @@ public class GlidUtils {
      * @param imageView
      */
     public static void loadImg(Context context, Object url, ImageView imageView) {
-        Glide.with(context).load(url).apply(new RequestOptions()
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL))
+        Glide.with(context).load(url)
+                .apply(new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .transition(new DrawableTransitionOptions().crossFade(800))
                 .into(imageView);
     }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_ad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rl_bottom" />
+
+    <RelativeLayout
+        android:background="@android:color/white"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/gifImageView"
+                android:layout_width="100dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/welcome"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:textStyle="bold"
+                android:layout_marginTop="25dp"
+                android:text="阅读一下 你就知道"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="40dp"
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_ad"
+        android:visibility="visible"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="8.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:paddingTop="3dp"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:text="跳过广告"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:background="@drawable/splash_ad_ignore_bg"
+            android:id="@+id/tv_skip"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="24.0dp" />
+
+    </FrameLayout>
+
+</RelativeLayout>
