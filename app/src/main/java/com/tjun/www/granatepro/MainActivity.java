@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity{
 
     @Override
     public int getContentLayout() {
-        return 0;
+        return R.layout.activity_main;
     }
 
     @Override
