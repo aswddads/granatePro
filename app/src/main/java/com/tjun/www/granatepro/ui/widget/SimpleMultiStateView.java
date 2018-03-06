@@ -112,7 +112,22 @@ public class SimpleMultiStateView extends MultiStateView {
         }
     }
 
-    public void shouContent(){
+    /**
+     * 无数据时
+     */
+    public void showNoNetView() {
+        if (getViewState() != MultiStateView.STATE_CONTENT) {
+            this.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setViewState(MultiStateView.STATE_NO_NET);
+                }
+            }, 100);
+
+        }
+
+    }
+    public void showContent(){
         this.postDelayed(new Runnable() {
             @Override
             public void run() {

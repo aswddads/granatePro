@@ -33,4 +33,7 @@ public class MyApp extends LitePalApplication{
     public static MyApp getInstance(){
         return mApp;
     }
+    public ApplicationComponent getApplicationComponent() {
+        return mApplicationComponent;
+    }
 }
