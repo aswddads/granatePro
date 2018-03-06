@@ -9,11 +9,11 @@
         <attr name="msv_contentView" format="reference"/>
         <attr name="msv_nonetView" format="reference"/>
         <attr name="msv_viewState" format="enum">
-            <enum name="content" value="10001"/>
-            <enum name="loading" value="10002"/>
-            <enum name="empty" value="10003"/>
-            <enum name="fail" value="10004"/>
-            <enum name="nonet" value="10005"/>
+            <enum name="content" value="1000"/>
+            <enum name="loading" value="1001"/>
+            <enum name="empty" value="1002"/>
+            <enum name="fail" value="1003"/>
+            <enum name="nonet" value="1004"/>
         </attr>
     </declare-styleable>
 
