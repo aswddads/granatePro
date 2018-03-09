@@ -39,6 +39,8 @@ dependencies {
     implementation 'com.android.support:design:26.0.2'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
     implementation 'com.airbnb.android:lottie:2.1.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
+
     //rxJava
     implementation 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.0.6'
