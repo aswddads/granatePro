@@ -1,12 +1,10 @@
 package com.tjun.www.granatepro.ui.news;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.tjun.www.granatepro.R;
@@ -15,7 +13,6 @@ import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.adapter.ChannelPagerAdapter;
 import com.tjun.www.granatepro.ui.base.BaseFragment;
 import com.tjun.www.granatepro.ui.widget.CustomViewPager;
-import com.tjun.www.granatepro.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by tanjun on 2018/3/5.
@@ -45,7 +41,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     private int selectIndex;
     private String selectChannel;
 
-    public static Fragment newsInstance(){
+    public static NewsFragment newsInstance(){
         Bundle args = new Bundle();
         NewsFragment fragment = new NewsFragment();
         fragment.setArguments(args);
