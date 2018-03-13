@@ -1,10 +1,23 @@
 package com.tjun.www.granatepro.net;
 
-import java.io.IOException;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.tjun.www.granatepro.MyApp;
+import com.tjun.www.granatepro.bean.Constants;
+import com.tjun.www.granatepro.utils.NetUtils;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
+import okhttp3.CacheControl;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.Buffer;
 
 /**
  * Created by tanjun on 2018/3/12.
@@ -23,11 +36,82 @@ public class RetrofitConfig {
     // 避免出现 HTTP 403 Forbidden，参考：http://stackoverflow.com/questions/13670692/403-forbidden-with-java-but-not-web-browser
     static final String AVOID_HTTP403_FORBIDDEN = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
 
+    /**
+     * 拦截器,配置缓存策略
+     */
     public static final Interceptor sRewriteCacheControlInterceptor =  new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
-            if (!)
+            if (!NetUtils.isNetWorkAvailable(MyApp.getContext())) {
+                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
+                Log.e(TAG, "no network");
+            }
+            Response originResponse = chain.proceed(request);
+            if (NetUtils.isNetWorkAvailable(MyApp.getContext())) {
+                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
+                String cacheControl = request.cacheControl().toString();
+                return originResponse.newBuilder().header("Cache-Control", cacheControl)
+                        .removeHeader("Pragma").build();
+            } else {
+                return originResponse.newBuilder()
+                        .header("Cache-Control", "public, " + CACHE_CONTROL_CACHE)
+                        .removeHeader("Pragma")
+                        .build();
+            }
         }
     };
+
+    /**
+     * 公共参数
+     */
+    public static final Interceptor sQueryParameterInterceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request originalRequest = chain.request();
+            Request request;
+            HttpUrl httpUrl = originalRequest.url().newBuilder()
+                    .addQueryParameter("uid", Constants.uid)
+                    .addQueryParameter("devid", Constants.uid)
+                    .addQueryParameter("proid", "ifengnews")
+                    .addQueryParameter("vt", "5")
+                    .addQueryParameter("publishid", "6103")
+                    .addQueryParameter("screen", "1080x1920")
+                    .addQueryParameter("df", "androidphone")
+                    .addQueryParameter("os", "android_22")
+                    .addQueryParameter("nw", "wifi").build();
+            request = originalRequest.newBuilder().url(httpUrl).build();
+            return chain.proceed(request);
+        }
+    };
+
+    /**
+     * 打印返回的json数据拦截器
+     */
+    public static final Interceptor sLoggingInterceptor = new Interceptor() {
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            final Request request = chain.request();
+            Buffer requestBuffer = new Buffer();
+            if (request.body() != null) {
+                request.body().writeTo(requestBuffer);
+            } else {
+                Log.d("LogTAG", "request.body() == null");
+            }
+            //打印url信息
+            Log.w(TAG, "intercept: " + request.url() + (request.body() != null ? "?" + _parseParams(request.body(), requestBuffer) : ""));
+            final Response response = chain.proceed(request);
+
+            return response;
+        }
+    };
+
+    @NonNull
+    private static String _parseParams(RequestBody body, Buffer requestBuffer) throws UnsupportedEncodingException {
+        if (body.contentType() != null && !body.contentType().toString().contains("multipart")) {
+            return URLDecoder.decode(requestBuffer.readUtf8(), "UTF-8");
+        }
+        return "null";
+    }
 }
