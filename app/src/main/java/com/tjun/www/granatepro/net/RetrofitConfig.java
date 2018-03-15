@@ -1,11 +1,11 @@
-package com.tjun.www.granatepro.net;
+package com.tjun.www.granatePro.net;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.tjun.www.granatepro.MyApp;
-import com.tjun.www.granatepro.bean.Constants;
-import com.tjun.www.granatepro.utils.NetUtils;
+import com.tjun.www.granatePro.MyApp;
+import com.tjun.www.granatePro.bean.Constants;
+import com.tjun.www.granatePro.utils.NetUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -20,14 +20,13 @@ import okhttp3.Response;
 import okio.Buffer;
 
 /**
- * Created by tanjun on 2018/3/12.
+ * Created by tanjun on 2018/3/13.
  */
-
 public class RetrofitConfig {
     private static final String TAG = "RetrofitConfig";
 
-    //设置缓存有限期限为一天
-    static final long CACHE_STALE_SEC = 60 * 60 * 24;
+    //设缓存有效期为1天
+    static final long CACHE_STALE_SEC = 60 * 60 * 24 * 1;
     //查询缓存的Cache-Control设置，为if-only-cache时只查询缓存而不会请求服务器，max-stale可以配合设置缓存失效时间
     private static final String CACHE_CONTROL_CACHE = "only-if-cached, max-stale=" + CACHE_STALE_SEC;
     //查询网络的Cache-Control设置
@@ -37,24 +36,29 @@ public class RetrofitConfig {
     static final String AVOID_HTTP403_FORBIDDEN = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
 
     /**
-     * 拦截器,配置缓存策略
+     * 云端响应头拦截器，用来配置缓存策略
+     * Dangerous interceptor that rewrites the server's cache-control header.
      */
-    public static final Interceptor sRewriteCacheControlInterceptor =  new Interceptor() {
+    public static final Interceptor sRewriteCacheControlInterceptor = new Interceptor() {
+
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
-            if (!NetUtils.isNetWorkAvailable(MyApp.getContext())) {
+            if (!NetUtil.isNetworkAvailable(MyApp.getContext())) {
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
                 Log.e(TAG, "no network");
             }
-            Response originResponse = chain.proceed(request);
-            if (NetUtils.isNetWorkAvailable(MyApp.getContext())) {
+            Response originalResponse = chain.proceed(request);
+
+            if (NetUtil.isNetworkAvailable(MyApp.getContext())) {
                 //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
                 String cacheControl = request.cacheControl().toString();
-                return originResponse.newBuilder().header("Cache-Control", cacheControl)
-                        .removeHeader("Pragma").build();
+                return originalResponse.newBuilder()
+                        .header("Cache-Control", cacheControl)
+                        .removeHeader("Pragma")
+                        .build();
             } else {
-                return originResponse.newBuilder()
+                return originalResponse.newBuilder()
                         .header("Cache-Control", "public, " + CACHE_CONTROL_CACHE)
                         .removeHeader("Pragma")
                         .build();
@@ -70,7 +74,7 @@ public class RetrofitConfig {
         public Response intercept(Chain chain) throws IOException {
             Request originalRequest = chain.request();
             Request request;
-            HttpUrl httpUrl = originalRequest.url().newBuilder()
+            HttpUrl modifiedUrl = originalRequest.url().newBuilder()
                     .addQueryParameter("uid", Constants.uid)
                     .addQueryParameter("devid", Constants.uid)
                     .addQueryParameter("proid", "ifengnews")
@@ -79,12 +83,12 @@ public class RetrofitConfig {
                     .addQueryParameter("screen", "1080x1920")
                     .addQueryParameter("df", "androidphone")
                     .addQueryParameter("os", "android_22")
-                    .addQueryParameter("nw", "wifi").build();
-            request = originalRequest.newBuilder().url(httpUrl).build();
+                    .addQueryParameter("nw", "wifi")
+                    .build();
+            request = originalRequest.newBuilder().url(modifiedUrl).build();
             return chain.proceed(request);
         }
     };
-
     /**
      * 打印返回的json数据拦截器
      */
@@ -114,4 +118,6 @@ public class RetrofitConfig {
         }
         return "null";
     }
+
+
 }

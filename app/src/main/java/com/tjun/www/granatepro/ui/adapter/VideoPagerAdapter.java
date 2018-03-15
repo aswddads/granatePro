@@ -1,27 +1,27 @@
-package com.tjun.www.granatepro.ui.adapter;
+package com.tjun.www.granatePro.ui.adapter;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.tjun.www.granatepro.bean.VideoChannelBean;
+import com.tjun.www.granatePro.bean.VideoChannelBean;
+import com.tjun.www.granatePro.ui.base.BaseFragment;
+import com.tjun.www.granatePro.ui.video.DetailFragment;
 
 /**
- * Created by tanjun on 2018/3/12.
+ * Created by tanjun on 2018/3/13.
  */
-
 public class VideoPagerAdapter extends FragmentStatePagerAdapter {
 
     private VideoChannelBean videoChannelBean;
 
-    public VideoPagerAdapter(FragmentManager fm,VideoChannelBean videoChannelBean) {
+    public VideoPagerAdapter(FragmentManager fm, VideoChannelBean videoChannelBean) {
         super(fm);
         this.videoChannelBean = videoChannelBean;
     }
 
     @Override
-    public Fragment getItem(int position) {
-        return null;
+    public BaseFragment getItem(int position) {
+        return DetailFragment.newInstance("clientvideo_" + videoChannelBean.getTypes().get(position).getId());
     }
 
     @Override
@@ -38,4 +38,5 @@ public class VideoPagerAdapter extends FragmentStatePagerAdapter {
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
+
 }

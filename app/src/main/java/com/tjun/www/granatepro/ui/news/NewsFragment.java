@@ -1,18 +1,27 @@
-package com.tjun.www.granatepro.ui.news;
+package com.tjun.www.granatePro.ui.news;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
-import com.flyco.tablayout.SlidingTabLayout;
-import com.tjun.www.granatepro.R;
-import com.tjun.www.granatepro.bean.Channel;
-import com.tjun.www.granatepro.component.ApplicationComponent;
-import com.tjun.www.granatepro.ui.adapter.ChannelPagerAdapter;
-import com.tjun.www.granatepro.ui.base.BaseFragment;
-import com.tjun.www.granatepro.ui.widget.CustomViewPager;
+import com.tjun.www.granatePro.R;
+import com.tjun.www.granatePro.component.DaggerHttpComponent;
+import com.tjun.www.granatePro.bean.Channel;
+import com.tjun.www.granatePro.component.ApplicationComponent;
+import com.tjun.www.granatePro.database.ChannelDao;
+import com.tjun.www.granatePro.event.NewChannelEvent;
+import com.tjun.www.granatePro.event.SelectChannelEvent;
+import com.tjun.www.granatePro.ui.adapter.ChannelPagerAdapter;
+import com.tjun.www.granatePro.ui.base.BaseFragment;
+import com.tjun.www.granatePro.ui.news.contract.NewsContract;
+import com.tjun.www.granatePro.ui.news.presenter.NewsPresenter;
+import com.tjun.www.granatePro.widget.ChannelDialogFragment;
+import com.tjun.www.granatePro.widget.CustomViewPager;
+
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,28 +29,29 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-
 /**
- * Created by tanjun on 2018/3/5.
+ * Created by tanjun on 2018/3/10.
  */
+public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.View {
 
-public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.View{
+    private static final String TAG = "NewsFragment";
 
-    @BindView(R.id.view_pager)
-    CustomViewPager mViewPager;
-    @BindView(R.id.iv_add)
-    ImageButton mIvAdd;
-    @BindView(R.id.news_tab_layout)
-    SlidingTabLayout mTabLayout;
+    @BindView(R.id.viewpager)
+    CustomViewPager mViewpager;
+    @BindView(R.id.iv_edit)
+    ImageView mIvEdit;
+    @BindView(R.id.SlidingTabLayout)
+    com.flyco.tablayout.SlidingTabLayout SlidingTabLayout;
 
-    private ChannelPagerAdapter mAdapter;
+    private ChannelPagerAdapter mChannelPagerAdapter;
 
-    private List<Channel> mSelectChannels;
-    private List<Channel> mUnSelectChannels;
-    private int selectIndex;
-    private String selectChannel;
+    private List<Channel> mSelectedDatas;
+    private List<Channel> mUnSelectedDatas;
 
-    public static NewsFragment newsInstance(){
+    private int selectedIndex;
+    private String selectedChannel;
+
+    public static NewsFragment newInstance() {
         Bundle args = new Bundle();
         NewsFragment fragment = new NewsFragment();
         fragment.setArguments(args);
@@ -49,58 +59,22 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     }
 
     @Override
-    public void loadData(List<Channel> channels, List<Channel> otherChannel) {
-        if (channels != null) {
-            mSelectChannels.clear();
-            mSelectChannels.addAll(channels);
-            mUnSelectChannels.clear();
-            mUnSelectChannels.addAll(otherChannel);
-            mAdapter = new ChannelPagerAdapter(getChildFragmentManager(),channels);
-            mViewPager.setAdapter(mAdapter);
-            mViewPager.setOffscreenPageLimit(2);
-            mViewPager.setCurrentItem(0,false);
-            mTabLayout.setViewPager(mViewPager);
-        } else {
-            ToastMsg("数据异常");
-        }
-    }
-
-    /**
-     * 设置当前选中项
-     * @param strings
-     * @param channelName
-     */
-    public void setViewPagerPosition(List<String> strings,String channelName){
-        if (TextUtils.isEmpty(channelName) || strings == null){
-            return;
-        }
-        for (int i = 0; i < strings.size(); i++) {
-            if (strings.get(i).equals(channelName)) {
-                selectChannel = strings.get(i);
-                selectIndex = i;
-                break;
-            }
-        }
-        mViewPager.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mViewPager.setCurrentItem(selectIndex,false);
-            }
-        },100);
-    }
-
-    @Override
     public int getContentLayout() {
-        return R.layout.fragment_news;
+        return R.layout.fragment_news_new;
     }
 
     @Override
-    public void initInjector(ApplicationComponent applicationComponent) {
+    public void initInjector(ApplicationComponent appComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(appComponent)
+                .build()
+                .inject(this);
     }
 
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        EventBus.getDefault().register(this);
+        mViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -108,8 +82,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
             @Override
             public void onPageSelected(int position) {
-                selectIndex = position;
-                selectChannel = mSelectChannels.get(position).getChannelName();
+                selectedIndex = position;
+                selectedChannel = mSelectedDatas.get(position).getChannelName();
             }
 
             @Override
@@ -117,22 +91,107 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
             }
         });
+
     }
 
     @Override
     public void initData() {
-        mSelectChannels = new ArrayList<>();
-        mUnSelectChannels = new ArrayList<>();
+        mSelectedDatas = new ArrayList<>();
+        mUnSelectedDatas = new ArrayList<>();
         mPresenter.getChannel();
     }
 
-    @OnClick(R.id.iv_add)
-    public void onViewClicked(){
+    @Override
+    public void onRetry() {
 
     }
 
     @Override
+    public void loadData(List<Channel> channels, List<Channel> unSelectedDatas) {
+        if (channels != null) {
+            mSelectedDatas.clear();
+            mSelectedDatas.addAll(channels);
+            mUnSelectedDatas.clear();
+            mUnSelectedDatas.addAll(unSelectedDatas);
+            mChannelPagerAdapter = new ChannelPagerAdapter(getChildFragmentManager(), channels);
+            mViewpager.setAdapter(mChannelPagerAdapter);
+            mViewpager.setOffscreenPageLimit(2);
+            mViewpager.setCurrentItem(0, false);
+            SlidingTabLayout.setViewPager(mViewpager);
+        } else {
+            T("数据异常");
+        }
+    }
+
+    @Subscriber
+    private void updateChannel(NewChannelEvent event) {
+        if (event == null) return;
+        if (event.selectedDatas != null && event.unSelectedDatas != null) {
+            mSelectedDatas = event.selectedDatas;
+            mUnSelectedDatas = event.unSelectedDatas;
+            mChannelPagerAdapter.updateChannel(mSelectedDatas);
+            SlidingTabLayout.notifyDataSetChanged();
+            ChannelDao.saveChannels(event.allChannels);
+
+            List<String> integers = new ArrayList<>();
+            for (Channel channel : mSelectedDatas) {
+                integers.add(channel.getChannelName());
+            }
+            if (TextUtils.isEmpty(event.firstChannelName)) {
+                if (!integers.contains(selectedChannel)) {
+                    selectedChannel = mSelectedDatas.get(selectedIndex).getChannelName();
+                    mViewpager.setCurrentItem(selectedIndex, false);
+                } else {
+                    setViewpagerPosition(integers, selectedChannel);
+                }
+            } else {
+                setViewpagerPosition(integers, event.firstChannelName);
+            }
+        }
+    }
+
+    @Subscriber
+    private void selectChannelEvent(SelectChannelEvent selectChannelEvent) {
+        if (selectChannelEvent == null) return;
+        List<String> integers = new ArrayList<>();
+        for (Channel channel : mSelectedDatas) {
+            integers.add(channel.getChannelName());
+        }
+        setViewpagerPosition(integers, selectChannelEvent.channelName);
+    }
+
+    /**
+     * 设置 当前选中页
+     *
+     * @param integers
+     * @param channelName
+     */
+    private void setViewpagerPosition(List<String> integers, String channelName) {
+        if (TextUtils.isEmpty(channelName) || integers == null) return;
+        for (int j = 0; j < integers.size(); j++) {
+            if (integers.get(j).equals(channelName)) {
+                selectedChannel = integers.get(j);
+                selectedIndex = j;
+                break;
+            }
+        }
+        mViewpager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mViewpager.setCurrentItem(selectedIndex, false);
+            }
+        }, 100);
+    }
+
+    @OnClick(R.id.iv_edit)
+    public void onViewClicked() {
+        ChannelDialogFragment dialogFragment = ChannelDialogFragment.newInstance(mSelectedDatas, mUnSelectedDatas);
+        dialogFragment.show(getChildFragmentManager(), "CHANNEL");
+    }
+
+    @Override
     public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 }

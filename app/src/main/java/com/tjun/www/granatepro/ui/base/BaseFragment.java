@@ -1,74 +1,83 @@
-package com.tjun.www.granatepro.ui.base;
+package com.tjun.www.granatePro.ui.base;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.tjun.www.granatepro.MyApp;
-import com.tjun.www.granatepro.R;
-import com.tjun.www.granatepro.ui.widget.MultiStateView;
-import com.tjun.www.granatepro.ui.widget.SimpleMultiStateView;
-import com.tjun.www.granatepro.utils.DialogUtils;
-import com.tjun.www.granatepro.utils.ToastUtils;
+import com.tjun.www.granatePro.R;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.tjun.www.granatePro.MyApp;
+import com.tjun.www.granatePro.ui.inter.IBase;
+import com.tjun.www.granatePro.utils.DialogHelper;
+import com.tjun.www.granatePro.utils.ToastUtils;
+import com.tjun.www.granatePro.widget.MultiStateView;
+import com.tjun.www.granatePro.widget.SimpleMultiStateView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.annotations.Nullable;
 
 /**
- * Created by tanjun on 2018/3/5.
+ * Created by tanjun on 2018/3/06.
  */
+public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extends SupportFragment implements IBase, BaseContract.BaseView {
 
-public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extends SupportFragment
-        implements IBase,BaseContract.BaseView {
     protected Context mContext;
     protected View mRootView;
-    protected Dialog mLoadingDialog;
-    Unbinder mUnbiner;
+    protected Dialog mLoadingDialog = null;
+    Unbinder unbinder;
 
     @Nullable
     @Inject
     protected T1 mPresenter;
 
+    @Nullable
+    @BindView(R.id.SimpleMultiStateView)
     SimpleMultiStateView mSimpleMultiStateView;
 
-    @android.support.annotation.Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @android.support.annotation.Nullable ViewGroup container, @android.support.annotation.Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mRootView != null) {
-            ViewGroup group = (ViewGroup) mRootView.getParent();
-            if (group != null) {
-                group.removeView(group);
+            ViewGroup parent = (ViewGroup) mRootView.getParent();
+            if (parent != null) {
+                parent.removeView(mRootView);
             }
         } else {
-            mRootView = createView(inflater,container,savedInstanceState);
+            mRootView = createView(inflater, container, savedInstanceState);
         }
 
         mContext = mRootView.getContext();
-        mLoadingDialog = DialogUtils.getLoadingDialog(getActivity());
+        mLoadingDialog = DialogHelper.getLoadingDialog(getActivity());
         return mRootView;
     }
 
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(getContentLayout(),container,false);
-        mUnbiner = ButterKnife.bind(this,view);
+        View view = inflater.inflate(getContentLayout(), container, false);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @android.support.annotation.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initInjector(MyApp.getInstance().getApplicationComponent());
         attachView();
-        bindView(view,savedInstanceState);
+        bindView(view, savedInstanceState);
         initStateView();
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        initData();
     }
 
     @Override
@@ -76,26 +85,51 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
         super.onSupportVisible();
     }
 
-    @android.support.annotation.Nullable
+    @Nullable
     @Override
     public View getView() {
         return mRootView;
     }
 
-    @Override
-    public void onLazyInitView(@android.support.annotation.Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
-        initData();
+    private void attachView() {
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
+        }
     }
 
-    private void initStateView(){
+    @Override
+    public void onRetry() {
+
+    }
+
+
+    protected void showLoadingDialog() {
+        if (mLoadingDialog != null)
+            mLoadingDialog.show();
+    }
+
+    protected void showLoadingDialog(String str) {
+        if (mLoadingDialog != null) {
+            TextView tv = (TextView) mLoadingDialog.findViewById(R.id.tv_load_dialog);
+            tv.setText(str);
+            mLoadingDialog.show();
+        }
+    }
+
+    protected void hideLoadingDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing())
+            mLoadingDialog.dismiss();
+    }
+
+
+    private void initStateView() {
         if (mSimpleMultiStateView == null) return;
         mSimpleMultiStateView.setEmptyResource(R.layout.view_empty)
                 .setRetryResource(R.layout.view_retry)
                 .setLoadingResource(R.layout.view_loading)
                 .setNoNetResource(R.layout.view_nonet)
                 .build()
-                .setmOnReloadListener(new MultiStateView.onReloadListener() {
+                .setonReLoadlistener(new MultiStateView.onReLoadlistener() {
                     @Override
                     public void onReload() {
                         onRetry();
@@ -119,7 +153,7 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
     }
 
     @Override
-    public void showFailed() {
+    public void showFaild() {
         if (mSimpleMultiStateView != null) {
             mSimpleMultiStateView.showErrorView();
         }
@@ -132,7 +166,7 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
         }
     }
 
-    protected void ToastMsg(String string) {
+    protected void T(String string) {
         ToastUtils.showShort(MyApp.getContext(), string);
     }
 
@@ -142,32 +176,11 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
     }
 
     @Override
-    public void onRetry() {
-
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        mUnbiner.unbind();
+        unbinder.unbind();
         if (mPresenter != null) {
             mPresenter.detachView();
         }
-    }
-
-    private void attachView() {
-        if (mPresenter != null) {
-            mPresenter.attachView(this);
-        }
-    }
-
-    protected void showLoadingDialog() {
-        if (mLoadingDialog != null)
-            mLoadingDialog.show();
-    }
-
-    protected void hideLoadingDialog() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing())
-            mLoadingDialog.dismiss();
     }
 }

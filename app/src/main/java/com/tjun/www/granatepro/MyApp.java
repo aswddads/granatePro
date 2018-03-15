@@ -1,39 +1,52 @@
-package com.tjun.www.granatepro;
+package com.tjun.www.granatePro;
 
-import com.tjun.www.granatepro.component.ApplicationComponent;
-import com.tjun.www.granatepro.utils.ContextUtils;
+
+import com.tjun.www.granatePro.component.ApplicationComponent;
+import com.tjun.www.granatePro.component.DaggerApplicationComponent;
+import com.tjun.www.granatePro.module.ApplicationModule;
+import com.tjun.www.granatePro.module.HttpModule;
+import com.tjun.www.granatePro.utils.ContextUtils;
 
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
+
 /**
- * Created by tanjun on 2018/2/27.
+ * Created by tanjun on 2018/3/07.
  */
+public class MyApp extends LitePalApplication {
 
-public class MyApp extends LitePalApplication{
+    private ApplicationComponent mApplicationComponent;
 
-    private static MyApp mApp;
+    private static MyApp sMyApp;
 
     public static int width = 0;
 
     public static int height = 0;
 
-    private ApplicationComponent mApplicationComponent;
-
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mApp = this;
+        sMyApp = this;
+        BGASwipeBackManager.getInstance().init(this);
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .httpModule(new HttpModule())
+                .build();
         LitePal.initialize(this);
-        width = ContextUtils.getScreenWidth(MyApp.getContext());
-        height = ContextUtils.getScreenHeight(MyApp.getContext());
+        width = ContextUtils.getSreenWidth(MyApp.getContext());
+        height = ContextUtils.getSreenHeight(MyApp.getContext());
+
     }
 
-    public static MyApp getInstance(){
-        return mApp;
+    public static MyApp getInstance() {
+        return sMyApp;
     }
+
     public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;
     }
+
 }

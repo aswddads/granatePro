@@ -1,62 +1,104 @@
-package com.tjun.www.granatepro.ui.base;
+package com.tjun.www.granatePro.ui.base;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.tjun.www.granatepro.MyApp;
-import com.tjun.www.granatepro.R;
-import com.tjun.www.granatepro.utils.DialogUtils;
-import com.tjun.www.granatepro.utils.StatusBarUtils;
-import com.tjun.www.granatepro.utils.ToastUtils;
+import com.tjun.www.granatePro.R;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.tjun.www.granatePro.MyApp;
+import com.tjun.www.granatePro.ui.inter.IBase;
+import com.tjun.www.granatePro.utils.DialogHelper;
+import com.tjun.www.granatePro.utils.StatusBarUtil;
+import com.tjun.www.granatePro.utils.ToastUtils;
+import com.tjun.www.granatePro.widget.MultiStateView;
+import com.tjun.www.granatePro.widget.SimpleMultiStateView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
-import io.reactivex.annotations.Nullable;
 
 
 /**
- * Created by tanjun on 2018/3/1.
+ * Created by tanjun on 2018/3/06.
  */
-
-public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extends SupportActivity implements IBase,BaseContract.BaseView,BGASwipeBackHelper.Delegate{
+public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extends SupportActivity implements IBase, BaseContract.BaseView, BGASwipeBackHelper.Delegate {
     protected View mRootView;
     protected Dialog mLoadingDialog = null;
-
     Unbinder unbinder;
+
+    @Nullable
+    @BindView(R.id.SimpleMultiStateView)
+    SimpleMultiStateView mSimpleMultiStateView;
 
     @Nullable
     @Inject
     protected T1 mPresenter;
     protected BGASwipeBackHelper mSwipeBackHelper;
 
-
     @Override
-    protected void onCreate(@android.support.annotation.Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
-        mRootView = createView(null,null,savedInstanceState);
+        mRootView = createView(null, null, savedInstanceState);
         setContentView(mRootView);
+        initInjector(MyApp.getInstance().getApplicationComponent());
         attachView();
-        bindView(mRootView,savedInstanceState);
+        bindView(mRootView, savedInstanceState);
+        initStateView();
         initData();
-        mLoadingDialog = DialogUtils.getLoadingDialog(this);
+        mLoadingDialog = DialogHelper.getLoadingDialog(this);
+    }
+
+    @Override
+    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = getLayoutInflater().inflate(getContentLayout(), container);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public View getView() {
+        return mRootView;
+    }
+
+    private void attachView() {
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
+        }
+    }
+
+    private void initStateView() {
+        if (mSimpleMultiStateView == null) return;
+        mSimpleMultiStateView.setEmptyResource(R.layout.view_empty)
+                .setRetryResource(R.layout.view_retry)
+                .setLoadingResource(R.layout.view_loading)
+                .setNoNetResource(R.layout.view_nonet)
+                .build()
+                .setonReLoadlistener(new MultiStateView.onReLoadlistener() {
+                    @Override
+                    public void onReload() {
+                        onRetry();
+                    }
+                });
     }
 
     /**
      * 初始化滑动返回。在 super.onCreate(savedInstanceState) 之前调用该方法
      */
     private void initSwipeBackFinish() {
-        mSwipeBackHelper = new BGASwipeBackHelper(this,this);
+        mSwipeBackHelper = new BGASwipeBackHelper(this, this);
         // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
+        // 下面几项可以不配置，这里只是为了讲述接口用法。
         // 设置滑动返回是否可用。默认值为 true
         mSwipeBackHelper.setSwipeBackEnable(true);
         // 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
@@ -73,24 +115,6 @@ public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extend
         mSwipeBackHelper.setSwipeBackThreshold(0.3f);
     }
 
-    @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = getLayoutInflater().inflate(getContentLayout(),container);
-        unbinder = ButterKnife.bind(this,view);
-        return view;
-    }
-
-    @Override
-    public View getView() {
-        return mRootView;
-    }
-
-    private void attachView(){
-        if (mPresenter != null) {
-            mPresenter.attachView(this);
-        }
-    }
-
     /**
      * 是否支持滑动返回。这里在父类中默认返回 true 来支持滑动返回，如果某个界面不想支持滑动返回则重写该方法返回 false 即可
      *
@@ -105,10 +129,42 @@ public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extend
      * 设置状态栏颜色
      *
      * @param color
+     */
+    protected void setStatusBarColor(@ColorInt int color) {
+        setStatusBarColor(color, StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA);
+    }
+
+    /**
+     * 设置状态栏颜色
+     *
+     * @param color
      * @param statusBarAlpha 透明度
      */
     public void setStatusBarColor(@ColorInt int color, @IntRange(from = 0, to = 255) int statusBarAlpha) {
-        StatusBarUtils.setColorForSwipeBack(this, color, statusBarAlpha);
+        StatusBarUtil.setColorForSwipeBack(this, color, statusBarAlpha);
+    }
+
+    protected void showLoadingDialog() {
+        if (mLoadingDialog != null)
+            mLoadingDialog.show();
+    }
+
+    protected void showLoadingDialog(String str) {
+        if (mLoadingDialog != null) {
+            TextView tv = (TextView) mLoadingDialog.findViewById(R.id.tv_load_dialog);
+            tv.setText(str);
+            mLoadingDialog.show();
+        }
+    }
+
+    protected void hideLoadingDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
+    }
+
+    protected SimpleMultiStateView getStateView() {
+        return mSimpleMultiStateView;
     }
 
     @Override
@@ -117,6 +173,34 @@ public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extend
         unbinder.unbind();
         if (mPresenter != null) {
             mPresenter.detachView();
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        if (mSimpleMultiStateView != null) {
+            mSimpleMultiStateView.showLoadingView();
+        }
+    }
+
+    @Override
+    public void showSuccess() {
+        if (mSimpleMultiStateView != null) {
+            mSimpleMultiStateView.showContent();
+        }
+    }
+
+    @Override
+    public void showFaild() {
+        if (mSimpleMultiStateView != null) {
+            mSimpleMultiStateView.showErrorView();
+        }
+    }
+
+    @Override
+    public void showNoNet() {
+        if (mSimpleMultiStateView != null) {
+            mSimpleMultiStateView.showNoNetView();
         }
     }
 
@@ -144,4 +228,5 @@ public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extend
     public void onSwipeBackLayoutExecuted() {
         mSwipeBackHelper.swipeBackward();
     }
+
 }

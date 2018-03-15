@@ -1,4 +1,4 @@
-package com.tjun.www.granatepro.bean;
+package com.tjun.www.granatePro.bean;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
@@ -8,23 +8,34 @@ import org.litepal.crud.DataSupport;
 import java.io.Serializable;
 
 /**
- * Created by tanjun on 2018/3/9.
+ * Created by tanjun on 2018/3/11.
  */
-
-public class Channel extends DataSupport implements Serializable,MultiItemEntity {
+public class Channel extends DataSupport implements Serializable, MultiItemEntity {
 
     public static final int TYPE_MY = 1;
     public static final int TYPE_OTHER = 2;
     public static final int TYPE_MY_CHANNEL = 3;
     public static final int TYPE_OTHER_CHANNEL = 4;
 
+    @Column(ignore = true)
+    public int itemtype;
+
     private String channelId;
     private String channelName;
-
     /**
      * 0 可移除，1不可移除
      */
     private int channelType;
+
+    /**
+     * 0 未选中 1 选中
+     */
+    private boolean isChannelSelect;
+
+    @Override
+    public int getItemType() {
+        return itemtype;
+    }
 
     public String getChannelId() {
         return channelId;
@@ -58,25 +69,8 @@ public class Channel extends DataSupport implements Serializable,MultiItemEntity
         isChannelSelect = channelSelect;
     }
 
-    public int getItemtype() {
-        return itemtype;
-    }
-
     public void setItemtype(int itemtype) {
         this.itemtype = itemtype;
     }
 
-    /**
-     * 0 未选中 1 选中
-     */
-
-    private boolean isChannelSelect;
-
-    @Column(ignore = true)
-    public int itemtype;
-
-    @Override
-    public int getItemType() {
-        return 0;
-    }
 }

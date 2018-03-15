@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">知道</string>
+    <string name="app_name">微阅</string>
 
     <!-- 状态视图  -->
     <string name="loading">加载中...</string>

@@ -1,35 +1,39 @@
-package com.tjun.www.granatepro.ui.adapter;
+package com.tjun.www.granatePro.ui.adapter;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.tjun.www.granatepro.bean.Channel;
+import com.tjun.www.granatePro.bean.Channel;
+import com.tjun.www.granatePro.ui.base.BaseFragment;
+import com.tjun.www.granatePro.ui.news.DetailFragment;
 
 import java.util.List;
 
 /**
- * Created by tanjun on 2018/3/12.
+ * Created by tanjun on 2018/3/13.
  */
-
 public class ChannelPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Channel> mChannels;
 
-    public ChannelPagerAdapter(FragmentManager fm,List<Channel> channels) {
+    public ChannelPagerAdapter(FragmentManager fm, List<Channel> channels) {
         super(fm);
         this.mChannels = channels;
     }
 
-    public void uploadChannel(List<Channel> channelList) {
-        this.mChannels = channelList;
+    public void updateChannel(List<Channel> channels){
+        this.mChannels = channels;
         notifyDataSetChanged();
     }
 
+    @Override
+    public BaseFragment getItem(int position) {
+        return DetailFragment.newInstance(mChannels.get(position).getChannelId(), position);
+    }
 
     @Override
-    public Fragment getItem(int position) {
-        return null;
+    public CharSequence getPageTitle(int position) {
+        return mChannels.get(position).getChannelName();
     }
 
     @Override
@@ -41,4 +45,5 @@ public class ChannelPagerAdapter extends FragmentStatePagerAdapter {
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
+
 }

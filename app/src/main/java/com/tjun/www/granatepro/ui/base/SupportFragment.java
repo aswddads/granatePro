@@ -1,12 +1,10 @@
-package com.tjun.www.granatepro.ui.base;
+package com.tjun.www.granatePro.ui.base;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.animation.Animation;
-
 
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -16,14 +14,12 @@ import me.yokeyword.fragmentation.SupportFragmentDelegate;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
- * Created by tanjun on 2018/2/28.
+ * Created by tanjun on 2018/3/07.
  */
-
 public class SupportFragment extends RxFragment implements ISupportFragment {
 
     final SupportFragmentDelegate mDelegate = new SupportFragmentDelegate(this);
-    FragmentManager h;
-    protected FragmentActivity mActivity;
+    protected FragmentActivity _mActivity;
 
     @Override
     public SupportFragmentDelegate getSupportDelegate() {
@@ -40,26 +36,21 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
     }
 
     @Override
-    public void enqueueAction(Runnable runnable) {
-
-    }
-
-    @Override
-    public void post(Runnable runnable) {
-
-    }
-
-    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mDelegate.onAttach(activity);
-        mActivity = mDelegate.getActivity();
+        _mActivity = mDelegate.getActivity();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDelegate.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        return mDelegate.onCreateAnimation(transit, enter, nextAnim);
     }
 
     @Override
@@ -88,14 +79,14 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         mDelegate.onDestroyView();
+        super.onDestroyView();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mDelegate.onDestroy();
+        super.onDestroy();
     }
 
     @Override
@@ -110,15 +101,15 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         mDelegate.setUserVisibleHint(isVisibleToUser);
     }
 
+    /**
+     * Called when the enter-animation end.
+     * 入栈动画 结束时,回调
+     */
     @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        return mDelegate.onCreateAnimation(transit, enter, nextAnim);
-    }
-
-    @Override
-    public void onEnterAnimationEnd(@Nullable Bundle savedInstanceState) {
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
         mDelegate.onEnterAnimationEnd(savedInstanceState);
     }
+
 
     /**
      * Lazy initial，Called when fragment is first called.
@@ -130,58 +121,118 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         mDelegate.onLazyInitView(savedInstanceState);
     }
 
+    /**
+     * Called when the fragment is visible.
+     * 当Fragment对用户可见时回调
+     * <p>
+     * Is the combination of  [onHiddenChanged() + onResume()/onPause() + setUserVisibleHint()]
+     */
     @Override
     public void onSupportVisible() {
         mDelegate.onSupportVisible();
     }
 
+    /**
+     * Called when the fragment is invivible.
+     * <p>
+     * Is the combination of  [onHiddenChanged() + onResume()/onPause() + setUserVisibleHint()]
+     */
     @Override
     public void onSupportInvisible() {
         mDelegate.onSupportInvisible();
     }
 
+    /**
+     * Return true if the fragment has been supportVisible.
+     */
     @Override
     final public boolean isSupportVisible() {
         return mDelegate.isSupportVisible();
     }
 
+    /**
+     * Set fragment animation with a higher priority than the ISupportActivity
+     * 设定当前Fragmemt动画,优先级比在SupportActivity里高
+     */
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         return mDelegate.onCreateFragmentAnimator();
     }
 
+    /**
+     * 获取设置的全局动画 copy
+     *
+     * @return FragmentAnimator
+     */
     @Override
     public FragmentAnimator getFragmentAnimator() {
         return mDelegate.getFragmentAnimator();
     }
 
+    /**
+     * 设置Fragment内的全局动画
+     */
     @Override
     public void setFragmentAnimator(FragmentAnimator fragmentAnimator) {
         mDelegate.setFragmentAnimator(fragmentAnimator);
     }
 
+    /**
+     * 按返回键触发,前提是SupportActivity的onBackPressed()方法能被调用
+     *
+     * @return false则继续向上传递, true则消费掉该事件
+     */
+    @Override
+    public boolean onBackPressedSupport() {
+        return mDelegate.onBackPressedSupport();
+    }
+
+    /**
+     * 类似 {@link Activity#setResult(int, Intent)}
+     *
+     * Similar to {@link Activity#setResult(int, Intent)}
+     *
+     * @see #startForResult(ISupportFragment, int)
+     */
     @Override
     public void setFragmentResult(int resultCode, Bundle bundle) {
         mDelegate.setFragmentResult(resultCode, bundle);
     }
 
+    /**
+     * 类似  {@link Activity#onActivityResult(int, int, Intent)}
+     *
+     * Similar to {@link Activity#onActivityResult(int, int, Intent)}
+     *
+     * @see #startForResult(ISupportFragment, int)
+     */
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         mDelegate.onFragmentResult(requestCode, resultCode, data);
     }
 
+    /**
+     * 在start(TargetFragment,LaunchMode)时,启动模式为SingleTask/SingleTop, 回调TargetFragment的该方法
+     * 类似 {@link Activity#onNewIntent(Intent)}
+     *
+     * Similar to {@link Activity#onNewIntent(Intent)}
+     *
+     * @see #start(ISupportFragment, int)
+     *
+     * @param args putNewBundle(Bundle newBundle)
+     */
     @Override
     public void onNewBundle(Bundle args) {
         mDelegate.onNewBundle(args);
     }
 
+    /**
+     * 添加NewBundle,用于启动模式为SingleTask/SingleTop时
+     *
+     * @see #start(ISupportFragment, int)
+     */
     @Override
     public void putNewBundle(Bundle newBundle) {
         mDelegate.putNewBundle(newBundle);
-    }
-
-    @Override
-    public boolean onBackPressedSupport() {
-        return mDelegate.onBackPressedSupport();
     }
 }

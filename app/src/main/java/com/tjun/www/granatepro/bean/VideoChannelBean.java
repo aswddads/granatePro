@@ -1,12 +1,13 @@
-package com.tjun.www.granatepro.bean;
+package com.tjun.www.granatePro.bean;
 
 import java.util.List;
 
 /**
- * Created by tanjun on 2018/3/12.
+ * Created by tanjun on 2018/3/10.
  */
-
 public class VideoChannelBean {
+
+
     /**
      * types : [{"id":9,"name":"娱乐","chType":"video","position":"down"},{"id":18,"name":"美食","chType":"video","position":"down"},{"id":22,"name":"锵锵三人行","chType":"video","position":"down"},{"id":5,"name":"军事","chType":"video","position":"up"},{"id":24,"name":"综艺","chType":"video","position":"up"},{"id":10,"name":"体育","chType":"video","position":"up"},{"id":8,"name":"生活","chType":"video","position":"up"},{"id":25,"name":"纪录片","chType":"video","position":"up"},{"id":4,"name":"社会","chType":"video","position":"up"},{"id":27,"name":"萌萌哒","chType":"video","position":"up"},{"id":2,"name":"段子","chType":"video","position":"down"},{"id":3,"name":"历史","chType":"video","position":"up"},{"id":1,"name":"美女","chType":"video","position":"down"},{"id":23,"name":"鲁豫有约 ","chType":"video","position":"down"}]
      * totalPage : 20
