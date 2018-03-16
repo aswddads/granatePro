@@ -8,7 +8,8 @@ import com.tjun.www.granatePro.component.ApplicationComponent;
 import com.tjun.www.granatePro.ui.base.BaseActivity;
 import com.tjun.www.granatePro.ui.base.SupportFragment;
 import com.tjun.www.granatePro.ui.jandan.JanDanFragment;
-import com.tjun.www.granatePro.ui.personal.PersonalFragment;
+import com.tjun.www.granatePro.ui.mine.MineCenterFragment;
+import com.tjun.www.granatePro.ui.mine.PersonalFragment;
 import com.tjun.www.granatePro.ui.news.NewsFragment;
 import com.tjun.www.granatePro.ui.video.VideoFragment;
 import com.tjun.www.granatePro.utils.StatusBarUtil;
@@ -52,7 +53,7 @@ public class MainActivity extends BaseActivity {
             mFragments[0] = NewsFragment.newInstance();
             mFragments[1] = VideoFragment.newInstance();
             mFragments[2] = JanDanFragment.newInstance();
-            mFragments[3] = PersonalFragment.newInstance();
+            mFragments[3] = MineCenterFragment.newInstance();
 
             getSupportDelegate().loadMultipleRootFragment(R.id.contentContainer, 0,
                     mFragments[0],

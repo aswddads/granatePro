@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/g_3"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"/>
+    <FrameLayout
+        android:background="@color/colorPrimary"
+        android:id="@+id/fl_top_login_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_un_login"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_un_login"
+                android:padding="15dp"
+                android:layout_width="80dp"
+                android:id="@+id/iv_un_login"
+                android:layout_height="60dp" />
+            <TextView
+                android:drawableRight="@drawable/right_arrow"
+                android:paddingRight="5dp"
+                android:layout_marginLeft="90dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="登 录 查 看 个 人 收 藏                   "
+                android:id="@+id/tv_un_login"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rl_login"
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_logo"
+                android:padding="10dp"
+                android:layout_width="80dp"
+                android:id="@+id/iv_login"
+                android:layout_height="64dp" />
+            <TextView
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:text="aswddads"
+                android:id="@+id/tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <View
+        android:background="@color/view_bg"
+        android:id="@+id/ge"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/ll_des"
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/tv_name"
+            android:gravity="center"
+            android:text="个人说明:"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:padding="5dp"
+            android:textColor="@android:color/black"
+            android:text="My name is Asw.Tan"
+            android:id="@+id/tv_des"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:maxLines="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/view_bg"
+        android:id="@+id/g_1"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+
+    <TextView
+        android:drawableEnd="@drawable/right_arrow"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:text="我的新闻"
+        android:layout_marginLeft="5dp"
+        android:padding="5dp"
+        android:id="@+id/tv_my_collect"
+        android:layout_width="match_parent"
+        android:layout_height="64dp" />
+    <View
+        android:background="@color/view_bg"
+        android:id="@+id/g_2"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+    <TextView
+        android:drawableEnd="@drawable/right_arrow"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:text="个人设置"
+        android:layout_marginLeft="5dp"
+        android:padding="5dp"
+        android:id="@+id/tv_my_settinggs"
+        android:layout_width="match_parent"
+        android:layout_height="64dp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_copy_right"
+        android:background="#F2F2F2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/copy_right"
+            android:textSize="12sp"
+            android:text="@string/copy_right"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+    </RelativeLayout>
+
+</LinearLayout>

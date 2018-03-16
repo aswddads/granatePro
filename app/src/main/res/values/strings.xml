@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">微阅</string>
+    <string name="app_name">新鲜事</string>
+    <string name="copy_right">\@copyright:https://github.com/aswddads/granatePro</string>
+    <string name="copyright">https://github.com/aswddads/granatePro</string>
 
     <!-- 状态视图  -->
     <string name="loading">加载中...</string>
