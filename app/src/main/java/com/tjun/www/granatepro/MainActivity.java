@@ -1,6 +1,7 @@
 package com.tjun.www.granatePro;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -13,6 +14,7 @@ import com.tjun.www.granatePro.ui.mine.PersonalFragment;
 import com.tjun.www.granatePro.ui.news.NewsFragment;
 import com.tjun.www.granatePro.ui.video.VideoFragment;
 import com.tjun.www.granatePro.utils.StatusBarUtil;
+import com.tjun.www.granatePro.utils.ToastUtils;
 import com.tjun.www.granatePro.widget.BottomBar;
 import com.tjun.www.granatePro.widget.BottomBarTab;
 
@@ -21,6 +23,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
+    private long exitTime = 0;
 
     @BindView(R.id.contentContainer)
     FrameLayout mContentContainer;
@@ -69,7 +72,7 @@ public class MainActivity extends BaseActivity {
 
         mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_news, "新闻"))
                 .addItem(new BottomBarTab(this, R.drawable.ic_video, "视频"))
-                .addItem(new BottomBarTab(this, R.drawable.ic_jiandan, "煎蛋"))
+                .addItem(new BottomBarTab(this, R.drawable.ic_jiandan, "影讯"))
                 .addItem(new BottomBarTab(this, R.drawable.ic_my, "我的"));
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
@@ -117,5 +120,20 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == event.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                ToastUtils.showShort(getApplicationContext(), "再按一次退出程序");
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

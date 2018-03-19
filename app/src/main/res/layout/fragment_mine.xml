@@ -76,9 +76,10 @@
         android:orientation="horizontal"
         android:id="@+id/ll_des"
         android:layout_width="match_parent"
-        android:layout_height="64dp">
+        android:layout_height="60dp">
 
         <TextView
+            android:textColor="@android:color/black"
             android:padding="5dp"
             android:id="@+id/tv_name"
             android:gravity="center"
@@ -88,9 +89,9 @@
             android:layout_height="match_parent" />
 
         <TextView
-            android:padding="5dp"
             android:textColor="@android:color/black"
-            android:text="My name is Asw.Tan"
+            android:padding="5dp"
+            android:text="@string/my_des"
             android:id="@+id/tv_des"
             android:textSize="16sp"
             android:layout_marginLeft="5dp"
@@ -107,6 +108,7 @@
         android:layout_height="15dp"/>
 
     <TextView
+        android:textColor="@android:color/black"
         android:drawableEnd="@drawable/right_arrow"
         android:textSize="18sp"
         android:gravity="center_vertical"
@@ -115,13 +117,14 @@
         android:padding="5dp"
         android:id="@+id/tv_my_collect"
         android:layout_width="match_parent"
-        android:layout_height="64dp" />
+        android:layout_height="60dp" />
     <View
         android:background="@color/view_bg"
         android:id="@+id/g_2"
         android:layout_width="match_parent"
         android:layout_height="15dp"/>
     <TextView
+        android:textColor="@android:color/black"
         android:drawableEnd="@drawable/right_arrow"
         android:textSize="18sp"
         android:gravity="center_vertical"
@@ -130,7 +133,7 @@
         android:padding="5dp"
         android:id="@+id/tv_my_settinggs"
         android:layout_width="match_parent"
-        android:layout_height="64dp" />
+        android:layout_height="60dp" />
 
     <RelativeLayout
         android:id="@+id/rl_copy_right"

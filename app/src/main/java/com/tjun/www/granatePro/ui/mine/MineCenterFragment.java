@@ -76,7 +76,6 @@ public class MineCenterFragment extends BaseFragment{
         if (!SpUtils.getBoolean(getContext(), Constants.IS_LOGIN,false)) {
             mRlUnLogin.setVisibility(View.VISIBLE);
             mRlLogin.setVisibility(View.GONE);
-            mTvDes.setVisibility(View.GONE);
         }
     }
 
@@ -92,6 +91,7 @@ public class MineCenterFragment extends BaseFragment{
                 toWeb(getResources().getString(R.string.copyright));
                 break;
             case R.id.rl_un_login:
+
                 //跳转登录界面
                 break;
             case R.id.tv_my_collect:

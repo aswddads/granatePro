@@ -4,6 +4,8 @@ package com.tjun.www.granatePro.bean;
  * Created by tanjun on 2018/3/11.
  */
 public class Constants {
+    public static final String BOMB_APP_ID = "4c3314e3e41202b18d72da6647a5ac3d";
+
     public static final String IS_LOGIN = "is_login";
 
     //864678036850608 如果数据太少，请自行抓包凤凰新闻 获取数据时的参数中的 uid 更换

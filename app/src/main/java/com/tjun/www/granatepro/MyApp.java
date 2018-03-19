@@ -1,10 +1,12 @@
 package com.tjun.www.granatePro;
 
 
+import com.tjun.www.granatePro.bean.Constants;
 import com.tjun.www.granatePro.component.ApplicationComponent;
 import com.tjun.www.granatePro.component.DaggerApplicationComponent;
 import com.tjun.www.granatePro.module.ApplicationModule;
 import com.tjun.www.granatePro.module.HttpModule;
+import com.tjun.www.granatePro.net.ApiConstants;
 import com.tjun.www.granatePro.utils.ContextUtils;
 
 import org.litepal.LitePal;
@@ -36,9 +38,11 @@ public class MyApp extends LitePalApplication {
                 .httpModule(new HttpModule())
                 .build();
         LitePal.initialize(this);
+        //初始化bmob
+        Bmob.initialize(this, Constants.BOMB_APP_ID);
+
         width = ContextUtils.getSreenWidth(MyApp.getContext());
         height = ContextUtils.getSreenHeight(MyApp.getContext());
-
     }
 
     public static MyApp getInstance() {

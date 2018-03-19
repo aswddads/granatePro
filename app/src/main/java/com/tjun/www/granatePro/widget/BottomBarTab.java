@@ -47,7 +47,7 @@ public class BottomBarTab extends LinearLayout {
 
         setOrientation(LinearLayout.VERTICAL);
         mIcon = new ImageView(context);
-        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
         LayoutParams params = new LayoutParams(size, size);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.topMargin = ContextUtils.dip2px(context, 2.5f);
@@ -62,7 +62,7 @@ public class BottomBarTab extends LinearLayout {
         textViewParams.bottomMargin = ContextUtils.dip2px(context, 2.5f);
         mTextView = new TextView(context);
         mTextView.setText(title);
-        mTextView.setTextSize(ContextUtils.dip2px(context, 3.2f));
+        mTextView.setTextSize(ContextUtils.dip2px(context, 3.4f));
         mTextView.setLayoutParams(textViewParams);
         mTextView.setTextColor(ContextCompat.getColor(mContext, R.color.tab_unselect));
         addView(mIcon);
