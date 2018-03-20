@@ -1,12 +1,12 @@
-package com.tjun.www.granatePro;
+package com.tjun.www.granatepro;
 
 
-import com.tjun.www.granatePro.bean.Constants;
-import com.tjun.www.granatePro.component.ApplicationComponent;
-import com.tjun.www.granatePro.component.DaggerApplicationComponent;
-import com.tjun.www.granatePro.module.ApplicationModule;
-import com.tjun.www.granatePro.module.HttpModule;
-import com.tjun.www.granatePro.utils.ContextUtils;
+import com.tjun.www.granatepro.bean.Constants;
+import com.tjun.www.granatepro.component.ApplicationComponent;
+import com.tjun.www.granatepro.component.DaggerApplicationComponent;
+import com.tjun.www.granatepro.module.ApplicationModule;
+import com.tjun.www.granatepro.module.HttpModule;
+import com.tjun.www.granatepro.utils.ContextUtils;
 
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;

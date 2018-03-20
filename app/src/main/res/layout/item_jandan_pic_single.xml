@@ -84,7 +84,7 @@
                 android:layout_alignParentTop="true"
                 app:mpb_secondaryProgressTint="@color/colorPrimary"/>
 
-            <com.tjun.www.granatePro.widget.ShowMaxImageView
+            <com.tjun.www.granatepro.widget.ShowMaxImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

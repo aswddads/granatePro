@@ -1,4 +1,4 @@
-package com.tjun.www.granatePro.ui.base;
+package com.tjun.www.granatepro.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

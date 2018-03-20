@@ -37,7 +37,7 @@
             android:src="@drawable/ic_news_add"/>
     </RelativeLayout>
 
-    <com.tjun.www.granatePro.widget.CustomViewPager
+    <com.tjun.www.granatepro.widget.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true">
 
-        <com.tjun.www.granatePro.widget.SimpleMultiStateView
+        <com.tjun.www.granatepro.widget.SimpleMultiStateView
             android:id="@+id/SimpleMultiStateView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,7 +27,7 @@
                 android:scrollbars="vertical"
                 />
 
-        </com.tjun.www.granatePro.widget.SimpleMultiStateView>
+        </com.tjun.www.granatepro.widget.SimpleMultiStateView>
 
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 </FrameLayout>

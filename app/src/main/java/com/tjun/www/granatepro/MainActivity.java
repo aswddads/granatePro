@@ -1,22 +1,22 @@
-package com.tjun.www.granatePro;
+package com.tjun.www.granatepro;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.tjun.www.granatePro.component.ApplicationComponent;
-import com.tjun.www.granatePro.ui.base.BaseActivity;
-import com.tjun.www.granatePro.ui.base.SupportFragment;
-import com.tjun.www.granatePro.ui.jandan.JanDanFragment;
-import com.tjun.www.granatePro.ui.mine.MineCenterFragment;
-import com.tjun.www.granatePro.ui.mine.PersonalFragment;
-import com.tjun.www.granatePro.ui.news.NewsFragment;
-import com.tjun.www.granatePro.ui.video.VideoFragment;
-import com.tjun.www.granatePro.utils.StatusBarUtil;
-import com.tjun.www.granatePro.utils.ToastUtils;
-import com.tjun.www.granatePro.widget.BottomBar;
-import com.tjun.www.granatePro.widget.BottomBarTab;
+import com.tjun.www.granatepro.component.ApplicationComponent;
+import com.tjun.www.granatepro.ui.base.BaseActivity;
+import com.tjun.www.granatepro.ui.base.SupportFragment;
+import com.tjun.www.granatepro.ui.jandan.JanDanFragment;
+import com.tjun.www.granatepro.ui.mine.MineCenterFragment;
+import com.tjun.www.granatepro.ui.mine.PersonalFragment;
+import com.tjun.www.granatepro.ui.news.NewsFragment;
+import com.tjun.www.granatepro.ui.video.VideoFragment;
+import com.tjun.www.granatepro.utils.StatusBarUtil;
+import com.tjun.www.granatepro.utils.ToastUtils;
+import com.tjun.www.granatepro.widget.BottomBar;
+import com.tjun.www.granatepro.widget.BottomBarTab;
 
 import butterknife.BindView;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;

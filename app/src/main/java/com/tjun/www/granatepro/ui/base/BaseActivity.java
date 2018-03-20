@@ -1,4 +1,4 @@
-package com.tjun.www.granatePro.ui.base;
+package com.tjun.www.granatepro.ui.base;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -10,15 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tjun.www.granatePro.R;
+import com.tjun.www.granatepro.R;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.tjun.www.granatePro.MyApp;
-import com.tjun.www.granatePro.ui.inter.IBase;
-import com.tjun.www.granatePro.utils.DialogHelper;
-import com.tjun.www.granatePro.utils.StatusBarUtil;
-import com.tjun.www.granatePro.utils.ToastUtils;
-import com.tjun.www.granatePro.widget.MultiStateView;
-import com.tjun.www.granatePro.widget.SimpleMultiStateView;
+import com.tjun.www.granatepro.MyApp;
+import com.tjun.www.granatepro.ui.inter.IBase;
+import com.tjun.www.granatepro.utils.DialogHelper;
+import com.tjun.www.granatepro.utils.StatusBarUtil;
+import com.tjun.www.granatepro.utils.ToastUtils;
+import com.tjun.www.granatepro.widget.MultiStateView;
+import com.tjun.www.granatepro.widget.SimpleMultiStateView;
 
 import javax.inject.Inject;
 

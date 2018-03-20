@@ -1,11 +1,11 @@
-package com.tjun.www.granatePro.ui.adapter;
+package com.tjun.www.granatepro.ui.adapter;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.tjun.www.granatePro.bean.Channel;
-import com.tjun.www.granatePro.ui.base.BaseFragment;
-import com.tjun.www.granatePro.ui.news.DetailFragment;
+import com.tjun.www.granatepro.bean.Channel;
+import com.tjun.www.granatepro.ui.base.BaseFragment;
+import com.tjun.www.granatepro.ui.news.DetailFragment;
 
 import java.util.List;
 

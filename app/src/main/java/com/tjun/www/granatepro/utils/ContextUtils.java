@@ -1,4 +1,4 @@
-package com.tjun.www.granatePro.utils;
+package com.tjun.www.granatepro.utils;
 
 import android.content.Context;
 import android.view.LayoutInflater;

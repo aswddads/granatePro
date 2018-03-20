@@ -1,11 +1,11 @@
-package com.tjun.www.granatePro.net;
+package com.tjun.www.granatepro.net;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.tjun.www.granatePro.MyApp;
-import com.tjun.www.granatePro.bean.Constants;
-import com.tjun.www.granatePro.utils.NetUtil;
+import com.tjun.www.granatepro.MyApp;
+import com.tjun.www.granatepro.bean.Constants;
+import com.tjun.www.granatepro.utils.NetUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

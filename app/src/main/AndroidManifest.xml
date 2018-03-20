@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tjun.www.granatePro">
+    package="com.tjun.www.granatepro">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -38,14 +38,14 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
-        android:name=".MyApp"
+        android:name="com.tjun.www.granatepro.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name="com.tjun.www.granatepro.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoBar"
             android:windowSoftInputMode="stateAlwaysHidden">
@@ -57,48 +57,48 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.tjun.www.granatepro.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
 
         </activity>
         <activity
-            android:name=".ui.news.ArticleReadActivity"
+            android:name="com.tjun.www.granatepro.ui.news.ArticleReadActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
-            android:name=".ui.news.AdvertActivity"
+            android:name="com.tjun.www.granatepro.ui.news.AdvertActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
-            android:name=".ui.news.ImageBrowseActivity"
+            android:name="com.tjun.www.granatepro.ui.news.ImageBrowseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
-            android:name=".ui.jandan.ReadActivity"
+            android:name="com.tjun.www.granatepro.ui.jandan.ReadActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
 
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
-            android:name=".ui.jandan.ImageBrowseActivity"
+            android:name="com.tjun.www.granatepro.ui.jandan.ImageBrowseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <activity
-            android:name=".ui.mine.LoginActivity"
+            android:name="com.tjun.www.granatepro.ui.mine.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent" />
         <activity
             android:label="注册"
-            android:name=".ui.mine.RegisterActivity"
+            android:name="com.tjun.www.granatepro.ui.mine.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent" />
     </application>

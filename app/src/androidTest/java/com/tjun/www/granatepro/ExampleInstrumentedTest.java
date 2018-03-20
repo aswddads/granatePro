@@ -1,4 +1,4 @@
-package com.tjun.www.granatePro;
+package com.tjun.www.granatepro;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

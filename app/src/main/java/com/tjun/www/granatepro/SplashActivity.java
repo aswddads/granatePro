@@ -1,4 +1,4 @@
-package com.tjun.www.granatePro;
+package com.tjun.www.granatepro;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tjun.www.granatePro.component.ApplicationComponent;
-import com.tjun.www.granatePro.ui.base.BaseActivity;
-import com.tjun.www.granatePro.utils.GildUtils;
+import com.tjun.www.granatepro.component.ApplicationComponent;
+import com.tjun.www.granatepro.ui.base.BaseActivity;
+import com.tjun.www.granatepro.utils.GildUtils;
 
 import java.util.concurrent.TimeUnit;
 

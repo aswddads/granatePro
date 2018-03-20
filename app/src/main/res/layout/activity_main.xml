@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomBar" />
 
-    <com.tjun.www.granatePro.widget.BottomBar
+    <com.tjun.www.granatepro.widget.BottomBar
         android:id="@+id/bottomBar"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

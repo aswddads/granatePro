@@ -85,7 +85,7 @@
                 app:mpb_progressStyle="horizontal"
                 app:mpb_secondaryProgressTint="@color/colorPrimary"/>
 
-            <com.tjun.www.granatePro.widget.MultiImageView
+            <com.tjun.www.granatepro.widget.MultiImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

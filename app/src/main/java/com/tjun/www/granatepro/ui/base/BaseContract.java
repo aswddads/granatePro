@@ -1,4 +1,4 @@
-package com.tjun.www.granatePro.ui.base;
+package com.tjun.www.granatepro.ui.base;
 
 import com.trello.rxlifecycle2.LifecycleTransformer;
 

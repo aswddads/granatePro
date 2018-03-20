@@ -1,4 +1,4 @@
-package com.tjun.www.granatePro.bean;
+package com.tjun.www.granatepro.bean;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 

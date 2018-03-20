@@ -1,4 +1,4 @@
-package com.tjun.www.granatePro.ui.news;
+package com.tjun.www.granatepro.ui.news;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -6,19 +6,19 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.tjun.www.granatePro.R;
-import com.tjun.www.granatePro.component.DaggerHttpComponent;
-import com.tjun.www.granatePro.bean.Channel;
-import com.tjun.www.granatePro.component.ApplicationComponent;
-import com.tjun.www.granatePro.database.ChannelDao;
-import com.tjun.www.granatePro.event.NewChannelEvent;
-import com.tjun.www.granatePro.event.SelectChannelEvent;
-import com.tjun.www.granatePro.ui.adapter.ChannelPagerAdapter;
-import com.tjun.www.granatePro.ui.base.BaseFragment;
-import com.tjun.www.granatePro.ui.news.contract.NewsContract;
-import com.tjun.www.granatePro.ui.news.presenter.NewsPresenter;
-import com.tjun.www.granatePro.widget.ChannelDialogFragment;
-import com.tjun.www.granatePro.widget.CustomViewPager;
+import com.tjun.www.granatepro.R;
+import com.tjun.www.granatepro.component.DaggerHttpComponent;
+import com.tjun.www.granatepro.bean.Channel;
+import com.tjun.www.granatepro.component.ApplicationComponent;
+import com.tjun.www.granatepro.database.ChannelDao;
+import com.tjun.www.granatepro.event.NewChannelEvent;
+import com.tjun.www.granatepro.event.SelectChannelEvent;
+import com.tjun.www.granatepro.ui.adapter.ChannelPagerAdapter;
+import com.tjun.www.granatepro.ui.base.BaseFragment;
+import com.tjun.www.granatepro.ui.news.contract.NewsContract;
+import com.tjun.www.granatepro.ui.news.presenter.NewsPresenter;
+import com.tjun.www.granatepro.widget.ChannelDialogFragment;
+import com.tjun.www.granatepro.widget.CustomViewPager;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;

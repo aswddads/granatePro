@@ -1,11 +1,11 @@
-package com.tjun.www.granatePro.net;
+package com.tjun.www.granatepro.net;
 
-import com.tjun.www.granatePro.bean.NewsArticleBean;
-import com.tjun.www.granatePro.bean.NewsCmppVideoBean;
-import com.tjun.www.granatePro.bean.NewsDetail;
-import com.tjun.www.granatePro.bean.NewsImagesBean;
-import com.tjun.www.granatePro.bean.VideoChannelBean;
-import com.tjun.www.granatePro.bean.VideoDetailBean;
+import com.tjun.www.granatepro.bean.NewsArticleBean;
+import com.tjun.www.granatepro.bean.NewsCmppVideoBean;
+import com.tjun.www.granatepro.bean.NewsDetail;
+import com.tjun.www.granatepro.bean.NewsImagesBean;
+import com.tjun.www.granatepro.bean.VideoChannelBean;
+import com.tjun.www.granatepro.bean.VideoDetailBean;
 
 import java.util.List;
 

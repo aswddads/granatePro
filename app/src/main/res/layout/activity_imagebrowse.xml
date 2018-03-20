@@ -10,17 +10,17 @@
     android:fitsSystemWindows="true"
     >
 
-    <com.tjun.www.granatePro.widget.SwipeBackLayout
+    <com.tjun.www.granatepro.widget.SwipeBackLayout
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.tjun.www.granatePro.widget.HackyViewPager
+        <com.tjun.www.granatepro.widget.HackyViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-    </com.tjun.www.granatePro.widget.SwipeBackLayout>
+    </com.tjun.www.granatepro.widget.SwipeBackLayout>
 
     <RelativeLayout
         android:id="@+id/rl_top"
@@ -54,7 +54,7 @@
 
     </RelativeLayout>
 
-    <com.tjun.www.granatePro.widget.MyScrollView
+    <com.tjun.www.granatepro.widget.MyScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             android:textSize="15sp"
             />
 
-    </com.tjun.www.granatePro.widget.MyScrollView>
+    </com.tjun.www.granatepro.widget.MyScrollView>
 
 </RelativeLayout>
 

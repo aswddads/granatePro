@@ -7,17 +7,17 @@
     android:background="@android:color/black">
 
 
-    <com.tjun.www.granatePro.widget.SwipeBackLayout
+    <com.tjun.www.granatepro.widget.SwipeBackLayout
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.tjun.www.granatePro.widget.HackyViewPager
+        <com.tjun.www.granatepro.widget.HackyViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-    </com.tjun.www.granatePro.widget.SwipeBackLayout>
+    </com.tjun.www.granatepro.widget.SwipeBackLayout>
 
 
     <TextView

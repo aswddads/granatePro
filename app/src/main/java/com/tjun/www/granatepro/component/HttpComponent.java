@@ -1,11 +1,11 @@
-package com.tjun.www.granatePro.component;
+package com.tjun.www.granatepro.component;
 
-import com.tjun.www.granatePro.ui.jandan.JdDetailFragment;
-import com.tjun.www.granatePro.ui.news.ArticleReadActivity;
-import com.tjun.www.granatePro.ui.news.ImageBrowseActivity;
-import com.tjun.www.granatePro.ui.news.NewsFragment;
-import com.tjun.www.granatePro.ui.video.DetailFragment;
-import com.tjun.www.granatePro.ui.video.VideoFragment;
+import com.tjun.www.granatepro.ui.jandan.JdDetailFragment;
+import com.tjun.www.granatepro.ui.news.ArticleReadActivity;
+import com.tjun.www.granatepro.ui.news.ImageBrowseActivity;
+import com.tjun.www.granatepro.ui.news.NewsFragment;
+import com.tjun.www.granatepro.ui.video.DetailFragment;
+import com.tjun.www.granatepro.ui.video.VideoFragment;
 
 import dagger.Component;
 
@@ -23,7 +23,7 @@ public interface HttpComponent {
 
     void inject(ImageBrowseActivity imageBrowseActivity);
 
-    void inject( com.tjun.www.granatePro.ui.news.DetailFragment detailFragment);
+    void inject( com.tjun.www.granatepro.ui.news.DetailFragment detailFragment);
 
     void inject(ArticleReadActivity articleReadActivity);
 

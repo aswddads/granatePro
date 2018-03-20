@@ -1,12 +1,12 @@
-package com.tjun.www.granatePro.component;
+package com.tjun.www.granatepro.component;
 
 import android.content.Context;
 
-import com.tjun.www.granatePro.MyApp;
-import com.tjun.www.granatePro.module.ApplicationModule;
-import com.tjun.www.granatePro.module.HttpModule;
-import com.tjun.www.granatePro.net.JanDanApi;
-import com.tjun.www.granatePro.net.NewsApi;
+import com.tjun.www.granatepro.MyApp;
+import com.tjun.www.granatepro.module.ApplicationModule;
+import com.tjun.www.granatepro.module.HttpModule;
+import com.tjun.www.granatepro.net.JanDanApi;
+import com.tjun.www.granatepro.net.NewsApi;
 
 import dagger.Component;
 
