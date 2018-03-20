@@ -91,7 +91,7 @@ public class MineCenterFragment extends BaseFragment{
                 toWeb(getResources().getString(R.string.copyright));
                 break;
             case R.id.rl_un_login:
-
+                startActivity(new Intent(getActivity(),LoginActivity.class));
                 //跳转登录界面
                 break;
             case R.id.tv_my_collect:
