@@ -13,6 +13,7 @@ import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
+import cn.bmob.v3.Bmob;
 
 /**
  * Created by tanjun on 2018/3/07.
