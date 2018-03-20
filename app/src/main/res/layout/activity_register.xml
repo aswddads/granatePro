@@ -89,7 +89,7 @@
                 android:background="@drawable/btn_check_bg"
                 android:layout_weight="2"
                 android:text="发送验证码"
-                android:id="@+id/et_check"
+                android:id="@+id/btn_check"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />
             
