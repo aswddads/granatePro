@@ -6,7 +6,6 @@ import com.tjun.www.granatePro.component.ApplicationComponent;
 import com.tjun.www.granatePro.component.DaggerApplicationComponent;
 import com.tjun.www.granatePro.module.ApplicationModule;
 import com.tjun.www.granatePro.module.HttpModule;
-import com.tjun.www.granatePro.net.ApiConstants;
 import com.tjun.www.granatePro.utils.ContextUtils;
 
 import org.litepal.LitePal;
@@ -27,7 +26,6 @@ public class MyApp extends LitePalApplication {
     public static int width = 0;
 
     public static int height = 0;
-
 
     @Override
     public void onCreate() {
