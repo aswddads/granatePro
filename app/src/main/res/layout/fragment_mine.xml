@@ -15,11 +15,12 @@
 
         <RelativeLayout
             android:id="@+id/rl_un_login"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="72dp">
 
             <ImageView
+                android:background="@android:color/transparent"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/ic_un_login"
                 android:padding="15dp"
@@ -39,7 +40,8 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:visibility="gone"
+            android:background="@color/view_bg"
+            android:visibility="visible"
             android:id="@+id/rl_login"
             android:layout_width="match_parent"
             android:layout_height="72dp">
@@ -53,7 +55,7 @@
                 android:layout_height="64dp" />
             <TextView
                 android:textColor="@android:color/black"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:textSize="25sp"
@@ -65,12 +67,6 @@
         </RelativeLayout>
 
     </FrameLayout>
-
-    <View
-        android:background="@color/view_bg"
-        android:id="@+id/ge"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"/>
 
     <LinearLayout
         android:orientation="horizontal"

@@ -1,5 +1,6 @@
 package com.tjun.www.granatepro.ui.mine;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -95,7 +96,7 @@ public class MineCenterFragment extends BaseFragment{
                 toWeb(getResources().getString(R.string.copyright));
                 break;
             case R.id.rl_un_login:
-                getActivity().startActivityForResult(new Intent(getActivity(),LoginActivity.class),OPEN_REGISTER);
+                startActivityForResult(new Intent(getActivity(),LoginActivity.class),OPEN_REGISTER);
                 //跳转登录界面
                 break;
             case R.id.tv_my_collect:
@@ -112,5 +113,24 @@ public class MineCenterFragment extends BaseFragment{
         Uri weburl = Uri.parse(url);
         Intent web_Intent = new Intent(Intent.ACTION_VIEW, weburl);
         getActivity().startActivity(web_Intent);
+    }
+
+    /**
+     * 登录成功回调
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK){
+            return;
+        }
+        mRlUnLogin.setVisibility(View.GONE);
+        mRlLogin.setVisibility(View.VISIBLE);
+
+        mTvLogin.setText(data.getStringExtra("username"));
+        mTvDes.setText(data.getStringExtra("desc"));
     }
 }

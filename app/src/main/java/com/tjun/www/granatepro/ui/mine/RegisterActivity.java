@@ -1,7 +1,9 @@
 package com.tjun.www.granatepro.ui.mine;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,14 +14,23 @@ import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
-import com.tjun.www.granatepro.utils.CountDownTimerUtils;
 import com.tjun.www.granatepro.utils.ToastUtils;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
 
 import static cn.bmob.v3.BmobSMS.requestSMSCode;
 
@@ -59,6 +70,14 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.btn_register)
     Button mBtnRegister;
 
+    CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public int getContentLayout() {
         return R.layout.activity_register;
@@ -71,7 +90,6 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
-
     }
 
     @Override
@@ -94,9 +112,39 @@ public class RegisterActivity extends BaseActivity {
                     public void done(Integer integer, BmobException e) {
                         if (e == null) {
                             checkNum = integer.toString().trim();
+                            /**
+                             * 注：
+                             * 同一个手机号码  短时间内只能发10次验证码
+                             */
                             ToastUtils.showShort(RegisterActivity.this,"验证码已通过短信发送到您手机上");
                             //传入时间单位为毫秒
-                            CountDownTimerUtils utils = new CountDownTimerUtils(mBtnCheck,60 * 1000,1 * 1000);
+                            //CountDownTimerUtils utils = new CountDownTimerUtils(mBtnCheck,60 * 1000,1 * 1000);
+                            mCompositeDisposable.add(countDown(58).doOnSubscribe(new Consumer<Disposable>() {
+                                @Override
+                                public void accept(@NonNull Disposable disposable) throws Exception {
+                                    mBtnCheck.setClickable(false);
+                                    mBtnCheck.setText("59秒后可重发");
+                                    mBtnCheck.setBackgroundResource(R.drawable.btn_number_send);
+                                }
+                            }).subscribeWith(new DisposableObserver<Integer>() {
+                                @Override
+                                public void onNext(Integer integer) {
+                                    //mBtnCheck.setText("跳过 " + (integer + 1));
+                                    mBtnCheck.setText((integer + 1) + "秒后可重发");
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    mBtnCheck.setClickable(true);
+                                    mBtnCheck.setText("重新获取验证码");
+                                    mBtnCheck.setBackgroundResource(R.drawable.btn_check_bg);
+                                }
+                            }));
                         }
                     }
                 });
@@ -130,8 +178,8 @@ public class RegisterActivity extends BaseActivity {
                     //注册
                     MyUser myUser = new MyUser();
                     myUser.setMobilePhoneNumber(iphone);
-                    myUser.setUserName(userName);
-                    myUser.setPassWord(passWord);
+                    myUser.setUsername(userName);
+                    myUser.setPassword(passWord);
                     myUser.setDesc(desc);
                     //myUser.setNumber(iphone);
                     myUser.setSex(isMan);
@@ -143,7 +191,7 @@ public class RegisterActivity extends BaseActivity {
                                 ToastUtils.showShort(RegisterActivity.this, "注册成功");
                                 finish();
                             } else {
-                                ToastUtils.showShort(RegisterActivity.this, "注册失败:" + e.toString());
+                                ToastUtils.showShort(RegisterActivity.this, "注册失败，验证码有误或手机号码有误:" + e.toString());
                             }
                         }
                     });
@@ -160,4 +208,30 @@ public class RegisterActivity extends BaseActivity {
                 break;
         }
     }
+
+    public Observable<Integer> countDown(int time) {
+        if (time < 0) time = 0;
+        final int countTime = time;
+        return Observable.interval(0, 1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<Long, Integer>() {
+                    @Override
+                    public Integer apply(@NonNull Long aLong) throws Exception {
+                        return countTime - aLong.intValue();
+                    }
+                })
+                .take(countTime + 1);
+    }
+
+    /**
+     * 解决注册成功后crash
+     */
+    @Override
+    protected void onDestroy() {
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.dispose();
+        }
+        super.onDestroy();
+    }
+
 }

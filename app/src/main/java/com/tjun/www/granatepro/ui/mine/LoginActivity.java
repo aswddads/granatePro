@@ -84,16 +84,19 @@ public class LoginActivity extends BaseActivity {
                 String userName = mEtUserName.getText().toString().trim();
                 String userPassword = mEtPassword.getText().toString().trim();
 
-                MyUser user = new MyUser();
+                final MyUser user = new MyUser();
 
-                user.setUserName(userName);
-                user.setPassWord(userPassword);
+                user.setUsername(userName);
+                user.setPassword(userPassword);
 
                 user.login(new SaveListener<MyUser>() {
                     @Override
                     public void done(MyUser myUser, BmobException e) {
                         if (e == null) {//登录成功
-
+                            Intent intent = new Intent();
+                            intent.putExtra("username",myUser.getUsername());
+                            intent.putExtra("desc",myUser.getDesc());
+                            setResult(RESULT_OK,intent);
                             finish();
                         } else {
                             ToastUtils.showShort(LoginActivity.this,"用户名或者密码错误");

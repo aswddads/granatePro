@@ -7,18 +7,8 @@ import cn.bmob.v3.BmobUser;
  */
 
 public class MyUser extends BmobUser {
-    private String userName;
     private boolean sex;
     private String desc;
-    private String passWord;
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public boolean isSex() {
         return sex;
@@ -34,13 +24,5 @@ public class MyUser extends BmobUser {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
     }
 }
