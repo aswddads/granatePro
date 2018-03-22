@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:padding="@dimen/dp_10"
+            android:id="@+id/et_update_username"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/view_bg"
+            android:hint="输入用户名"
+            android:textSize="18sp" />
+
+        <TextView
+            android:padding="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="修改用户密码"
+            android:textColor="@color/news_tv_source_color"
+            android:textSize="10sp" />
+
+        <TextView
+            android:paddingLeft="@dimen/dp_10"
+            android:id="@+id/tv_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/view_bg"
+            android:drawableEnd="@drawable/right_arrow"
+            android:gravity="center_vertical"
+            android:text="修改密码"
+            android:textSize="18sp" />
+
+
+        <LinearLayout
+            android:background="@color/view_bg"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="个人说明:"
+                android:textSize="18sp" />
+
+            <EditText
+                android:padding="@dimen/dp_10"
+                android:id="@+id/et_desc"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_weight="8"
+                android:background="@null"
+                android:maxLines="2"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:paddingLeft="@dimen/dp_10"
+            android:id="@+id/tv_out"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/view_bg"
+            android:gravity="center_vertical"
+            android:text="退出登录"
+            android:textSize="18sp" />
+
+
+        <Button
+            android:id="@+id/btn_update"
+            android:layout_width="200dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_40"
+            android:background="@drawable/button_bg"
+            android:text="保存修改"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>

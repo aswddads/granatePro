@@ -14,12 +14,15 @@ import android.widget.TextView;
 
 import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.Constants;
+import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseFragment;
 import com.tjun.www.granatepro.utils.SpUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by tanjun on 2018/3/16.
@@ -28,6 +31,7 @@ import butterknife.OnClick;
 public class MineCenterFragment extends BaseFragment{
 
     private static final int OPEN_REGISTER = 1000;
+    private static final int OPEN_SETTING = 1001;
 
     @BindView(R.id.fl_top_login_parent)
     FrameLayout mFlTopLoginParent;
@@ -81,6 +85,13 @@ public class MineCenterFragment extends BaseFragment{
         if (!SpUtils.getBoolean(getContext(), Constants.IS_LOGIN,false)) {
             mRlUnLogin.setVisibility(View.VISIBLE);
             mRlLogin.setVisibility(View.GONE);
+        } else {
+            mRlUnLogin.setVisibility(View.GONE);
+            mRlLogin.setVisibility(View.VISIBLE);
+            MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+
+            mTvLogin.setText(myUser.getUsername());
+            mTvDes.setText(myUser.getDesc());
         }
     }
 
@@ -103,6 +114,7 @@ public class MineCenterFragment extends BaseFragment{
                 //跳转新闻收藏页面
                 break;
             case R.id.tv_my_settinggs:
+                startActivityForResult(new Intent(getActivity(),SettingActivity.class),OPEN_SETTING);
                 //跳转设置界面
                 break;
 
@@ -132,5 +144,7 @@ public class MineCenterFragment extends BaseFragment{
 
         mTvLogin.setText(data.getStringExtra("username"));
         mTvDes.setText(data.getStringExtra("desc"));
+
+        SpUtils.putBoolean(getContext(),Constants.IS_LOGIN,true);
     }
 }

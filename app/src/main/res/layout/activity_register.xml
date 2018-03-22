@@ -88,8 +88,9 @@
                     android:layout_height="match_parent" />
 
                 <Button
+                    android:textColor="@color/colorPrimary"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/btn_check_bg"
+                    android:background="@drawable/button_bg"
                     android:layout_weight="2"
                     android:text="发送验证码"
                     android:id="@+id/btn_check"
@@ -99,10 +100,11 @@
             </LinearLayout>
 
             <Button
+                android:textColor="@color/colorPrimary"
                 android:id="@+id/btn_register"
                 android:textSize="18sp"
                 android:text="注册"
-                android:background="@drawable/btn_check_bg"
+                android:background="@drawable/button_bg"
                 android:layout_marginTop="30dp"
                 android:layout_gravity="center"
                 android:layout_width="200dp"

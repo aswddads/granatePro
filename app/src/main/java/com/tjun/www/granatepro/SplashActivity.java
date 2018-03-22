@@ -67,10 +67,10 @@ public class SplashActivity extends BaseActivity {
         //必应每日壁纸 来源于 https://www.dujin.org/fenxiang/jiaocheng/3618.html.
         GildUtils.LoadImage(this, "http://api.dujin.org/bing/1920.php", ivAd);
 
-        mCompositeDisposable.add(countDown(3).doOnSubscribe(new Consumer<Disposable>() {
+        mCompositeDisposable.add(countDown(4).doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(@NonNull Disposable disposable) throws Exception {
-                tvSkip.setText("跳过 4");
+                tvSkip.setText("跳过 5");
             }
         }).subscribeWith(new DisposableObserver<Integer>() {
             @Override

@@ -24,6 +24,7 @@
     <EditText
         android:padding="@dimen/dp_10"
         android:textSize="16sp"
+        android:inputType="textPassword"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/edit_bg"
         android:id="@+id/et_password"
