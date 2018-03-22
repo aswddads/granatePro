@@ -18,6 +18,7 @@ import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseFragment;
 import com.tjun.www.granatepro.utils.SpUtils;
+import com.tjun.www.granatepro.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -114,8 +115,12 @@ public class MineCenterFragment extends BaseFragment{
                 //跳转新闻收藏页面
                 break;
             case R.id.tv_my_settinggs:
-                startActivityForResult(new Intent(getActivity(),SettingActivity.class),OPEN_SETTING);
                 //跳转设置界面
+                if (SpUtils.getBoolean(getContext(),Constants.IS_LOGIN,false)) {
+                    startActivityForResult(new Intent(getActivity(),SettingActivity.class),OPEN_SETTING);
+                } else {
+                    ToastUtils.showShort(getContext(),"请先登录");
+                }
                 break;
 
         }
@@ -139,12 +144,27 @@ public class MineCenterFragment extends BaseFragment{
         if (resultCode != Activity.RESULT_OK){
             return;
         }
-        mRlUnLogin.setVisibility(View.GONE);
-        mRlLogin.setVisibility(View.VISIBLE);
+        if (requestCode == OPEN_REGISTER && SpUtils.getBoolean(getContext(),Constants.IS_LOGIN,false)) {
+            mRlUnLogin.setVisibility(View.GONE);
+            mRlLogin.setVisibility(View.VISIBLE);
 
-        mTvLogin.setText(data.getStringExtra("username"));
-        mTvDes.setText(data.getStringExtra("desc"));
+            mTvLogin.setText(data.getStringExtra("username"));
+            mTvDes.setText(data.getStringExtra("desc"));
+        }
 
-        SpUtils.putBoolean(getContext(),Constants.IS_LOGIN,true);
+        else if (requestCode == OPEN_SETTING && !SpUtils.getBoolean(getContext(),Constants.IS_LOGIN,false)) {
+            mRlUnLogin.setVisibility(View.VISIBLE);
+            mRlLogin.setVisibility(View.GONE);
+
+            mTvDes.setText("程序员 Asw.Tan");
+        }
+
+        else if (requestCode == OPEN_SETTING && SpUtils.getBoolean(getContext(),Constants.IS_LOGIN,false)) {
+            mRlUnLogin.setVisibility(View.GONE);
+            mRlLogin.setVisibility(View.VISIBLE);
+
+            mTvLogin.setText(data.getStringExtra("username"));
+            mTvDes.setText(data.getStringExtra("desc"));
+        }
     }
 }

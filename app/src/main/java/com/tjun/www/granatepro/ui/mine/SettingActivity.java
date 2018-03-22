@@ -140,9 +140,15 @@ public class SettingActivity extends BaseActivity {
 
                 break;
             case R.id.tv_out://退出登录
+                BmobUser.logOut();//清除缓存用户对象
+                SpUtils.putBoolean(this,Constants.IS_LOGIN,false);
+                setResult(RESULT_OK);
+                finish();
                 break;
 
-            case R.id.tv_update_password:
+            case R.id.tv_update_password://修改密码
+                startActivity(new Intent(SettingActivity.this,UpdateActivity.class));
+                finish();
                 break;
         }
     }

@@ -68,45 +68,57 @@
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.news.AdvertActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.news.ImageBrowseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.jandan.ReadActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
 
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.jandan.ImageBrowseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-            android:label="登录"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".ui.mine.LoginActivity"
+            android:label="登录"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.User" />
         <activity
-            android:label="注册"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".ui.mine.RegisterActivity"
+            android:label="注册"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.User" />
 
-        <activity android:name=".ui.mine.SettingActivity"
+        <activity
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:name=".ui.mine.SettingActivity"
             android:label="设置"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.User"/>
+            android:theme="@style/AppTheme.User" />
+
+        <!--android:windowSoftInputMode="stateAlwaysHidden|adjustPan"   收起软键盘-->
+        <activity
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:name=".ui.mine.UpdateActivity"
+            android:label="修改密码"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.User" />
     </application>
 
 </manifest>

@@ -15,12 +15,6 @@ import butterknife.BindView;
  */
 
 public class ForgetActivity extends BaseActivity{
-    @BindView(R.id.et_new_password)
-    EditText mEtNewsPassWord;
-    @BindView(R.id.et_again_password)
-    EditText mEtAgainPassWord;
-    @BindView(R.id.et_old_password)
-    EditText mEtOldPassWord;
 
     @Override
     public int getContentLayout() {

@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tjun.www.granatepro.R;
+import com.tjun.www.granatepro.bean.Constants;
 import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
+import com.tjun.www.granatepro.utils.SpUtils;
 import com.tjun.www.granatepro.utils.ToastUtils;
 
 import butterknife.BindInt;
@@ -98,6 +100,9 @@ public class LoginActivity extends BaseActivity {
                             intent.putExtra("desc",myUser.getDesc());
                             setResult(RESULT_OK,intent);
                             finish();
+                            SpUtils.putBoolean(LoginActivity.this, Constants.IS_LOGIN,true);
+                            //保存token
+                            //SpUtils.putString(LoginActivity.this,Constants.BMOB_TOKEN,myUser.getSessionToken());
                         } else {
                             ToastUtils.showShort(LoginActivity.this,"用户名或者密码错误");
                         }
