@@ -86,8 +86,8 @@ public class LoginActivity extends BaseActivity {
 
                 MyUser user = new MyUser();
 
-                user.setUsername(userName);
-                user.setPassword(userPassword);
+                user.setUserName(userName);
+                user.setPassWord(userPassword);
 
                 user.login(new SaveListener<MyUser>() {
                     @Override

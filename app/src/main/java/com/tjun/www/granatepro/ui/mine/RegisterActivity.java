@@ -15,17 +15,13 @@ import com.tjun.www.granatepro.ui.base.BaseActivity;
 import com.tjun.www.granatepro.utils.CountDownTimerUtils;
 import com.tjun.www.granatepro.utils.ToastUtils;
 
-import org.w3c.dom.Text;
-
-import javax.inject.Inject;
-
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
+
+import static cn.bmob.v3.BmobSMS.requestSMSCode;
 
 /**
  * Created by tanjun on 2018/3/20.
@@ -93,12 +89,12 @@ public class RegisterActivity extends BaseActivity {
         String iphone = mEtIphone.getText().toString().trim();
         switch (view.getId()) {
             case R.id.btn_check:
-                cn.bmob.v3.BmobSMS.requestSMSCode(iphone, "注册", new QueryListener<Integer>() {
+               requestSMSCode(iphone, "注册", new QueryListener<Integer>() {
                     @Override
                     public void done(Integer integer, BmobException e) {
                         if (e == null) {
                             checkNum = integer.toString().trim();
-                            ToastUtils.showShort(RegisterActivity.this,"验证码已通过短信发送到您手机上" + checkNum);
+                            ToastUtils.showShort(RegisterActivity.this,"验证码已通过短信发送到您手机上");
                             //传入时间单位为毫秒
                             CountDownTimerUtils utils = new CountDownTimerUtils(mBtnCheck,60 * 1000,1 * 1000);
                         }
@@ -133,12 +129,12 @@ public class RegisterActivity extends BaseActivity {
 
                     //注册
                     MyUser myUser = new MyUser();
-                    myUser.setUsername(userName);
-                    myUser.setPassword(passWord);
-                    myUser.setDesc(desc);
-                    myUser.setNumber(iphone);
-                    myUser.setSex(isMan);
                     myUser.setMobilePhoneNumber(iphone);
+                    myUser.setUserName(userName);
+                    myUser.setPassWord(passWord);
+                    myUser.setDesc(desc);
+                    //myUser.setNumber(iphone);
+                    myUser.setSex(isMan);
 
                     myUser.signOrLogin(userCheckNum, new SaveListener<MyUser>() {
                         @Override

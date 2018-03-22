@@ -8,7 +8,9 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        //为解决bmob冲突
+        classpath 'com.android.tools.build:gradle:2.3.2'
+//        classpath 'com.android.tools.build:gradle:3.0.01'
 //        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
 
         // NOTE: Do not place your application dependencies here; they belong

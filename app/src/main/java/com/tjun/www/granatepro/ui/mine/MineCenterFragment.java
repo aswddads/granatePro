@@ -1,5 +1,7 @@
 package com.tjun.www.granatepro.ui.mine;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +25,8 @@ import butterknife.OnClick;
  */
 
 public class MineCenterFragment extends BaseFragment{
+
+    private static final int OPEN_REGISTER = 1000;
 
     @BindView(R.id.fl_top_login_parent)
     FrameLayout mFlTopLoginParent;
@@ -91,7 +95,7 @@ public class MineCenterFragment extends BaseFragment{
                 toWeb(getResources().getString(R.string.copyright));
                 break;
             case R.id.rl_un_login:
-                startActivity(new Intent(getActivity(),LoginActivity.class));
+                getActivity().startActivityForResult(new Intent(getActivity(),LoginActivity.class),OPEN_REGISTER);
                 //跳转登录界面
                 break;
             case R.id.tv_my_collect:

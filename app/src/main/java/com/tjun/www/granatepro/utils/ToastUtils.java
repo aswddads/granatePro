@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.tjun.www.granatepro.ui.mine.RegisterActivity;
+
 /**
  * Toast统一管理类
  */
@@ -46,11 +48,10 @@ public class ToastUtils {
 
     /**
      * 短时间显示Toast
-     *
-     * @param context
+     *  @param context
      * @param message
      */
-    public static void showShort(Context context, int message) {
+    public static void showShort(Context context, String message) {
         if (isShow)
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
