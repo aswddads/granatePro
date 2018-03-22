@@ -43,6 +43,11 @@ public class SettingActivity extends BaseActivity {
     TextView mTvUpdate;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public int getContentLayout() {
         return R.layout.activity_setting;
     }

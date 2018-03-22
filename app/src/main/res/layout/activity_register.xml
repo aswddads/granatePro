@@ -7,11 +7,21 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:padding="@dimen/dp_10"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/view_bg"
+                android:background="@color/colorPrimary"
+                android:padding="10dp"
+                android:text="注 册"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40" />
+
             <EditText
                 android:padding="@dimen/dp_10"
                 android:textSize="16sp"
@@ -83,6 +93,7 @@
                     android:background="@drawable/edit_bg"
                     android:layout_weight="5"
                     android:hint="输入验证码"
+                    android:textSize="16sp"
                     android:id="@+id/et_check_number"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -102,7 +113,7 @@
             <Button
                 android:textColor="@color/colorPrimary"
                 android:id="@+id/btn_register"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:text="注册"
                 android:background="@drawable/button_bg"
                 android:layout_marginTop="30dp"

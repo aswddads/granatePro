@@ -83,7 +83,7 @@
             android:id="@+id/tv_name"
             android:gravity="center"
             android:text="个人说明:"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
@@ -100,16 +100,14 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/g_1"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"/>
+
 
     <TextView
+        android:layout_marginTop="10dp"
         android:background="@color/view_bg"
         android:textColor="@android:color/black"
         android:drawableEnd="@drawable/right_arrow"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:gravity="center_vertical"
         android:text="我的新闻"
         android:layout_marginLeft="5dp"
@@ -117,15 +115,12 @@
         android:id="@+id/tv_my_collect"
         android:layout_width="match_parent"
         android:layout_height="60dp" />
-    <View
-        android:id="@+id/g_2"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"/>
     <TextView
+        android:layout_marginTop="10dp"
         android:background="@color/view_bg"
         android:textColor="@android:color/black"
         android:drawableEnd="@drawable/right_arrow"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:gravity="center_vertical"
         android:text="个人设置"
         android:layout_marginLeft="5dp"
