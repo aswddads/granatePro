@@ -1,9 +1,8 @@
 package com.tjun.www.granatepro.ui.mine;
 
-import android.app.ActionBar;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +13,7 @@ import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
+import com.tjun.www.granatepro.utils.DialogHelper;
 import com.tjun.www.granatepro.utils.ToastUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -42,6 +42,8 @@ public class RegisterActivity extends BaseActivity {
     private boolean isMan = true;
 
     private String checkNum;
+
+    private Dialog dialog = null;
 
     @BindView(R.id.et_username)
     EditText mEtUserName;
@@ -76,6 +78,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialog = DialogHelper.getMineLodingDiaLog(this,"注册中...");
     }
 
     @Override
@@ -107,7 +110,7 @@ public class RegisterActivity extends BaseActivity {
         String iphone = mEtIphone.getText().toString().trim();
         switch (view.getId()) {
             case R.id.btn_check:
-               requestSMSCode(iphone, "注册", new QueryListener<Integer>() {
+               requestSMSCode(iphone, "新鲜事", new QueryListener<Integer>() {
                     @Override
                     public void done(Integer integer, BmobException e) {
                         if (e == null) {
@@ -142,7 +145,7 @@ public class RegisterActivity extends BaseActivity {
                                 public void onComplete() {
                                     mBtnCheck.setClickable(true);
                                     mBtnCheck.setText("重新获取验证码");
-                                    mBtnCheck.setBackgroundResource(R.drawable.btn_check_bg);
+                                    mBtnCheck.setBackgroundResource(R.drawable.button_bg);
                                 }
                             }));
                         }
@@ -150,15 +153,17 @@ public class RegisterActivity extends BaseActivity {
                 });
                 break;
             case R.id.btn_register:
+                dialog.show();
+
                 String userName = mEtUserName.getText().toString().trim();
                 String passWord = mEtPassword.getText().toString().trim();
                 String desc = mEtDes.getText().toString().trim();
                 String userCheckNum = mEtCheckNumber.getText().toString().trim();
 
                 if (!TextUtils.isEmpty(userName)
-                        && !TextUtils.isEmpty(passWord)
-                        && !TextUtils.isEmpty(iphone)
-                        && !TextUtils.isEmpty(userCheckNum)) {
+                        & !TextUtils.isEmpty(passWord)
+                        & !TextUtils.isEmpty(iphone)
+                        & !TextUtils.isEmpty(userCheckNum)) {
 
                     mRgSex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
@@ -189,20 +194,26 @@ public class RegisterActivity extends BaseActivity {
                         public void done(MyUser myUser, BmobException e) {
                             if (e == null) {
                                 ToastUtils.showShort(RegisterActivity.this, "注册成功");
+                                dialog.hide();
                                 finish();
                             } else {
+                                dialog.hide();
                                 ToastUtils.showShort(RegisterActivity.this, "注册失败，验证码有误或手机号码有误:" + e.toString());
                             }
                         }
                     });
 
                 } else if (TextUtils.isEmpty(userName)) {
+                    dialog.hide();
                     ToastUtils.showShort(this, "用户名不能为空");
                 } else if (TextUtils.isEmpty(passWord)) {
+                    dialog.hide();
                     ToastUtils.showShort(this, "用户密码不能为空");
                 } else if (TextUtils.isEmpty(iphone)) {
+                    dialog.hide();
                     ToastUtils.showShort(this, "请输入手机号码进行注册");
                 } else if (TextUtils.isEmpty(userCheckNum)) {
+                    dialog.hide();
                     ToastUtils.showShort(this, "请输入验证码进行用户手机号验证");
                 }
                 break;

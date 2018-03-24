@@ -1,10 +1,13 @@
 package com.tjun.www.granatepro.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+
+import static cn.bmob.v3.Bmob.getApplicationContext;
 
 /**
  * NetWork Utils
@@ -12,26 +15,26 @@ import android.text.TextUtils;
  * <strong>Attentions</strong>
  * <li>You should add <strong>android.permission.ACCESS_NETWORK_STATE</strong> in manifest, to get network status.</li>
  * </ul>
- * 
+ *
  * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2014-11-03
  */
 public class NetUtil {
 
-    public static final String NETWORK_TYPE_WIFI       = "wifi";
-    public static final String NETWORK_TYPE_3G         = "eg";
-    public static final String NETWORK_TYPE_2G         = "2g";
-    public static final String NETWORK_TYPE_WAP        = "wap";
-    public static final String NETWORK_TYPE_UNKNOWN    = "unknown";
+    public static final String NETWORK_TYPE_WIFI = "wifi";
+    public static final String NETWORK_TYPE_3G = "eg";
+    public static final String NETWORK_TYPE_2G = "2g";
+    public static final String NETWORK_TYPE_WAP = "wap";
+    public static final String NETWORK_TYPE_UNKNOWN = "unknown";
     public static final String NETWORK_TYPE_DISCONNECT = "disconnect";
 
     /**
      * Get network type
-     * 
+     *
      * @param context
      * @return
      */
     public static int getNetworkType(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager)context
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
         return networkInfo == null ? -1 : networkInfo.getType();
@@ -39,12 +42,12 @@ public class NetUtil {
 
     /**
      * Get network type name
-     * 
+     *
      * @param context
      * @return
      */
     public static String getNetworkTypeName(Context context) {
-        ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo;
         String type = NETWORK_TYPE_DISCONNECT;
         if (manager == null || (networkInfo = manager.getActiveNetworkInfo()) == null) {
@@ -68,12 +71,12 @@ public class NetUtil {
 
     /**
      * Whether is fast mobile network
-     * 
+     *
      * @param context
      * @return
      */
     private static boolean isFastMobileNetwork(Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         if (telephonyManager == null) {
             return false;
         }
@@ -118,17 +121,31 @@ public class NetUtil {
 
     /**
      * 网络是否可用
+     *
      * @param context
      * @return
      */
     public static boolean isNetworkAvailable(Context context) {
-        try {
-            ConnectivityManager cm =
-                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo info = cm.getActiveNetworkInfo();
-            return null != info && info.isConnected();
-        } catch (Exception e) {
-            e.printStackTrace();
+        Context mContext = context.getApplicationContext();
+        // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
+        ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager == null) {
+            return false;
+        } else {
+            // 获取NetworkInfo对象
+            NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
+
+            if (networkInfo != null && networkInfo.length > 0) {
+                for (int i = 0; i < networkInfo.length; i++) {
+                    System.out.println(i + "===状态===" + networkInfo[i].getState());
+                    System.out.println(i + "===类型===" + networkInfo[i].getTypeName());
+                    // 判断当前网络状态是否为连接状态
+                    if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }

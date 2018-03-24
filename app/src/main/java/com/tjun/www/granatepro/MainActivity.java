@@ -10,7 +10,6 @@ import com.tjun.www.granatepro.ui.base.BaseActivity;
 import com.tjun.www.granatepro.ui.base.SupportFragment;
 import com.tjun.www.granatepro.ui.jandan.JanDanFragment;
 import com.tjun.www.granatepro.ui.mine.MineCenterFragment;
-import com.tjun.www.granatepro.ui.mine.PersonalFragment;
 import com.tjun.www.granatepro.ui.news.NewsFragment;
 import com.tjun.www.granatepro.ui.video.VideoFragment;
 import com.tjun.www.granatepro.utils.StatusBarUtil;
@@ -67,7 +66,7 @@ public class MainActivity extends BaseActivity {
             mFragments[0] = findFragment(NewsFragment.class);
             mFragments[1] = findFragment(VideoFragment.class);
             mFragments[2] = findFragment(JanDanFragment.class);
-            mFragments[3] = findFragment(PersonalFragment.class);
+            mFragments[3] = findFragment(MineCenterFragment.class);
         }
 
         mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_news, "新闻"))

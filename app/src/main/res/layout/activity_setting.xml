@@ -19,10 +19,11 @@
             android:layout_height="45dp" />
 
         <EditText
+            android:layout_marginTop="5dp"
             android:padding="@dimen/dp_10"
             android:id="@+id/et_update_username"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:background="@color/view_bg"
             android:hint="输入用户名"
             android:textSize="18sp" />
@@ -33,29 +34,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="3dp"
             android:text="修改用户密码"
             android:textColor="@color/news_tv_source_color"
             android:textSize="10sp" />
 
         <TextView
-            android:paddingLeft="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
             android:id="@+id/tv_update_password"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:background="@color/view_bg"
             android:drawableEnd="@drawable/right_arrow"
             android:gravity="center_vertical"
             android:text="修改密码"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
 
         <LinearLayout
+            android:layout_marginTop="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
             android:background="@color/view_bg"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -63,12 +65,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:text="个人说明:"
                 android:textSize="18sp" />
 
             <EditText
-                android:padding="@dimen/dp_10"
                 android:id="@+id/et_desc"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -81,10 +82,10 @@
         </LinearLayout>
 
         <TextView
-            android:paddingLeft="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
             android:id="@+id/tv_out"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@color/view_bg"
             android:gravity="center_vertical"

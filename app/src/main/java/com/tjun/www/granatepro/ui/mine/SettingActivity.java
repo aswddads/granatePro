@@ -1,7 +1,9 @@
 package com.tjun.www.granatepro.ui.mine;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,7 @@ import com.tjun.www.granatepro.bean.Constants;
 import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
+import com.tjun.www.granatepro.utils.DialogHelper;
 import com.tjun.www.granatepro.utils.SpUtils;
 import com.tjun.www.granatepro.utils.ToastUtils;
 
@@ -26,6 +29,7 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 
 public class SettingActivity extends BaseActivity {
+    private Dialog dialog = null;
 
     @BindView(R.id.et_update_username)
     EditText mEtUpdateUserName;
@@ -45,6 +49,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialog = DialogHelper.getMineLodingDiaLog(this,"修改中...");
     }
 
     @Override
@@ -81,6 +86,7 @@ public class SettingActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_update:
                 //获取当前用户
+                dialog.show();
                 final MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
 
                 String username = mEtUpdateUserName.getText().toString().trim();
@@ -113,11 +119,11 @@ public class SettingActivity extends BaseActivity {
 //                    }
 //                }
 
-                if (username != null && username != myUser.getUsername()) {
+                if (!TextUtils.isEmpty(username) && !username.equals(myUser.getUsername())) {
                     myUser.setUsername(username);
                 }
 
-                if (desc != null && desc != myUser.getDesc()) {
+                if (!TextUtils.isEmpty(desc) && !desc.equals(myUser.getDesc())) {
                     myUser.setDesc(desc);
                 }
                 myUser.update(new UpdateListener() {
@@ -125,13 +131,15 @@ public class SettingActivity extends BaseActivity {
                     public void done(BmobException e) {
                         if (e == null) {
                             //  回调
-                            ToastUtils.showShort(SettingActivity.this, "修改成功");
                             Intent intent = new Intent();
                             intent.putExtra("username", myUser.getUsername());
                             intent.putExtra("desc", myUser.getDesc());
                             setResult(RESULT_OK, intent);
+                            dialog.hide();
+                            ToastUtils.showShort(SettingActivity.this, "修改成功");
                             finish();
                         } else {
+                            dialog.hide();
                             ToastUtils.showShort(SettingActivity.this, "修改失败" + e.toString());
                         }
                     }

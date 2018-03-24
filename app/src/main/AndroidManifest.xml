@@ -47,7 +47,7 @@
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoBar"
+            android:theme="@style/AppTheme.Launcher"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -93,29 +93,35 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".ui.mine.LoginActivity"
             android:label="登录"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.User" />
+            android:theme="@style/AppTheme.User"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".ui.mine.RegisterActivity"
             android:label="注册"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.User" />
+            android:theme="@style/AppTheme.User"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".ui.mine.SettingActivity"
             android:label="设置"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.User" />
+            android:theme="@style/AppTheme.User"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <!--android:windowSoftInputMode="stateAlwaysHidden|adjustPan"   收起软键盘-->
         <activity
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:name=".ui.mine.UpdateActivity"
+            android:label="修改密码"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.User"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".ui.mine.ForgetActivity"
             android:label="修改密码"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.User" />

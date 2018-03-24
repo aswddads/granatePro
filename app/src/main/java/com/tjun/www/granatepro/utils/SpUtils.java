@@ -3,6 +3,8 @@ package com.tjun.www.granatepro.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.tjun.www.granatepro.bean.Constants;
+
 /**
  * Created by tanjun on 2018/3/15.
  */
@@ -60,6 +62,15 @@ public class SpUtils {
 
     public static int getInt(Context context,String key,int defValue){
         return getSp(context).getInt(key,defValue);
+    }
+
+    /**
+     * 删除指定数据
+     * @param context
+     * @param key
+     */
+    public static void delete(Context context,String key) {
+        getSp(context).edit().remove(key).apply();
     }
 
 }

@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:paddingLeft="@dimen/dp_10"
                     android:background="@drawable/edit_bg"
                     android:layout_weight="5"
                     android:hint="输入验证码"
@@ -99,6 +100,7 @@
                     android:layout_height="match_parent" />
 
                 <Button
+                    android:layout_marginRight="@dimen/dp_10"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/button_bg"

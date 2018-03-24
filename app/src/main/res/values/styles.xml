@@ -30,6 +30,10 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="AppTheme.Launcher" parent="AppTheme.NoBar">
+        <item name="android:windowBackground">@color/view_bg</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.User" parent="Theme.AppCompat.Light.NoActionBar">
