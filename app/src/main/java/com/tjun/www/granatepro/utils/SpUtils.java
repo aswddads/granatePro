@@ -2,8 +2,16 @@ package com.tjun.www.granatepro.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.Base64;
+import android.widget.ImageView;
 
 import com.tjun.www.granatepro.bean.Constants;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by tanjun on 2018/3/15.
@@ -73,4 +81,27 @@ public class SpUtils {
         getSp(context).edit().remove(key).apply();
     }
 
+
+    public static void putImageToSp(Context context, ImageView imageView) {
+        //保存
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        //bitmap压缩成字节数组输出
+        ByteArrayOutputStream byStream  = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,80,byStream);
+        //利用base64将字节数组输出流转化为String
+        byte[] byteArray = byStream.toByteArray();
+        String imageString = new String(Base64.encodeToString(byteArray,Base64.DEFAULT));
+        SpUtils.putString(context,Constants.IMAGE_TITLE,imageString);
+    }
+
+    public static void getImageFromSp(Context context, ImageView imageView){
+        String imageString = SpUtils.getString(context,Constants.IMAGE_TITLE,"");
+        if (!imageString.equals("")) {
+            byte[] byteArray = Base64.decode(imageString,Base64.DEFAULT);
+            ByteArrayInputStream byInputStream = new ByteArrayInputStream(byteArray);
+            Bitmap bitmap = BitmapFactory.decodeStream(byInputStream);
+            imageView.setImageBitmap(bitmap);
+        }
+    }
 }

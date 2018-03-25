@@ -13,6 +13,9 @@ public class Constants {
     public static final String IS_KEEP_PASS = "is_keep_pass";
     public static final String USER_NAME = "user_name";
     public static final String PASS_WORD = "pass_word";
+    public static final String IMAGE_TITLE = "image_title";
+
+    public static final String PHOTO_IMAGE_FILE_NAME = "fileImg,jpg";
 
 
     //864678036850608 如果数据太少，请自行抓包凤凰新闻 获取数据时的参数中的 uid 更换

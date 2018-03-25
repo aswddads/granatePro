@@ -3,7 +3,6 @@ package com.tjun.www.granatepro.ui.mine;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.print.PageRange;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -101,7 +100,7 @@ public class ForgetActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.btn_check, R.id.btn_register})
+    @OnClick({R.id.btn_check, R.id.btn_register,R.id.tv_back})
     public void onViewClicked(View view) {
         String iphone = mEtIphone.getText().toString().trim();
         switch (view.getId()) {
@@ -147,6 +146,10 @@ public class ForgetActivity extends BaseActivity {
                 }
                 break;
 
+            case R.id.tv_back:
+                finish();
+                break;
+
             case R.id.btn_register:
                 dialog.show();
 
@@ -167,21 +170,21 @@ public class ForgetActivity extends BaseActivity {
                                         SpUtils.putBoolean(ForgetActivity.this,Constants.IS_LOGIN,false);
                                         SpUtils.putString(ForgetActivity.this,Constants.PASS_WORD,"");
                                         startActivity(new Intent(ForgetActivity.this,LoginActivity.class));
-                                        dialog.hide();
+                                        dialog.dismiss();
                                         finish();
                                     } else {
-                                        dialog.hide();
+                                        dialog.dismiss();
                                         finish();
                                     }
                                 } else {
-                                    dialog.hide();
+                                    dialog.dismiss();
                                     ToastUtils.showShort(ForgetActivity.this, "重置密码失败");
                                 }
                             }
                         });
                     }
                 } else {
-                    dialog.hide();
+                    dialog.dismiss();
                     ToastUtils.showShort(ForgetActivity.this, "输入框不能为空");
                 }
                 break;

@@ -91,7 +91,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_register, R.id.tv_forget, R.id.btn_login})
+    @OnClick({R.id.tv_register, R.id.tv_forget, R.id.btn_login,R.id.tv_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_register:
@@ -100,8 +100,11 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_forget://忘记密码应该走的逻辑,重置密码
                 startActivity(new Intent(LoginActivity.this, ForgetActivity.class));
                 break;
+            case R.id.tv_back:
+                finish();
+                break;
             case R.id.btn_login:
-                if (!NetUtil.isMobileConnected(this) || !NetUtil.isWifiConnected(this)) {
+                if (!NetUtil.isMobileConnected(this) && !NetUtil.isWifiConnected(this)) {
                     ToastUtils.showShort(this, "当前无网络...");
                 } else {
                     dialog.show();
@@ -121,13 +124,13 @@ public class LoginActivity extends BaseActivity {
                                 intent.putExtra("username", myUser.getUsername());
                                 intent.putExtra("desc", myUser.getDesc());
                                 setResult(RESULT_OK, intent);
-                                dialog.hide();
+                                dialog.dismiss();
                                 finish();
                                 SpUtils.putBoolean(LoginActivity.this, Constants.IS_LOGIN, true);
                                 //保存token
                                 SpUtils.putString(LoginActivity.this, Constants.BMOB_TOKEN, myUser.getSessionToken());
                             } else {
-                                dialog.hide();
+                                dialog.dismiss();
                                 ToastUtils.showShort(LoginActivity.this, "用户名或者密码错误");
                             }
                         }

@@ -105,7 +105,7 @@ public class RegisterActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_check, R.id.btn_register})
+    @OnClick({R.id.btn_check, R.id.btn_register,R.id.tv_back})
     public void onViewClicked(View view) {
         String iphone = mEtIphone.getText().toString().trim();
         switch (view.getId()) {
@@ -152,6 +152,11 @@ public class RegisterActivity extends BaseActivity {
                     }
                 });
                 break;
+
+            case R.id.tv_back:
+                finish();
+                break;
+
             case R.id.btn_register:
                 dialog.show();
 
@@ -194,26 +199,26 @@ public class RegisterActivity extends BaseActivity {
                         public void done(MyUser myUser, BmobException e) {
                             if (e == null) {
                                 ToastUtils.showShort(RegisterActivity.this, "注册成功");
-                                dialog.hide();
+                                dialog.dismiss();
                                 finish();
                             } else {
-                                dialog.hide();
+                                dialog.dismiss();
                                 ToastUtils.showShort(RegisterActivity.this, "注册失败，验证码有误或手机号码有误:" + e.toString());
                             }
                         }
                     });
 
                 } else if (TextUtils.isEmpty(userName)) {
-                    dialog.hide();
+                    dialog.dismiss();
                     ToastUtils.showShort(this, "用户名不能为空");
                 } else if (TextUtils.isEmpty(passWord)) {
-                    dialog.hide();
+                    dialog.dismiss();
                     ToastUtils.showShort(this, "用户密码不能为空");
                 } else if (TextUtils.isEmpty(iphone)) {
-                    dialog.hide();
+                    dialog.dismiss();
                     ToastUtils.showShort(this, "请输入手机号码进行注册");
                 } else if (TextUtils.isEmpty(userCheckNum)) {
-                    dialog.hide();
+                    dialog.dismiss();
                     ToastUtils.showShort(this, "请输入验证码进行用户手机号验证");
                 }
                 break;

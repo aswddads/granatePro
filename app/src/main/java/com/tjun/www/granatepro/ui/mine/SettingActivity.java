@@ -81,7 +81,7 @@ public class SettingActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_update, R.id.tv_out,R.id.tv_update_password})
+    @OnClick({R.id.btn_update, R.id.tv_out,R.id.tv_update_password,R.id.tv_back})
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.btn_update:
@@ -135,18 +135,22 @@ public class SettingActivity extends BaseActivity {
                             intent.putExtra("username", myUser.getUsername());
                             intent.putExtra("desc", myUser.getDesc());
                             setResult(RESULT_OK, intent);
-                            dialog.hide();
+                            dialog.dismiss();
                             ToastUtils.showShort(SettingActivity.this, "修改成功");
                             finish();
                         } else {
-                            dialog.hide();
+                            dialog.dismiss();
                             ToastUtils.showShort(SettingActivity.this, "修改失败" + e.toString());
                         }
                     }
                 });
 
-
                 break;
+
+            case R.id.tv_back:
+                finish();
+                break;
+
             case R.id.tv_out://退出登录
                 BmobUser.logOut();//清除缓存用户对象
                 SpUtils.putBoolean(this,Constants.IS_LOGIN,false);

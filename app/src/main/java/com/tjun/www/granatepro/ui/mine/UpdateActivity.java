@@ -76,7 +76,7 @@ public class UpdateActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_update,R.id.tv_msg_password})
+    @OnClick({R.id.btn_update,R.id.tv_msg_password,R.id.tv_back})
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.btn_update:
@@ -96,11 +96,11 @@ public class UpdateActivity extends BaseActivity {
                             public void done(BmobException e) {
                                 if (e == null) {
                                     ToastUtils.showShort(UpdateActivity.this,"修改密码成功");
-                                    dialog.hide();
+                                    dialog.dismiss();
                                     finish();
                                 } else {//旧密码方式不使用  跳转到短信验证方式
 //                                    ToastUtils.showShort(UpdateActivity.this,"密码修改失败"+e.getMessage());
-                                    dialog.hide();
+                                    dialog.dismiss();
                                     ToastUtils.showShort(UpdateActivity.this,"token失效，请使用短信验证方式修改密码");
                                     Intent intent = new Intent(UpdateActivity.this,ForgetActivity.class);
                                     intent.putExtra("this","update");
@@ -109,11 +109,11 @@ public class UpdateActivity extends BaseActivity {
                             }
                         });
                     } else {
-                        dialog.hide();
+                        dialog.dismiss();
                         ToastUtils.showShort(UpdateActivity.this,"新密码不一致");
                     }
                 } else {
-                    dialog.hide();
+                    dialog.dismiss();
                     ToastUtils.showShort(UpdateActivity.this,"输入框不能为空");
                 }
                 break;
@@ -121,6 +121,10 @@ public class UpdateActivity extends BaseActivity {
                 Intent intent = new Intent(UpdateActivity.this,ForgetActivity.class);
                 intent.putExtra("this","update");
                 startActivity(intent);
+                break;
+
+            case R.id.tv_back:
+                finish();
                 break;
         }
     }
