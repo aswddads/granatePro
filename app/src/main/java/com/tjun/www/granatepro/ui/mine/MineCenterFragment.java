@@ -127,7 +127,7 @@ public class MineCenterFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!SpUtils.getBoolean(getActivity(),Constants.IS_LOGIN,false)) {
+        if (!SpUtils.getBoolean(getActivity(), Constants.IS_LOGIN, false)) {
             if (mView.getVisibility() == View.GONE) {
                 mView.setVisibility(View.VISIBLE);
             }
@@ -164,14 +164,14 @@ public class MineCenterFragment extends BaseFragment {
         }
     }
 
-    private Bitmap getBitmapFromString(MyUser myUser){
+    private Bitmap getBitmapFromString(MyUser myUser) {
 
         String imageString = myUser.getHeadImg();
         if (imageString != null) {
-            byte[] byteArray = Base64.decode(imageString,Base64.DEFAULT);
+            byte[] byteArray = Base64.decode(imageString, Base64.DEFAULT);
             ByteArrayInputStream byInputStream = new ByteArrayInputStream(byteArray);
             Bitmap bitmap = BitmapFactory.decodeStream(byInputStream);
-           // imageView.setImageBitmap(bitmap);
+            // imageView.setImageBitmap(bitmap);
             return bitmap;
         } else {
             return null;
@@ -179,9 +179,9 @@ public class MineCenterFragment extends BaseFragment {
 
     }
 
-    private Bitmap getBitmapFromString(String imgString){
+    private Bitmap getBitmapFromString(String imgString) {
         if (imgString != null) {
-            byte[] byteArray = Base64.decode(imgString,Base64.DEFAULT);
+            byte[] byteArray = Base64.decode(imgString, Base64.DEFAULT);
             ByteArrayInputStream byInputStream = new ByteArrayInputStream(byteArray);
             Bitmap bitmap = BitmapFactory.decodeStream(byInputStream);
             // imageView.setImageBitmap(bitmap);
@@ -245,7 +245,7 @@ public class MineCenterFragment extends BaseFragment {
                             imageUri = Uri.fromFile(fileUri);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                                 //通过FileProvider创建一个content类型的Uri
-                                imageUri = FileProvider.getUriForFile(getContext(),  "com.tjun.www.granatepro.fileprovider", fileUri);
+                                imageUri = FileProvider.getUriForFile(getContext(), "com.tjun.www.granatepro.fileprovider", fileUri);
                             PhotoUtils.toCamera(MineCenterFragment.this, imageUri, CAMERA_REQUEST_CODE);
                         } else {
                             ToastUtils.showShort(getContext(), "设备没有SD卡！");
@@ -268,7 +268,7 @@ public class MineCenterFragment extends BaseFragment {
     }
 
     @OnClick({R.id.rl_un_login, R.id.tv_des, R.id.tv_my_collect, R.id.tv_my_settinggs, R.id.copy_right, R.id.circleImageView
-    ,R.id.tv_change_background})
+            , R.id.tv_change_background})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.copy_right:
@@ -279,6 +279,11 @@ public class MineCenterFragment extends BaseFragment {
                 //跳转登录界面
                 break;
             case R.id.tv_my_collect:
+                if (!SpUtils.getBoolean(getActivity(),Constants.IS_LOGIN,false)) {
+                    ToastUtils.showShort(getActivity(),"请先登录");
+                } else {
+                    startActivity(new Intent(getActivity(),MyCollectingActivity.class));
+                }
                 //跳转新闻收藏页面
                 break;
             case R.id.tv_my_settinggs:
@@ -291,12 +296,17 @@ public class MineCenterFragment extends BaseFragment {
                 break;
 
             case R.id.circleImageView:// 用户头像   true
-                SpUtils.putBoolean(getActivity(),Constants.IS_HEAD_IMG,true);
+                SpUtils.putBoolean(getActivity(), Constants.IS_HEAD_IMG, true);
                 dialog.show();
                 break;
             case R.id.tv_change_background://切换背景  false
-                SpUtils.putBoolean(getActivity(),Constants.IS_HEAD_IMG,false);
-                dialog.show();
+                if (!SpUtils.getBoolean(getActivity(), Constants.IS_LOGIN, false)) {
+                    ToastUtils.showShort(getActivity(),"请先登录");
+                } else {
+                    SpUtils.putBoolean(getActivity(), Constants.IS_HEAD_IMG, false);
+                    dialog.show();
+                }
+
                 break;
         }
     }
@@ -365,13 +375,17 @@ public class MineCenterFragment extends BaseFragment {
 
                 mTvLogin.setText(data.getStringExtra("username"));
                 mTvDes.setText(data.getStringExtra("desc"));
-                if (data.getStringExtra("img") != null){
+                if (data.getStringExtra("img") != null) {
                     mCircleImageView.setImageBitmap(getBitmapFromString(data.getStringExtra("img")));
+                } else {
+                    mCircleImageView.setImageResource(R.drawable.ic_default);
                 }
 
                 Bitmap bitmap = getBitmapFromString(data.getStringExtra("backImg"));
                 if (bitmap != null) {
                     mllLogin.setBackground(new BitmapDrawable(bitmap));
+                } else {
+                    mllLogin.setBackgroundResource(R.drawable.ic_default);
                 }
             } else if (requestCode == OPEN_SETTING && !SpUtils.getBoolean(getContext(), Constants.IS_LOGIN, false)) {
                 mRlUnLogin.setVisibility(View.VISIBLE);
@@ -386,7 +400,7 @@ public class MineCenterFragment extends BaseFragment {
                 mTvDes.setText(data.getStringExtra("desc"));
             } else if (requestCode == CAMERA_REQUEST_CODE) {
                 cropImageUri = Uri.fromFile(fileCropUri);
-                if (SpUtils.getBoolean(getActivity(),Constants.IS_HEAD_IMG,false)){
+                if (SpUtils.getBoolean(getActivity(), Constants.IS_HEAD_IMG, false)) {
                     PhotoUtils.cropImageUri(MineCenterFragment.this, imageUri, cropImageUri, 1, 1,
                             150, 150, RESULT_REQUEST_CODE);
                 } else {
@@ -399,8 +413,8 @@ public class MineCenterFragment extends BaseFragment {
                     cropImageUri = Uri.fromFile(fileCropUri);
                     Uri newUri = Uri.parse(PhotoUtils.getPath(getActivity(), data.getData()));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                        newUri = FileProvider.getUriForFile(getActivity(),  "com.tjun.www.granatepro.fileprovider", new File(newUri.getPath()));
-                    if (SpUtils.getBoolean(getActivity(),Constants.IS_HEAD_IMG,false)) {
+                        newUri = FileProvider.getUriForFile(getActivity(), "com.tjun.www.granatepro.fileprovider", new File(newUri.getPath()));
+                    if (SpUtils.getBoolean(getActivity(), Constants.IS_HEAD_IMG, false)) {
                         PhotoUtils.cropImageUri(MineCenterFragment.this, newUri, cropImageUri, 1, 1,
                                 150, 150, RESULT_REQUEST_CODE);
                     } else {
@@ -418,7 +432,7 @@ public class MineCenterFragment extends BaseFragment {
                 //有可能取消
                 if (bitmap != null) {
 
-                    if (SpUtils.getBoolean(getActivity(),Constants.IS_HEAD_IMG,false)){
+                    if (SpUtils.getBoolean(getActivity(), Constants.IS_HEAD_IMG, false)) {
                         showImages(bitmap);
                         //添加头像信息数据到数据库
 
@@ -430,10 +444,10 @@ public class MineCenterFragment extends BaseFragment {
                         myUser.update(objectId, new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
-                                if (e == null){
-                                   // ToastUtils.showShort(getActivity(),"头像信息同步成功");
+                                if (e == null) {
+                                    // ToastUtils.showShort(getActivity(),"头像信息同步成功");
                                 } else {
-                                    ToastUtils.showShort(getActivity(),"头像信息同步到远端失败");
+                                    ToastUtils.showShort(getActivity(), "头像信息同步到远端失败");
                                 }
                             }
                         });
@@ -446,10 +460,10 @@ public class MineCenterFragment extends BaseFragment {
                         myUser.update(objectId, new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
-                                if (e == null){
-                                   // ToastUtils.showShort(getActivity(),"背景信息同步成功");
+                                if (e == null) {
+                                    // ToastUtils.showShort(getActivity(),"背景信息同步成功");
                                 } else {
-                                    ToastUtils.showShort(getActivity(),"背景信息同步到远端失败");
+                                    ToastUtils.showShort(getActivity(), "背景信息同步到远端失败");
                                 }
                             }
                         });
@@ -461,16 +475,17 @@ public class MineCenterFragment extends BaseFragment {
 
     /**
      * 拿到bitmap压缩为String
+     *
      * @param bitmap
      * @return
      */
     private String getImgString(Bitmap bitmap) {
         //bitmap压缩成字节数组输出
-        ByteArrayOutputStream byStream  = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,80,byStream);
+        ByteArrayOutputStream byStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byStream);
         //利用base64将字节数组输出流转化为String
         byte[] byteArray = byStream.toByteArray();
-        String imageString = new String(Base64.encodeToString(byteArray,Base64.DEFAULT));
+        String imageString = new String(Base64.encodeToString(byteArray, Base64.DEFAULT));
         return imageString;
     }
 
