@@ -4,12 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -29,11 +31,17 @@ import com.tjun.www.granatepro.utils.SpUtils;
 import com.tjun.www.granatepro.utils.ToastUtils;
 import com.tjun.www.granatepro.widget.CustomDialog;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -131,6 +139,37 @@ public class MineCenterFragment extends BaseFragment {
             mTvLogin.setText(myUser.getUsername());
             mTvDes.setText(myUser.getDesc());
             //SpUtils.getImageFromSp(getActivity(),mCircleImageView);
+            if (getBitmapFromString(myUser) != null && myUser.getHeadImg() != null) {
+                mCircleImageView.setImageBitmap(getBitmapFromString(myUser));
+                //mCircleImageView.setImageDrawable(R.drawable.ic_default);
+            }
+        }
+    }
+
+    private Bitmap getBitmapFromString(MyUser myUser){
+
+        String imageString = myUser.getHeadImg();
+        if (imageString != null) {
+            byte[] byteArray = Base64.decode(imageString,Base64.DEFAULT);
+            ByteArrayInputStream byInputStream = new ByteArrayInputStream(byteArray);
+            Bitmap bitmap = BitmapFactory.decodeStream(byInputStream);
+           // imageView.setImageBitmap(bitmap);
+            return bitmap;
+        } else {
+            return null;
+        }
+
+    }
+
+    private Bitmap getBitmapFromString(String imgString){
+        if (imgString != null) {
+            byte[] byteArray = Base64.decode(imgString,Base64.DEFAULT);
+            ByteArrayInputStream byInputStream = new ByteArrayInputStream(byteArray);
+            Bitmap bitmap = BitmapFactory.decodeStream(byInputStream);
+            // imageView.setImageBitmap(bitmap);
+            return bitmap;
+        } else {
+            return null;
         }
     }
 
@@ -300,6 +339,7 @@ public class MineCenterFragment extends BaseFragment {
 
                 mTvLogin.setText(data.getStringExtra("username"));
                 mTvDes.setText(data.getStringExtra("desc"));
+                mCircleImageView.setImageBitmap(getBitmapFromString(data.getStringExtra("img")));
             } else if (requestCode == OPEN_SETTING && !SpUtils.getBoolean(getContext(), Constants.IS_LOGIN, false)) {
                 mRlUnLogin.setVisibility(View.VISIBLE);
                 mRlLogin.setVisibility(View.GONE);
@@ -333,9 +373,43 @@ public class MineCenterFragment extends BaseFragment {
                 //有可能取消
                 if (bitmap != null) {
                     showImages(bitmap);
+                    SpUtils.putImageToSp(getActivity(), mCircleImageView);
+
+                    //添加头像信息数据到数据库
+
+                    MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+                    myUser.setHeadImg(getImgString(bitmap));
+
+                    String objectId = myUser.getObjectId();
+
+                    myUser.update(objectId, new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null){
+                                ToastUtils.showShort(getActivity(),"头像信息同步成功");
+                            } else {
+                                ToastUtils.showShort(getActivity(),"头像信息同步到远端失败");
+                            }
+                        }
+                    });
                 }
             }
         }
+    }
+
+    /**
+     * 拿到bitmap压缩为String
+     * @param bitmap
+     * @return
+     */
+    private String getImgString(Bitmap bitmap) {
+        //bitmap压缩成字节数组输出
+        ByteArrayOutputStream byStream  = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,80,byStream);
+        //利用base64将字节数组输出流转化为String
+        byte[] byteArray = byStream.toByteArray();
+        String imageString = new String(Base64.encodeToString(byteArray,Base64.DEFAULT));
+        return imageString;
     }
 
     private void showImages(Bitmap bitmap) {
@@ -379,7 +453,6 @@ public class MineCenterFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SpUtils.putImageToSp(getActivity(), mCircleImageView);
     }
 
 

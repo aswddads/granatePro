@@ -49,7 +49,7 @@ public class PhotoUtils {
     }
 
     /**
-     * @param activity    当前activity
+     * @param fragment    当前activity
      * @param orgUri      剪裁原图的Uri
      * @param desUri      剪裁后的图片的Uri
      * @param aspectX     X方向的比例

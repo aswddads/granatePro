@@ -10,6 +10,16 @@ public class MyUser extends BmobUser {
     private boolean sex;
     private String desc;
 
+    private String headImg;
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
+    }
+
     public boolean isSex() {
         return sex;
     }

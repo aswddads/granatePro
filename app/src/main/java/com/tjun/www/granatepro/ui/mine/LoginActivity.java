@@ -63,6 +63,7 @@ public class LoginActivity extends BaseActivity {
         if (isChecked) {
             mEtUserName.setText(SpUtils.getString(this, Constants.USER_NAME, ""));
             mEtPassword.setText(SpUtils.getString(this, Constants.PASS_WORD, ""));
+            SpUtils.getImageFromSp(this,mIvHead);
         }
     }
 
@@ -123,6 +124,9 @@ public class LoginActivity extends BaseActivity {
                                 Intent intent = new Intent();
                                 intent.putExtra("username", myUser.getUsername());
                                 intent.putExtra("desc", myUser.getDesc());
+                                if (myUser.getHeadImg() != null) {
+                                    intent.putExtra("img",myUser.getHeadImg());
+                                }
                                 setResult(RESULT_OK, intent);
                                 dialog.dismiss();
                                 finish();
