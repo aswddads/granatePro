@@ -14,6 +14,7 @@ public class Constants {
     public static final String USER_NAME = "user_name";
     public static final String PASS_WORD = "pass_word";
     public static final String IMAGE_TITLE = "image_title";
+    public static final String IS_HEAD_IMG = "is_head_img";
 
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
 

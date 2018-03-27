@@ -2,6 +2,7 @@ package com.tjun.www.granatepro.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;

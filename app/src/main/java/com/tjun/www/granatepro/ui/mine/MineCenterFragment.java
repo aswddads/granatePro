@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,10 +26,11 @@ import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.Constants;
 import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
-import com.tjun.www.granatepro.ui.base.BaseActivity;
 import com.tjun.www.granatepro.ui.base.BaseFragment;
+import com.tjun.www.granatepro.utils.ContextUtils;
 import com.tjun.www.granatepro.utils.PhotoUtils;
 import com.tjun.www.granatepro.utils.SpUtils;
+import com.tjun.www.granatepro.utils.StatusBarUtil;
 import com.tjun.www.granatepro.utils.ToastUtils;
 import com.tjun.www.granatepro.widget.CustomDialog;
 
@@ -37,10 +40,8 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -73,7 +74,7 @@ public class MineCenterFragment extends BaseFragment {
     RelativeLayout mRlUnLogin;
 
     @BindView(R.id.ll_login)
-    LinearLayout mRlLogin;
+    LinearLayout mllLogin;
 
     @BindView(R.id.tv_login)
     TextView mTvLogin;
@@ -93,7 +94,7 @@ public class MineCenterFragment extends BaseFragment {
     @BindView(R.id.circleImageView)
     CircleImageView mCircleImageView;
 
-    @BindView(R.id.g_3)
+    @BindView(R.id.fake_status_bar)
     View mView;
 
     private Button mBtnCamera;
@@ -125,16 +126,18 @@ public class MineCenterFragment extends BaseFragment {
 
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
-        mView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        //mView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mBtnCamera = (Button) dialog.findViewById(R.id.btn_camera);
         mBtnPicture = (Button) dialog.findViewById(R.id.btn_picture);
         mBtnCancel = (Button) dialog.findViewById(R.id.btn_cancel);
         if (!SpUtils.getBoolean(getContext(), Constants.IS_LOGIN, false)) {
             mRlUnLogin.setVisibility(View.VISIBLE);
-            mRlLogin.setVisibility(View.GONE);
+            mllLogin.setVisibility(View.GONE);
+            mView.setVisibility(View.VISIBLE);
         } else {
             mRlUnLogin.setVisibility(View.GONE);
-            mRlLogin.setVisibility(View.VISIBLE);
+            mllLogin.setVisibility(View.VISIBLE);
+            mView.setVisibility(View.GONE);
             MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
             mTvLogin.setText(myUser.getUsername());
             mTvDes.setText(myUser.getDesc());
@@ -142,6 +145,11 @@ public class MineCenterFragment extends BaseFragment {
             if (getBitmapFromString(myUser) != null && myUser.getHeadImg() != null) {
                 mCircleImageView.setImageBitmap(getBitmapFromString(myUser));
                 //mCircleImageView.setImageDrawable(R.drawable.ic_default);
+            }
+
+            if (getBitmapFromString(myUser) != null && myUser.getHeadImg() != null) {
+                Bitmap bitmap = getBitmapFromString(myUser.getBackgroundImg());
+                mllLogin.setBackground(new BitmapDrawable(bitmap));
             }
         }
     }
@@ -249,7 +257,8 @@ public class MineCenterFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.rl_un_login, R.id.tv_des, R.id.tv_my_collect, R.id.tv_my_settinggs, R.id.copy_right, R.id.circleImageView})
+    @OnClick({R.id.rl_un_login, R.id.tv_des, R.id.tv_my_collect, R.id.tv_my_settinggs, R.id.copy_right, R.id.circleImageView
+    ,R.id.tv_change_background})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.copy_right:
@@ -271,7 +280,12 @@ public class MineCenterFragment extends BaseFragment {
                 }
                 break;
 
-            case R.id.circleImageView:
+            case R.id.circleImageView:// 用户头像   true
+                SpUtils.putBoolean(getActivity(),Constants.IS_HEAD_IMG,true);
+                dialog.show();
+                break;
+            case R.id.tv_change_background://切换背景  false
+                SpUtils.putBoolean(getActivity(),Constants.IS_HEAD_IMG,false);
                 dialog.show();
                 break;
         }
@@ -334,26 +348,41 @@ public class MineCenterFragment extends BaseFragment {
             return;
         } else {
             if (requestCode == OPEN_REGISTER && SpUtils.getBoolean(getContext(), Constants.IS_LOGIN, false)) {
+
                 mRlUnLogin.setVisibility(View.GONE);
-                mRlLogin.setVisibility(View.VISIBLE);
+                mllLogin.setVisibility(View.VISIBLE);
+                mView.setVisibility(View.GONE);
 
                 mTvLogin.setText(data.getStringExtra("username"));
                 mTvDes.setText(data.getStringExtra("desc"));
-                mCircleImageView.setImageBitmap(getBitmapFromString(data.getStringExtra("img")));
+                if (!data.getStringExtra("img").equals("")){
+                    mCircleImageView.setImageBitmap(getBitmapFromString(data.getStringExtra("img")));
+                }
+
+                Bitmap bitmap = getBitmapFromString(data.getStringExtra("backImg"));
+                if (bitmap != null) {
+                    mllLogin.setBackground(new BitmapDrawable(bitmap));
+                }
             } else if (requestCode == OPEN_SETTING && !SpUtils.getBoolean(getContext(), Constants.IS_LOGIN, false)) {
                 mRlUnLogin.setVisibility(View.VISIBLE);
-                mRlLogin.setVisibility(View.GONE);
+                mllLogin.setVisibility(View.GONE);
 
                 mTvDes.setText("程序员 Asw.Tan");
             } else if (requestCode == OPEN_SETTING && SpUtils.getBoolean(getContext(), Constants.IS_LOGIN, false)) {
                 mRlUnLogin.setVisibility(View.GONE);
-                mRlLogin.setVisibility(View.VISIBLE);
+                mllLogin.setVisibility(View.VISIBLE);
 
                 mTvLogin.setText(data.getStringExtra("username"));
                 mTvDes.setText(data.getStringExtra("desc"));
             } else if (requestCode == CAMERA_REQUEST_CODE) {
                 cropImageUri = Uri.fromFile(fileCropUri);
-                PhotoUtils.cropImageUri(MineCenterFragment.this, imageUri, cropImageUri, 1, 1, 320, 320, RESULT_REQUEST_CODE);
+                if (SpUtils.getBoolean(getActivity(),Constants.IS_HEAD_IMG,false)){
+                    PhotoUtils.cropImageUri(MineCenterFragment.this, imageUri, cropImageUri, 1, 1,
+                            150, 150, RESULT_REQUEST_CODE);
+                } else {
+                    PhotoUtils.cropImageUri(MineCenterFragment.this, imageUri, cropImageUri, 1, 1,
+                            ContextUtils.getSreenWidth(getActivity()), 280, RESULT_REQUEST_CODE);
+                }
 
             } else if (requestCode == IMAGE_REQUEST_CODE) {
                 if (hasSdCard()) {
@@ -361,7 +390,13 @@ public class MineCenterFragment extends BaseFragment {
                     Uri newUri = Uri.parse(PhotoUtils.getPath(getActivity(), data.getData()));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                         newUri = FileProvider.getUriForFile(getActivity(),  "com.tjun.www.granatepro.fileprovider", new File(newUri.getPath()));
-                    PhotoUtils.cropImageUri(MineCenterFragment.this, newUri, cropImageUri, 1, 1, 320, 320, RESULT_REQUEST_CODE);
+                    if (SpUtils.getBoolean(getActivity(),Constants.IS_HEAD_IMG,false)) {
+                        PhotoUtils.cropImageUri(MineCenterFragment.this, newUri, cropImageUri, 1, 1,
+                                150, 150, RESULT_REQUEST_CODE);
+                    } else {
+                        PhotoUtils.cropImageUri(MineCenterFragment.this, newUri, cropImageUri, 1, 1,
+                                ContextUtils.getSreenWidth(getActivity()), 280, RESULT_REQUEST_CODE);
+                    }
                 } else {
                     ToastUtils.showShort(getActivity(), "设备没有SD卡!");
                 }
@@ -372,26 +407,43 @@ public class MineCenterFragment extends BaseFragment {
 
                 //有可能取消
                 if (bitmap != null) {
-                    showImages(bitmap);
-                    SpUtils.putImageToSp(getActivity(), mCircleImageView);
 
-                    //添加头像信息数据到数据库
+                    if (SpUtils.getBoolean(getActivity(),Constants.IS_HEAD_IMG,false)){
+                        showImages(bitmap);
+                        //添加头像信息数据到数据库
 
-                    MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
-                    myUser.setHeadImg(getImgString(bitmap));
+                        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+                        myUser.setHeadImg(getImgString(bitmap));
 
-                    String objectId = myUser.getObjectId();
+                        String objectId = myUser.getObjectId();
 
-                    myUser.update(objectId, new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            if (e == null){
-                                ToastUtils.showShort(getActivity(),"头像信息同步成功");
-                            } else {
-                                ToastUtils.showShort(getActivity(),"头像信息同步到远端失败");
+                        myUser.update(objectId, new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null){
+                                   // ToastUtils.showShort(getActivity(),"头像信息同步成功");
+                                } else {
+                                    ToastUtils.showShort(getActivity(),"头像信息同步到远端失败");
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        mllLogin.setBackground(new BitmapDrawable(bitmap));
+                        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+                        myUser.setBackgroundImg(getImgString(bitmap));
+                        String objectId = myUser.getObjectId();
+
+                        myUser.update(objectId, new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null){
+                                   // ToastUtils.showShort(getActivity(),"背景信息同步成功");
+                                } else {
+                                    ToastUtils.showShort(getActivity(),"背景信息同步到远端失败");
+                                }
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -411,6 +463,7 @@ public class MineCenterFragment extends BaseFragment {
         String imageString = new String(Base64.encodeToString(byteArray,Base64.DEFAULT));
         return imageString;
     }
+
 
     private void showImages(Bitmap bitmap) {
         mCircleImageView.setImageBitmap(bitmap);
@@ -450,9 +503,17 @@ public class MineCenterFragment extends BaseFragment {
 //        }
 //    }
 
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        SpUtils.putImageToSp(getActivity(), mCircleImageView);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+
     }
 
 

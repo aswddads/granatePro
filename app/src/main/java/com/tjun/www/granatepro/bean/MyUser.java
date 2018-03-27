@@ -11,6 +11,15 @@ public class MyUser extends BmobUser {
     private String desc;
 
     private String headImg;
+    private String backgroundImg;
+
+    public String getBackgroundImg() {
+        return backgroundImg;
+    }
+
+    public void setBackgroundImg(String backgroundImg) {
+        this.backgroundImg = backgroundImg;
+    }
 
     public String getHeadImg() {
         return headImg;

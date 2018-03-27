@@ -9,4 +9,6 @@
     <color name="news_tv_source_color">#a3a3a3</color>
 
     <color name="view_bg">#F5FFFA</color>
+
+    <color name="trans">@android:color/transparent</color>
 </resources>

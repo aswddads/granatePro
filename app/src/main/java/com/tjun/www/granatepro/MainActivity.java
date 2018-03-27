@@ -51,6 +51,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
+//        setStatusBarColor(R.color.trans);
         if (savedInstanceState == null) {
             mFragments[0] = NewsFragment.newInstance();
             mFragments[1] = VideoFragment.newInstance();

@@ -5,9 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <View
-        android:id="@+id/g_3"
+        android:id="@+id/fake_status_bar"
         android:layout_width="match_parent"
-        android:layout_height="35dp"/>
+        android:layout_height="@dimen/statusbar_view_height"
+        android:background="@color/colorPrimary"/>
+
     <FrameLayout
         android:background="@color/colorPrimary"
         android:id="@+id/fl_top_login_parent"
@@ -21,7 +23,7 @@
             android:layout_height="72dp">
 
             <TextView
-                android:paddingLeft="@dimen/dp_10"
+                android:padding="10dp"
                 android:gravity="center_vertical"
                 android:layout_centerInParent="true"
                 android:drawableLeft="@drawable/ic_un_login"
@@ -34,38 +36,42 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:background="@color/view_bg"
+            android:background="@drawable/ic_default"
             android:visibility="gone"
             android:id="@+id/ll_login"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="252dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/circleImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:src="@drawable/add_pic"
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="2dp" />
             <TextView
-                android:layout_marginTop="5dp"
+                android:background="@drawable/edit_bg"
+                android:layout_marginTop="10dp"
                 android:textColor="@android:color/black"
                 android:textStyle="normal"
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:textSize="16sp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="aswddads"
                 android:id="@+id/tv_login"
-                android:layout_width="100dp"
-                android:layout_height="30dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
     </FrameLayout>
 
     <TextView
+        android:drawableRight="@drawable/right_arrow"
         android:padding="@dimen/dp_10"
         android:background="@color/view_bg"
         android:layout_marginTop="10dp"

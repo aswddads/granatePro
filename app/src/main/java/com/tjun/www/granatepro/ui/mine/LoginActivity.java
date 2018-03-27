@@ -127,6 +127,9 @@ public class LoginActivity extends BaseActivity {
                                 if (myUser.getHeadImg() != null) {
                                     intent.putExtra("img",myUser.getHeadImg());
                                 }
+                                if (myUser.getBackgroundImg() != null){
+                                    intent.putExtra("backImg",myUser.getBackgroundImg());
+                                }
                                 setResult(RESULT_OK, intent);
                                 dialog.dismiss();
                                 finish();
