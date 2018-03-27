@@ -125,6 +125,21 @@
             android:label="修改密码"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.User" />
+
+        <!--处理Android7.0以上调用相机-->
+        <!-- grantUriPermissions 属性值为“true”，则该 Provider 内所有的数据都能被授权访问-->
+        <provider
+            android:authorities="com.tjun.www.granatepro.fileprovider"
+            android:exported="false"
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+
+        </provider>
+
+        
     </application>
 
 </manifest>

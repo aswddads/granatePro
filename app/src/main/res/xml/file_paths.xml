@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    path=""代表根目录   path="images"(eg:/storage/emulated/0/images)
+            name: 代表定义在Content中的字段
+            若果 path="images";   name="camera_photos"
+            那么：
+            content://opencamera.baochen.com.fileprovider/images/camera_photos.jpg
+            同时也是:/storage/emulated/0/images/camera_photos.jpg
+这里我设置在根目录，即path=""
+    -->
+    <paths>
+        <external-path
+            name="camera_photos"
+            path="" />
+    </paths>
+</resources>
