@@ -1,6 +1,7 @@
 package com.tjun.www.granatepro;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -40,6 +41,11 @@ public class SplashActivity extends BaseActivity {
     TextView tvSkip;
     @BindView(R.id.fl_ad)
     FrameLayout flAd;
+    @BindView(R.id.tv_txt)
+    TextView mTvTxt;
+//    @BindView(R.id.tv_splash)
+//    TextView mTvSplash;
+
     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     @Override
@@ -55,6 +61,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
         //StatusBarUtil.setTranslucentForImageView(this, 0, flAd);
+        Typeface fontType = Typeface.createFromAsset(getAssets(), "font/FONT.TTF");
+        mTvTxt.setTypeface(fontType);
+//        mTvSplash.setTypeface(fontType);
+
         final GifDrawable gifDrawable = (GifDrawable) gifImageView.getDrawable();
         gifDrawable.setLoopCount(Character.MAX_VALUE);
         gifImageView.postDelayed(new Runnable() {

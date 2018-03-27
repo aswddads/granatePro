@@ -84,6 +84,7 @@
         </LinearLayout>
 
         <TextView
+            android:drawableRight="@drawable/right_arrow"
             android:padding="@dimen/dp_10"
             android:id="@+id/tv_out"
             android:layout_width="match_parent"

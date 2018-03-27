@@ -19,25 +19,28 @@
         android:background="@android:color/white"
         android:padding="10dp">
 
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/gifImageView"
-            android:layout_width="100dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/welcome" />
-
-        <TextView
-            android:textColor="@color/colorPrimary"
-            android:layout_marginEnd="20dp"
-            android:textSize="25sp"
-            android:textStyle="italic"
-            android:padding="5dp"
+        <LinearLayout
             android:gravity="center"
-            android:id="@+id/tv_txt"
-            android:layout_width="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_height="70dp"
-            android:text="新鲜事 简单看" />
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/gifImageView"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:src="@drawable/welcome" />
+
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp"
+                android:padding="5dp"
+                android:gravity="center"
+                android:id="@+id/tv_txt"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_height="70dp"
+                android:text="开心阅读每一天" />
+        </LinearLayout>
 
     </RelativeLayout>
 

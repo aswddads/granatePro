@@ -125,6 +125,16 @@ public class MineCenterFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (!SpUtils.getBoolean(getActivity(),Constants.IS_LOGIN,false)) {
+            if (mView.getVisibility() == View.GONE) {
+                mView.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    @Override
     public void bindView(View view, Bundle savedInstanceState) {
         //mView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mBtnCamera = (Button) dialog.findViewById(R.id.btn_camera);
@@ -355,7 +365,7 @@ public class MineCenterFragment extends BaseFragment {
 
                 mTvLogin.setText(data.getStringExtra("username"));
                 mTvDes.setText(data.getStringExtra("desc"));
-                if (!data.getStringExtra("img").equals("")){
+                if (data.getStringExtra("img") != null){
                     mCircleImageView.setImageBitmap(getBitmapFromString(data.getStringExtra("img")));
                 }
 
