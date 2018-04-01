@@ -16,6 +16,8 @@ public class Constants {
     public static final String IMAGE_TITLE = "image_title";
     public static final String IS_HEAD_IMG = "is_head_img";
 
+    public static final String IS_ADD_NEW = "is_add_new";
+
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
 
 

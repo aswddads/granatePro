@@ -169,7 +169,7 @@ public class NewsDetail implements Serializable {
 
         public int itemType;
         private String type;
-        private String thumbnail;
+        private String thumbnail;//title img
         private String online;
         private String title;
         private String showType;

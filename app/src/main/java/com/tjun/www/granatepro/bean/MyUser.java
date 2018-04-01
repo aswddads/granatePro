@@ -10,8 +10,8 @@ public class MyUser extends BmobUser {
     private boolean sex;
     private String desc;
 
-    private String headImg;
-    private String backgroundImg;
+    private String headImg;//头像
+    private String backgroundImg;//背景图片
 
     public String getBackgroundImg() {
         return backgroundImg;
@@ -44,4 +44,5 @@ public class MyUser extends BmobUser {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
 }

@@ -10,6 +10,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +20,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.tjun.www.granatepro.R;
+import com.tjun.www.granatepro.bean.Constants;
+import com.tjun.www.granatepro.bean.MyCollectNewsBeam;
+import com.tjun.www.granatepro.bean.MySelect;
+import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.DaggerHttpComponent;
 import com.tjun.www.granatepro.bean.NewsArticleBean;
 import com.tjun.www.granatepro.component.ApplicationComponent;
@@ -26,16 +31,33 @@ import com.tjun.www.granatepro.ui.base.BaseActivity;
 import com.tjun.www.granatepro.ui.news.contract.ArticleReadContract;
 import com.tjun.www.granatepro.ui.news.presenter.ArticleReadPresenter;
 import com.tjun.www.granatepro.utils.DateUtil;
+import com.tjun.www.granatepro.utils.SpUtils;
+import com.tjun.www.granatepro.utils.ToastUtils;
 import com.tjun.www.granatepro.widget.ObservableScrollView;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by tanjun on 2018/3/15.
  */
 public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> implements ArticleReadContract.View {
     private static final String TAG = "ArticleReadActivity";
+
+    private MyCollectNewsBeam mCollectBean;
+
+    private String id;
+
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.iv_logo)
@@ -63,6 +85,14 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
     @BindView(R.id.tv_TopUpdateTime)
     TextView mTvTopUpdateTime;
 
+    @BindView(R.id.btn_like)
+    Button mBtnLike;
+    @BindView(R.id.btn_unlike)
+    Button mBtnUnLike;
+
+    private String imgString;//item img url
+    private NewsArticleBean mNews;
+
     @Override
     public int getContentLayout() {
         return R.layout.activity_artcleread;
@@ -74,6 +104,41 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                 .applicationComponent(appComponent)
                 .build()
                 .inject(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        imgString = getIntent().getStringExtra("img");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mBtnLike.getVisibility() == View.VISIBLE & SpUtils.getBoolean(this,Constants.IS_LOGIN,false)) {
+            //添加一个查询
+
+            BmobQuery<MySelect> query = new BmobQuery<>();
+            query.addWhereEqualTo("img",imgString);
+            query.setLimit(1);
+            query.findObjects(new FindListener<MySelect>() {
+                @Override
+                public void done(List<MySelect> object, BmobException e) {
+                    if(e==null){// 查询成功
+
+                        id = object.get(0).getObjectId();
+
+                        if (id != null) {
+                            mBtnLike.setVisibility(View.GONE);
+                            mBtnUnLike.setVisibility(View.VISIBLE);
+                        }
+                    }else{
+                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -135,6 +200,9 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
 
     @Override
     public void loadData(final NewsArticleBean articleBean) {
+
+        mNews = articleBean;
+
         mTvTitle.setText(articleBean.getBody().getTitle());
         mTvUpdateTime.setText(DateUtil.getTimestampString(DateUtil.string2Date(articleBean.getBody().getUpdateTime(), "yyyy/MM/dd HH:mm:ss")));
         if (articleBean.getBody().getSubscribe() != null) {
@@ -189,10 +257,115 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
 
     }
 
-    @OnClick(R.id.iv_back)
-    public void onViewClicked() {
-        finish();
+    @OnClick({R.id.iv_back, R.id.btn_like, R.id.btn_unlike})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.btn_like:
+                if (SpUtils.getBoolean(this, Constants.IS_LOGIN, false)) {
+                    add();
+                } else {
+                    ToastUtils.showShort(this, "用户需要先登录才能进行文章收藏");
+                }
+                break;
+
+            case R.id.btn_unlike:
+                if (SpUtils.getBoolean(this, Constants.IS_LOGIN, false)) {
+                    delete();
+                } else {
+                    ToastUtils.showShort(this, "用户需要先登录才能取消文章收藏");
+                }
+
+//                BmobQuery<MySelect> query = new BmobQuery<MySelect>();
+//                MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+//                //String [] hobby = {"阅读","唱歌"};
+//                query.addWhereEqualTo("author", myUser);
+//                query.findObjects(new FindListener<MySelect>() {
+//
+//                    @Override
+//                    public void done(List<MySelect> object,BmobException e) {
+//                        if(e==null){
+//                            String s = object.get(2).getNews().get(0).getImg();
+//                            ToastUtils.showShort(ArticleReadActivity.this,"数据:"+s);
+//                        }else{
+//                            Log.i("bmob","失败："+e.getMessage());
+//                        }
+//                    }
+//
+//                });
+
+//            case R.id.bt_like:
+//                add();
+//                break;
+        }
+    }
+
+    private void delete() {
+
+        MySelect mySelect = new MySelect();
+
+//        mCollectBean = new MyCollectNewsBeam();
+//        mCollectBean.setImg(imgString);
+//        mCollectBean.setMyCollectNews(mNews);
+
+        mySelect.setObjectId(id);
+
+        // mySelect.removeAll("news",);
+
+        //mySelect.removeAll("news", Arrays.asList(mCollectBean));
+
+        mySelect.delete(new UpdateListener() {
+
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    mBtnLike.setVisibility(View.VISIBLE);
+                    mBtnUnLike.setVisibility(View.GONE);
+                    //SpUtils.putBoolean(ArticleReadActivity.this, Constants.IS_ADD_NEW, false);
+                    ToastUtils.showShort(ArticleReadActivity.this, "取消收藏成功");
+                } else {
+                    ToastUtils.showShort(ArticleReadActivity.this, "取消收藏失败" + e.getMessage());
+                }
+            }
+        });
     }
 
 
+    private void add() {
+
+        MySelect mySelect = new MySelect();
+
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+
+        mySelect.setAuthor(myUser);
+        mySelect.setImg(imgString);
+
+        //mySelect.setObjectId(myUser.getObjectId());
+
+        mCollectBean = new MyCollectNewsBeam();
+        mCollectBean.setImg(imgString);
+        mCollectBean.setMyCollectNews(mNews);
+
+        mySelect.addUnique("news", mCollectBean);
+
+        mySelect.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    mBtnLike.setVisibility(View.GONE);
+                    mBtnUnLike.setVisibility(View.VISIBLE);
+                    //pUtils.putBoolean(ArticleReadActivity.this, Constants.IS_ADD_NEW, true);
+                    id = s;
+                    ToastUtils.showShort(ArticleReadActivity.this, "收藏成功" + s);
+                } else {
+                    ToastUtils.showShort(ArticleReadActivity.this, "收藏失败" + e.getMessage());
+                }
+            }
+        });
+
+    }
 }
+
+

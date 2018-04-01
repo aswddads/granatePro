@@ -60,16 +60,33 @@
                 android:textSize="@dimen/sp_12"
                 android:textColor="#989898"/>
 
-            <Button
-                android:layout_width="60dp"
-                android:layout_height="30dp"
+            <FrameLayout
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
-                android:text="关注"
-                android:layout_alignParentRight="true"
-                android:textColor="@android:color/white"
-                android:background="@drawable/read_bt_bg"
-                />
+                android:layout_width="60dp"
+                android:layout_height="30dp">
+                <Button
+                    android:id="@+id/btn_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="收藏"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/read_bt_bg"
+                    />
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/btn_unlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="取消收藏"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/read_bt_bg"
+                    />
+
+
+            </FrameLayout>
+
 
 
         </RelativeLayout>
@@ -162,17 +179,17 @@
                             android:textColor="#989898"
                             />
 
-                        <Button
-                            android:id="@+id/bt_like"
-                            android:layout_width="60dp"
-                            android:layout_height="30dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_alignParentRight="true"
-                            android:text="关注"
-                            android:layout_centerVertical="true"
-                            android:textColor="@android:color/white"
-                            android:background="@drawable/read_bt_bg"
-                            />
+                        <!--<Button-->
+                            <!--android:id="@+id/bt_like"-->
+                            <!--android:layout_width="60dp"-->
+                            <!--android:layout_height="30dp"-->
+                            <!--android:layout_marginEnd="15dp"-->
+                            <!--android:layout_alignParentRight="true"-->
+                            <!--android:text="收藏"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:textColor="@android:color/white"-->
+                            <!--android:background="@drawable/read_bt_bg"-->
+                            <!--/>-->
                     </RelativeLayout>
                 </RelativeLayout>
 
