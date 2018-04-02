@@ -18,7 +18,9 @@ public class Constants {
 
     public static final String IS_ADD_NEW = "is_add_new";
 
-    public static final String IS_LODING = "is_loding";
+    public static final String IS_LODING = "is_loading";
+    public static final String IS_CANCEL = "is_cancel";
+
 
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
 

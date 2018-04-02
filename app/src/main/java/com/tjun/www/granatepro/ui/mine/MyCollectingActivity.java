@@ -76,12 +76,13 @@ public class MyCollectingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         dialog = DialogHelper.getMineLodingDiaLog(this, "加载中...");
 
+        SpUtils.putBoolean(this,Constants.IS_CANCEL,false);
     }
 
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        //getData();
+        getData();
     }
 
     @Override
@@ -93,8 +94,11 @@ public class MyCollectingActivity extends BaseActivity {
         } else {
             dialog.cancel();
         }
-        getData();
 
+        if (SpUtils.getBoolean(this,Constants.IS_CANCEL,false)) {
+            getData();
+            SpUtils.putBoolean(this,Constants.IS_CANCEL,false);
+        }
     }
 
 

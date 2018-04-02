@@ -316,11 +316,7 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
 
         MySelect mySelect = new MySelect();
 
-
-
         mySelect.setObjectId(id);
-
-
 
         mySelect.delete(new UpdateListener() {
 
@@ -331,6 +327,8 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                     mBtnUnLike.setVisibility(View.GONE);
                     //SpUtils.putBoolean(ArticleReadActivity.this, Constants.IS_ADD_NEW, false);
                     ToastUtils.showShort(ArticleReadActivity.this, "取消收藏成功");
+
+                    SpUtils.putBoolean(ArticleReadActivity.this,Constants.IS_CANCEL,true);
                 } else {
                     ToastUtils.showShort(ArticleReadActivity.this, "取消收藏失败" + e.getMessage());
                 }

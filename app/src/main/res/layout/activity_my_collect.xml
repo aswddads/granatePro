@@ -11,7 +11,7 @@
         android:background="@color/colorPrimary"
         android:drawableLeft="@drawable/ic_read_back"
         android:gravity="center_vertical"
-        android:text=" 收藏文章"
+        android:text=" 我的收藏"
         android:textColor="@color/view_bg"
         android:textSize="18sp" />
 
