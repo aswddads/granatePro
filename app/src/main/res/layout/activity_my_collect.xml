@@ -15,11 +15,38 @@
         android:textColor="@color/view_bg"
         android:textSize="18sp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_my_collect"
-        android:layout_width="match_parent"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/swipe_my_collect"
         android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_my_collect"
+                android:layout_width="match_parent"
+                android:visibility="visible"
+                android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_no_collect"
+                android:visibility="gone"
+                android:padding="5dp"
+                android:gravity="center"
+                android:text="您还没有收藏过新闻呢！"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </FrameLayout>
+
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
 </LinearLayout>

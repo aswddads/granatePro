@@ -28,6 +28,7 @@ import com.tjun.www.granatepro.component.DaggerHttpComponent;
 import com.tjun.www.granatepro.bean.NewsArticleBean;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
+import com.tjun.www.granatepro.ui.mine.MyCollectingActivity;
 import com.tjun.www.granatepro.ui.news.contract.ArticleReadContract;
 import com.tjun.www.granatepro.ui.news.presenter.ArticleReadPresenter;
 import com.tjun.www.granatepro.utils.DateUtil;
@@ -44,6 +45,7 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -53,8 +55,7 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> implements ArticleReadContract.View {
     private static final String TAG = "ArticleReadActivity";
-
-    private MyCollectNewsBeam mCollectBean;
+    private static final int MAX_COLLECT = 200;
 
     private String id;
 
@@ -91,6 +92,10 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
     Button mBtnUnLike;
 
     private String imgString;//item img url
+    private String mAid;
+    private String mTitle;
+    private String mSource;
+
     private NewsArticleBean mNews;
 
     @Override
@@ -110,22 +115,27 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         imgString = getIntent().getStringExtra("img");
+        mAid = getIntent().getStringExtra("aid");
+        mTitle = getIntent().getStringExtra("title");
+        mSource = getIntent().getStringExtra("source");
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (mBtnLike.getVisibility() == View.VISIBLE & SpUtils.getBoolean(this,Constants.IS_LOGIN,false)) {
+        if (mBtnLike.getVisibility() == View.VISIBLE & SpUtils.getBoolean(this, Constants.IS_LOGIN, false)) {
             //添加一个查询
+            MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
 
             BmobQuery<MySelect> query = new BmobQuery<>();
-            query.addWhereEqualTo("img",imgString);
+            query.addWhereEqualTo("img", imgString);
+            query.addWhereEqualTo("author",myUser.getObjectId());
             query.setLimit(1);
             query.findObjects(new FindListener<MySelect>() {
                 @Override
                 public void done(List<MySelect> object, BmobException e) {
-                    if(e==null){// 查询成功
+                    if (e == null) {// 查询成功
 
                         id = object.get(0).getObjectId();
 
@@ -133,8 +143,8 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                             mBtnLike.setVisibility(View.GONE);
                             mBtnUnLike.setVisibility(View.VISIBLE);
                         }
-                    }else{
-                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                    } else {
+                        Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                     }
                 }
             });
@@ -265,7 +275,7 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                 break;
             case R.id.btn_like:
                 if (SpUtils.getBoolean(this, Constants.IS_LOGIN, false)) {
-                    add();
+                    check();
                 } else {
                     ToastUtils.showShort(this, "用户需要先登录才能进行文章收藏");
                 }
@@ -306,15 +316,11 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
 
         MySelect mySelect = new MySelect();
 
-//        mCollectBean = new MyCollectNewsBeam();
-//        mCollectBean.setImg(imgString);
-//        mCollectBean.setMyCollectNews(mNews);
+
 
         mySelect.setObjectId(id);
 
-        // mySelect.removeAll("news",);
 
-        //mySelect.removeAll("news", Arrays.asList(mCollectBean));
 
         mySelect.delete(new UpdateListener() {
 
@@ -333,7 +339,28 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
     }
 
 
+    private void check() {
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+        BmobQuery<MySelect> query = new BmobQuery<MySelect>();
+        query.addWhereEqualTo("author",myUser.getObjectId());
+        query.count(MySelect.class, new CountListener() {
+            @Override
+            public void done(Integer count, BmobException e) {
+                if(e==null){
+                    if (count < MAX_COLLECT) { //允许收藏的新闻最大数为100
+                        add();
+                    } else {
+                        ToastUtils.showLong(ArticleReadActivity.this,"允许收藏最大新闻数量为100,您当前收藏了"+count+"篇新闻,请先进行删除相应新闻再收藏");
+                    }
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
     private void add() {
+
 
         MySelect mySelect = new MySelect();
 
@@ -341,14 +368,9 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
 
         mySelect.setAuthor(myUser);
         mySelect.setImg(imgString);
-
-        //mySelect.setObjectId(myUser.getObjectId());
-
-        mCollectBean = new MyCollectNewsBeam();
-        mCollectBean.setImg(imgString);
-        mCollectBean.setMyCollectNews(mNews);
-
-        mySelect.addUnique("news", mCollectBean);
+        mySelect.setAid(mAid);
+        mySelect.setTitle(mTitle);
+        mySelect.setSource(mSource);
 
         mySelect.save(new SaveListener<String>() {
             @Override
@@ -358,13 +380,19 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                     mBtnUnLike.setVisibility(View.VISIBLE);
                     //pUtils.putBoolean(ArticleReadActivity.this, Constants.IS_ADD_NEW, true);
                     id = s;
-                    ToastUtils.showShort(ArticleReadActivity.this, "收藏成功" + s);
+                    ToastUtils.showShort(ArticleReadActivity.this, "收藏成功");
                 } else {
                     ToastUtils.showShort(ArticleReadActivity.this, "收藏失败" + e.getMessage());
                 }
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpUtils.putBoolean(this,Constants.IS_LODING,true);
     }
 }
 

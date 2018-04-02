@@ -61,27 +61,32 @@
                 android:textColor="#989898"/>
 
             <FrameLayout
+                android:padding="5dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:layout_width="60dp"
-                android:layout_height="30dp">
+                android:layout_marginEnd="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp">
                 <Button
+                    android:padding="5dp"
                     android:id="@+id/btn_like"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="收藏"
+                    android:layout_height="wrap_content"
+                    android:text="收  藏"
+                    android:textSize="15sp"
                     android:textColor="@android:color/white"
-                    android:background="@drawable/read_bt_bg"
+                    android:background="@drawable/btn_check_bg"
                     />
                 <Button
+                    android:textSize="15sp"
+                    android:padding="5dp"
                     android:visibility="gone"
                     android:id="@+id/btn_unlike"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="取消收藏"
                     android:textColor="@android:color/white"
-                    android:background="@drawable/read_bt_bg"
+                    android:background="@drawable/btn_check_bg"
                     />
 
 

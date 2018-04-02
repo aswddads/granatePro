@@ -132,6 +132,23 @@ public class MineCenterFragment extends BaseFragment {
                 mView.setVisibility(View.VISIBLE);
             }
         }
+//         else {
+//            MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+//            if (myUser != null) {
+//                mTvLogin.setText(myUser.getUsername());
+//                mTvDes.setText(myUser.getDesc());
+//
+//                if (getBitmapFromString(myUser) != null && myUser.getHeadImg() != null) {
+//                    mCircleImageView.setImageBitmap(getBitmapFromString(myUser));
+//                    //mCircleImageView.setImageDrawable(R.drawable.ic_default);
+//                }
+//
+//                if (getBitmapFromString(myUser) != null && myUser.getBackgroundImg() != null) {
+//                    Bitmap bitmap = getBitmapFromString(myUser.getBackgroundImg());
+//                    mllLogin.setBackground(new BitmapDrawable(bitmap));
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -279,10 +296,10 @@ public class MineCenterFragment extends BaseFragment {
                 //跳转登录界面
                 break;
             case R.id.tv_my_collect:
-                if (!SpUtils.getBoolean(getActivity(),Constants.IS_LOGIN,false)) {
-                    ToastUtils.showShort(getActivity(),"请先登录");
+                if (!SpUtils.getBoolean(getActivity(), Constants.IS_LOGIN, false)) {
+                    ToastUtils.showShort(getActivity(), "请先登录");
                 } else {
-                    startActivity(new Intent(getActivity(),MyCollectingActivity.class));
+                    startActivity(new Intent(getActivity(), MyCollectingActivity.class));
                 }
                 //跳转新闻收藏页面
                 break;
@@ -301,7 +318,7 @@ public class MineCenterFragment extends BaseFragment {
                 break;
             case R.id.tv_change_background://切换背景  false
                 if (!SpUtils.getBoolean(getActivity(), Constants.IS_LOGIN, false)) {
-                    ToastUtils.showShort(getActivity(),"请先登录");
+                    ToastUtils.showShort(getActivity(), "请先登录");
                 } else {
                     SpUtils.putBoolean(getActivity(), Constants.IS_HEAD_IMG, false);
                     dialog.show();
@@ -381,6 +398,7 @@ public class MineCenterFragment extends BaseFragment {
                     mCircleImageView.setImageResource(R.drawable.ic_default);
                 }
 
+                //背景
                 Bitmap bitmap = getBitmapFromString(data.getStringExtra("backImg"));
                 if (bitmap != null) {
                     mllLogin.setBackground(new BitmapDrawable(bitmap));

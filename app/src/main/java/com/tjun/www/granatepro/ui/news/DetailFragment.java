@@ -332,6 +332,8 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 Intent intent = new Intent(getActivity(), ArticleReadActivity.class);
                 intent.putExtra("aid", itemBean.getDocumentId());
                 intent.putExtra("img",itemBean.getThumbnail());
+                intent.putExtra("title",itemBean.getTitle());
+                intent.putExtra("source",itemBean.getSource());
                 startActivity(intent);
                 break;
             case NewsDetail.ItemBean.TYPE_SLIDE:

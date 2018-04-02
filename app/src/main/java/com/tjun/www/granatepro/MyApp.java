@@ -7,6 +7,7 @@ import com.tjun.www.granatepro.component.DaggerApplicationComponent;
 import com.tjun.www.granatepro.module.ApplicationModule;
 import com.tjun.www.granatepro.module.HttpModule;
 import com.tjun.www.granatepro.utils.ContextUtils;
+import com.tjun.www.granatepro.utils.SpUtils;
 
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
@@ -30,6 +31,8 @@ public class MyApp extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        SpUtils.putBoolean(this,Constants.IS_LODING,false);
+
         sMyApp = this;
         BGASwipeBackManager.getInstance().init(this);
         mApplicationComponent = DaggerApplicationComponent.builder()
