@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tjun.www.granatepro.R;
@@ -74,8 +75,7 @@ public class MyCollectingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dialog = DialogHelper.getMineLodingDiaLog(this, "加载中...");
-
+        dialog = DialogHelper.getMineLodingDiaLog(this,"加载中");
         SpUtils.putBoolean(this,Constants.IS_CANCEL,false);
     }
 
@@ -109,7 +109,7 @@ public class MyCollectingActivity extends BaseActivity {
 //查询playerName叫“比目”的数据
         query.addWhereEqualTo("author", myUser.getObjectId());
 //返回50条数据，如果不加上这条语句，默认返回10条数据
-        query.setLimit(100);
+        query.setLimit(10);
 
         //执行查询方法
         query.findObjects(new FindListener<MySelect>() {
@@ -117,7 +117,12 @@ public class MyCollectingActivity extends BaseActivity {
             public void done(List<MySelect> object, BmobException e) {
                 if (e == null) {
                     dialog.hide();
-                    mAdapter = new MyAdapter(object, MyCollectingActivity.this);
+
+                    mList = new ArrayList<>();
+
+                    mList.addAll(object);
+
+                    mAdapter = new MyAdapter(mList, MyCollectingActivity.this);
 
                     if (object.size() == 0) {
                         mRecycler.setVisibility(View.GONE);
@@ -160,7 +165,7 @@ public class MyCollectingActivity extends BaseActivity {
 //查询playerName叫“比目”的数据
                 query.addWhereEqualTo("author", myUser.getObjectId());
 //返回50条数据，如果不加上这条语句，默认返回10条数据
-                query.setLimit(50);
+                query.setLimit(10);
 
                 query.findObjects(new FindListener<MySelect>() {
                     @Override
@@ -174,8 +179,10 @@ public class MyCollectingActivity extends BaseActivity {
                             } else {
                                 mRecycler.setVisibility(View.VISIBLE);
                                 mTvNoCollect.setVisibility(View.GONE);
-                                mAdapter.updateData(list);
-                                onClick(list);
+                                //mList.addAll(list);
+                                mList = list;
+                                mAdapter.updateData(mList);
+                                onClick(mList);
                             }
 
                         } else {
@@ -217,10 +224,14 @@ public class MyCollectingActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 //ToastUtils.showShort(MyCollectingActivity.this, "点击");
-                String s = mySelects.get(position).getAid();
+                //String s = mySelects.get(position).getAid();
                 Intent intent = new Intent(MyCollectingActivity.this, ArticleReadActivity.class);
                 intent.putExtra("aid",mySelects.get(position).getAid());
                 intent.putExtra("img",mySelects.get(position).getImg());
+                intent.putExtra("title",mySelects.get(position).getTitle());
+                intent.putExtra("source",mySelects.get(position).getSource());
+                intent.putExtra("myObjectId",mySelects.get(position).getObjectId());
+                intent.putExtra("path","collect");
                 startActivity(intent);
             }
 

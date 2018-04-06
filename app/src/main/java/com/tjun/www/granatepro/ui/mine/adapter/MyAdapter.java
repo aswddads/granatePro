@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tjun.www.granatepro.R;
@@ -15,14 +16,22 @@ import com.tjun.www.granatepro.utils.GildUtils;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by tanjun on 2018/4/2.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_FOOTER = 1;//底部
 
     public List<MySelect> mData;
     private Context mContext;
+
+    FooterViewHolder mFooterViewHolder;
 
     /**
      * 事件回调监听
@@ -30,43 +39,67 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private MyAdapter.OnItemClickListener onItemClickListener;
 
     public MyAdapter(List<MySelect> mData, Context context) {
-        this.mData = mData;
         Collections.reverse(mData);
+        this.mData = mData;
         this.mContext = context;
     }
 
-    public void updateData(List<MySelect> data){
+    public void updateData(List<MySelect> data) {
+        Collections.reverse(data);
         this.mData = data;
-        Collections.reverse(mData);
         notifyDataSetChanged();
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collect_news,parent,false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+    public int getItemViewType(int position) {
+        if (position == getItemCount() - 1) {
+            return TYPE_FOOTER;
+        }
+        return TYPE_ITEM;
+
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == TYPE_ITEM) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collect_news, parent, false);
+            ViewHolder viewHolder = new ViewHolder(view);
+            return viewHolder;
+        } else if (viewType == TYPE_FOOTER) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.collect_news_bottm,parent,false);
+            view.setClickable(false);
+            return mFooterViewHolder = new FooterViewHolder(view);
+        }
+        return null;
+    }
+    
 
-        GildUtils.LoadImage(mContext,mData.get(position).getImg(),holder.mIvImg);
-        holder.mTvTitle.setText(mData.get(position).getTitle());
-        holder.mTvSource.setText(mData.get(position).getSource());
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof FooterViewHolder) {
+            ((FooterViewHolder) holder).mEndViewStub.setVisibility(View.GONE);
+            ((FooterViewHolder) holder).mLoadingViewStub.setVisibility(View.VISIBLE);
+            ((FooterViewHolder) holder).mNetErrViewStub.setVisibility(View.GONE);
+        } else if (holder instanceof ViewHolder) {
+            GildUtils.LoadImage(mContext, mData.get(position).getImg(), ((ViewHolder) holder).mIvImg);
+            ((ViewHolder) holder).mTvTitle.setText(mData.get(position).getTitle());
+            ((ViewHolder) holder).mTvSource.setText(mData.get(position).getSource());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                if(onItemClickListener != null) {
-                    int pos = holder.getLayoutPosition();
-                    onItemClickListener.onItemClick(holder.itemView, pos);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    if (onItemClickListener != null) {
+                        int pos = holder.getLayoutPosition();
+                        onItemClickListener.onItemClick(holder.itemView, pos);
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 
+    //返回View中Item的个数，这个时候，总的个数应该是ListView中Item的个数加上HeaderView和FooterView
     @Override
     public int getItemCount() {
         return mData == null ? 0 : mData.size();
@@ -86,12 +119,30 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
     }
 
+    public static class FooterViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.loading_viewstub)
+        LinearLayout mLoadingViewStub;
+
+        @BindView(R.id.end_viewstub)
+        LinearLayout mEndViewStub;
+
+        @BindView(R.id.network_error_viewstub)
+        LinearLayout mNetErrViewStub;
+
+        public FooterViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this,itemView);
+        }
+    }
+
     /**
      * 移除item
+     *
      * @param position
      */
     public void deleteItem(int position) {
-        if(mData == null || mData.isEmpty()) {
+        if (mData == null || mData.isEmpty()) {
             return;
         }
         mData.remove(position);
@@ -110,6 +161,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
+
         void onItemLongClick(View view, int position);
     }
 
