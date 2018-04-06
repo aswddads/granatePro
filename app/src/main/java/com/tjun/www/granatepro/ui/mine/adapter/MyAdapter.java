@@ -13,7 +13,6 @@ import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.MySelect;
 import com.tjun.www.granatepro.utils.GildUtils;
 
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,26 +32,39 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     FooterViewHolder mFooterViewHolder;
 
+    @BindView(R.id.loading_view)
+    LinearLayout mLoadingView;
+
     /**
      * 事件回调监听
      */
     private MyAdapter.OnItemClickListener onItemClickListener;
 
     public MyAdapter(List<MySelect> mData, Context context) {
-        Collections.reverse(mData);
+        //Collections.reverse(mData);
         this.mData = mData;
         this.mContext = context;
     }
 
+    public void addData(List<MySelect> data) {
+        //Collections.reverse(data);
+        this.mData.addAll(data);
+        notifyItemInserted(getItemCount()+1);
+    }
+
     public void updateData(List<MySelect> data) {
-        Collections.reverse(data);
+        //Collections.reverse(data);
+//        if (mData != null) {
+//            mData = null;
+//        }
+        mData.clear();
         this.mData = data;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
+        if (position == mData.size()) {
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
@@ -78,8 +90,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FooterViewHolder) {
-            ((FooterViewHolder) holder).mEndViewStub.setVisibility(View.GONE);
-            ((FooterViewHolder) holder).mLoadingViewStub.setVisibility(View.VISIBLE);
+            ((FooterViewHolder) holder).mEndViewStub.setVisibility(View.VISIBLE);
+            ((FooterViewHolder) holder).mLoadingViewStub.setVisibility(View.GONE);
             ((FooterViewHolder) holder).mNetErrViewStub.setVisibility(View.GONE);
         } else if (holder instanceof ViewHolder) {
             GildUtils.LoadImage(mContext, mData.get(position).getImg(), ((ViewHolder) holder).mIvImg);
@@ -102,7 +114,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //返回View中Item的个数，这个时候，总的个数应该是ListView中Item的个数加上HeaderView和FooterView
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size();
+        return mData.size()+1;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -163,6 +175,27 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void onItemClick(View view, int position);
 
         void onItemLongClick(View view, int position);
+    }
+
+    public void hideLoading(){
+        mFooterViewHolder.mLoadingViewStub.setVisibility(View.GONE);
+    }
+
+    public void showNoMore(){
+        mFooterViewHolder.mEndViewStub.setVisibility(View.VISIBLE);
+    }
+
+    public void hideNoMore(){
+        mFooterViewHolder.mEndViewStub.setVisibility(View.GONE);
+
+    }
+
+    public void showLoading(){
+        mFooterViewHolder.mLoadingViewStub.setVisibility(View.VISIBLE);
+    }
+
+    public int getMorePageVisable(){
+        return mLoadingView.getVisibility();
     }
 
 }

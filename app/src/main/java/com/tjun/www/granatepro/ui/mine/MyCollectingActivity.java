@@ -22,6 +22,7 @@ import com.tjun.www.granatepro.bean.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
 import com.tjun.www.granatepro.ui.mine.adapter.MyAdapter;
+import com.tjun.www.granatepro.ui.mine.inter.EndLessOnScrollListener;
 import com.tjun.www.granatepro.ui.news.ArticleReadActivity;
 import com.tjun.www.granatepro.utils.DialogHelper;
 import com.tjun.www.granatepro.utils.SpUtils;
@@ -58,9 +59,9 @@ public class MyCollectingActivity extends BaseActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private MyAdapter mAdapter;
 
-    private Dialog dialog = null;
+    private static final int NEWS_DATA = 10;//默认加载新闻数量条数
 
-    private List<MySelect> mList;
+    private Dialog dialog = null;
 
     @Override
     public int getContentLayout() {
@@ -108,8 +109,10 @@ public class MyCollectingActivity extends BaseActivity {
         MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
 //查询playerName叫“比目”的数据
         query.addWhereEqualTo("author", myUser.getObjectId());
-//返回50条数据，如果不加上这条语句，默认返回10条数据
-        query.setLimit(10);
+        //query.order("updatedAt");
+//返回条数据，如果不加上这条语句，默认返回10条数据
+        query.order("-updatedAt");
+        query.setLimit(NEWS_DATA);
 
         //执行查询方法
         query.findObjects(new FindListener<MySelect>() {
@@ -118,11 +121,7 @@ public class MyCollectingActivity extends BaseActivity {
                 if (e == null) {
                     dialog.hide();
 
-                    mList = new ArrayList<>();
-
-                    mList.addAll(object);
-
-                    mAdapter = new MyAdapter(mList, MyCollectingActivity.this);
+                    mAdapter = new MyAdapter(object, MyCollectingActivity.this);
 
                     if (object.size() == 0) {
                         mRecycler.setVisibility(View.GONE);
@@ -134,6 +133,7 @@ public class MyCollectingActivity extends BaseActivity {
 
                         onClick(object);
 
+                        loadeMore();
                     }
 
                     reflesh(mAdapter);
@@ -164,8 +164,9 @@ public class MyCollectingActivity extends BaseActivity {
                 MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
 //查询playerName叫“比目”的数据
                 query.addWhereEqualTo("author", myUser.getObjectId());
+                query.order("-updatedAt");
 //返回50条数据，如果不加上这条语句，默认返回10条数据
-                query.setLimit(10);
+                query.setLimit(NEWS_DATA);
 
                 query.findObjects(new FindListener<MySelect>() {
                     @Override
@@ -173,6 +174,7 @@ public class MyCollectingActivity extends BaseActivity {
                         if (e == null) {
                             mSwipeMyCollect.setRefreshing(false);
                             ToastUtils.showShort(MyCollectingActivity.this,"刷新成功");
+                            //SpUtils.putInt(MyCollectingActivity.this,Constants.CURRENT_PAGE,0);
                             if (list.size() == 0){
                                 mRecycler.setVisibility(View.GONE);
                                 mTvNoCollect.setVisibility(View.VISIBLE);
@@ -180,9 +182,11 @@ public class MyCollectingActivity extends BaseActivity {
                                 mRecycler.setVisibility(View.VISIBLE);
                                 mTvNoCollect.setVisibility(View.GONE);
                                 //mList.addAll(list);
-                                mList = list;
-                                mAdapter.updateData(mList);
-                                onClick(mList);
+                                mAdapter.updateData(list);
+                                onClick(list);
+                                if (mAdapter.getMorePageVisable() == View.VISIBLE) {//解决进入收藏页面  先刷新页面几次  第二页就会加载几次重复数据的bug
+                                    loadeMore();
+                                }
                             }
 
                         } else {
@@ -219,6 +223,62 @@ public class MyCollectingActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 下拉加载更多
+     */
+    private void loadeMore(){
+        mRecycler.addOnScrollListener(new EndLessOnScrollListener((LinearLayoutManager) mLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                mAdapter.showLoading();
+                mAdapter.hideNoMore();
+                BmobQuery<MySelect> query = new BmobQuery<>();
+                MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+                //查询playerName叫“比目”的数据
+                query.addWhereEqualTo("author", myUser.getObjectId());
+//返回条数据，如果不加上这条语句，默认返回10条数据
+                //query.setLimit(NEWS_DATA);
+                query.order("-updatedAt");
+                query.setSkip(NEWS_DATA * currentPage);
+                // query.setLimit(NEWS_DATA);
+                query.findObjects(new FindListener<MySelect>() {
+                    @Override
+                    public void done(List<MySelect> list, BmobException e) {
+                        if (e == null) {
+                            //mList.addAll(list);
+                            mAdapter.addData(list);
+
+                            if (list.size() == 0) {
+                                mAdapter.hideLoading();
+                                //mRecycler.setVisibility(View.GONE);
+                                //mTvNoCollect.setVisibility(View.VISIBLE);
+                                mAdapter.showNoMore();
+                            } else {
+                                mRecycler.setVisibility(View.VISIBLE);
+                                mTvNoCollect.setVisibility(View.GONE);
+                                mAdapter.hideLoading();
+                                mAdapter.hideNoMore();
+
+                                // mRecycler.setAdapter(mAdapter);
+                                onClick(list);
+                            }
+                        } else {
+                            ToastUtils.showShort(MyCollectingActivity.this,"我是有底线的!");
+                            if (mAdapter != null) {
+                                mAdapter.showNoMore();
+                                mAdapter.hideLoading();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 点击进入详情页面
+     * @param mySelects
+     */
     private void onClick(final List<MySelect> mySelects) {
         mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
@@ -246,5 +306,6 @@ public class MyCollectingActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         SpUtils.putBoolean(this, Constants.IS_LODING,false);
+        SpUtils.putInt(this,Constants.CURRENT_PAGE,0);
     }
 }

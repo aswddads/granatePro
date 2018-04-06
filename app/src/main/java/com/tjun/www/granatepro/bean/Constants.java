@@ -1,5 +1,6 @@
 package com.tjun.www.granatepro.bean;
 
+
 /**
  * Created by tanjun on 2018/3/11.
  */
@@ -20,6 +21,8 @@ public class Constants {
 
     public static final String IS_LODING = "is_loading";
     public static final String IS_CANCEL = "is_cancel";
+
+    public static final String CURRENT_PAGE = "current_page";
 
 
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";

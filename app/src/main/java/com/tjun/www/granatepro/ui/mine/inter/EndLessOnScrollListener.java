@@ -3,6 +3,9 @@ package com.tjun.www.granatepro.ui.mine.inter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.tjun.www.granatepro.bean.Constants;
+import com.tjun.www.granatepro.utils.SpUtils;
+
 /**
  * Created by tanjun on 2018/4/3.
  */
@@ -53,7 +56,8 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
         //这里需要好好理解
         if (!loading && totalItemCount-visibleItemCount <= firstVisibleItem){
             currentPage ++;
-            onLoadMore(currentPage);
+            SpUtils.putInt(recyclerView.getContext(), Constants.CURRENT_PAGE,currentPage);
+            onLoadMore(SpUtils.getInt(recyclerView.getContext(), Constants.CURRENT_PAGE,0));
             loading = true;
         }
 
