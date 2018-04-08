@@ -35,6 +35,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     FooterViewHolder mFooterViewHolder;
 
+    ViewHolder mViewHolder;
+
     @BindView(R.id.loading_view)
     LinearLayout mLoadingView;
 
@@ -59,11 +61,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void updateData(List<MySelect> data) {
         //Collections.reverse(data);
-        if (mData.size() >= 0) {
+        if (mData.size() > 0 ){
             mData.clear();
-            mData = new ArrayList<>(data);
-            notifyDataSetChanged();
         }
+            //mData.clear();
+            mData.addAll(data);
+            notifyDataSetChanged();
         //notifyItemRangeChanged(0,data.size());
     }
 
@@ -81,8 +84,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         View view;
         if (viewType == TYPE_ITEM) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collect_news, parent, false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
+           // ViewHolder viewHolder = new ViewHolder(view);
+            return mViewHolder = new ViewHolder(view);
         } else if (viewType == TYPE_FOOTER) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.collect_news_bottm,parent,false);
             view.setClickable(false);
@@ -93,7 +96,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof FooterViewHolder) {
 
             ((FooterViewHolder) holder).mEndViewStub.setVisibility(View.VISIBLE);
@@ -113,6 +116,18 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         int pos = holder.getLayoutPosition();
                         onItemClickListener.onItemClick(holder.itemView, pos);
                     }
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (onItemClickListener != null) {
+                        int pos = holder.getLayoutPosition();
+                        onItemClickListener.onItemLongClick(holder.itemView,pos);
+                        return true;//消耗事件
+                    }
+                    return false;
                 }
             });
         }
@@ -210,5 +225,6 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void hideLoadingView(){
         mLoadingView.setVisibility(View.GONE);
     }
+
 
 }

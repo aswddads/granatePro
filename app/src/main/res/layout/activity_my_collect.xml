@@ -4,16 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_back"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+    <LinearLayout
         android:background="@color/colorPrimary"
-        android:drawableLeft="@drawable/ic_read_back"
-        android:gravity="center_vertical"
-        android:text=" 我的收藏"
-        android:textColor="@color/view_bg"
-        android:textSize="18sp" />
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:layout_weight="2"
+            android:id="@+id/tv_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_read_back"
+            android:gravity="center_vertical"
+            android:text=" 我的收藏"
+            android:textColor="@color/view_bg"
+            android:textSize="18sp" />
+
+        <com.tjun.www.granatepro.widget.MyTextView
+            android:textSize="18sp"
+            android:text="长按取消收藏"
+            android:textStyle="bold"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="wrap_content"

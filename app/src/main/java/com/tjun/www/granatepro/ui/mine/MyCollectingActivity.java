@@ -2,17 +2,17 @@ package com.tjun.www.granatepro.ui.mine;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tjun.www.granatepro.R;
@@ -38,6 +38,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by tanjun on 2018/3/27.
@@ -64,6 +65,7 @@ public class MyCollectingActivity extends BaseActivity {
     private static final int NEWS_DATA = 10;//默认加载新闻数量条数
 
     private Dialog dialog = null;
+    private Dialog removeDialog = null;
 
     @Override
     public int getContentLayout() {
@@ -78,7 +80,8 @@ public class MyCollectingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dialog = DialogHelper.getMineLodingDiaLog(this, "加载中");
+        dialog = DialogHelper.getMineLodingDiaLog(this, "加载中...");
+        removeDialog = DialogHelper.getMineLodingDiaLog(this, "删除中...");
         SpUtils.putBoolean(this, Constants.IS_CANCEL, false);
     }
 
@@ -105,6 +108,9 @@ public class MyCollectingActivity extends BaseActivity {
         //reflesh();
         //loadeMore();
 
+        /**
+         * 下拉刷新
+         */
         mSwipeMyCollect.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -112,10 +118,13 @@ public class MyCollectingActivity extends BaseActivity {
                 mSwipeMyCollect.setRefreshing(true);
                 getData();
                 EndLessOnScrollListener.loading = false;  //给上拉加载更多  设置入口
-                SpUtils.putInt(MyCollectingActivity.this,Constants.CURRENT_PAGE,0);  //刷新一次，重置页码数量到最前面
+                SpUtils.putInt(MyCollectingActivity.this, Constants.CURRENT_PAGE, 0);  //刷新一次，重置页码数量到最前面
             }
         });
 
+        /**
+         * 上拉加载更多
+         */
         mRecycler.addOnScrollListener(new EndLessOnScrollListener((LinearLayoutManager) mLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
@@ -193,7 +202,8 @@ public class MyCollectingActivity extends BaseActivity {
                             mList = new ArrayList<>(object);
                             //mList.addAll(mList);
                             if (mAdapter != null) {
-                                mAdapter.updateData(object);
+                                mAdapter.updateData(mList);
+                                onClick(mList);
                                 //mAdapter.updateData(object);
                                 //mAdapter.notifyDataSetChanged();
                                 ToastUtils.showShort(MyCollectingActivity.this, "刷新成功");
@@ -345,8 +355,46 @@ public class MyCollectingActivity extends BaseActivity {
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
+            public void onItemLongClick(View view, final int position) {
+                //showSureDialog(mySelects,position);
+                final AlertDialog.Builder normalDialog =
+                        new AlertDialog.Builder(MyCollectingActivity.this);
+                normalDialog.setIcon(R.drawable.ic_default);
+                normalDialog.setTitle("取消收藏");
+                normalDialog.setMessage("取消这篇文章的收藏?");
+                normalDialog.setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                removeDialog.show();
 
+                                MySelect mySelect = new MySelect();
+                                String id = mySelects.get(position).getObjectId();
+                                mySelect.setObjectId(id);
+                                mySelect.delete(new UpdateListener() {
+                                    @Override
+                                    public void done(BmobException e) {
+                                        if (e == null) {
+                                            removeDialog.cancel();
+                                            mAdapter.deleteItem(position);
+                                            ToastUtils.showShort(MyCollectingActivity.this, "取消收藏成功");
+                                        } else {
+                                            removeDialog.cancel();
+                                            ToastUtils.showShort(MyCollectingActivity.this, "取消收藏失败");
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                normalDialog.setNegativeButton("关闭",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                removeDialog.hide();
+                            }
+                        });
+                // 显示
+                normalDialog.show();
             }
         });
     }
@@ -356,5 +404,17 @@ public class MyCollectingActivity extends BaseActivity {
         super.onDestroy();
         SpUtils.putBoolean(this, Constants.IS_LODING, false);
         SpUtils.putInt(this, Constants.CURRENT_PAGE, 0);
+    }
+
+    /**
+     * 对话框
+     */
+    private void showSureDialog(final List<MySelect> mySelects, final int position){
+        /* @setIcon 设置对话框图标
+         * @setTitle 设置对话框标题
+         * @setMessage 设置对话框消息提示
+         * setXXX方法返回Dialog对象，因此可以链式设置属性
+         */
+
     }
 }
