@@ -23,6 +23,7 @@ public class Constants {
     public static final String IS_CANCEL = "is_cancel";
 
     public static final String CURRENT_PAGE = "current_page";
+    public static final String IS_LOAD_MORE = "is_load_more";
 
 
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";

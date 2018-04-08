@@ -30,7 +30,7 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
     private int firstVisibleItem;
 
     //是否正在上拉数据
-    private boolean loading = true;
+    public static boolean loading = true;
 
     public EndLessOnScrollListener(LinearLayoutManager linearLayoutManager) {
         this.mLinearLayoutManager = linearLayoutManager;
@@ -39,6 +39,8 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+
+        currentPage = SpUtils.getInt(recyclerView.getContext(),Constants.CURRENT_PAGE,0);
 
         visibleItemCount = recyclerView.getChildCount();
         totalItemCount = mLinearLayoutManager.getItemCount();
@@ -53,12 +55,15 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
             }
         }
 
+        previousTotal = totalItemCount;  //为解决下拉刷新和上拉加载更多冲突（最后一页数据较少）
+
         //这里需要好好理解
         if (!loading && totalItemCount-visibleItemCount <= firstVisibleItem){
             currentPage ++;
-            SpUtils.putInt(recyclerView.getContext(), Constants.CURRENT_PAGE,currentPage);
-            onLoadMore(SpUtils.getInt(recyclerView.getContext(), Constants.CURRENT_PAGE,0));
-            loading = true;
+            SpUtils.putInt(recyclerView.getContext(), Constants.CURRENT_PAGE,currentPage);  //加载页码数
+                onLoadMore(currentPage);
+                loading = true;
+
         }
 
     }

@@ -13,6 +13,7 @@ import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.MySelect;
 import com.tjun.www.granatepro.utils.GildUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,6 +24,8 @@ import butterknife.ButterKnife;
  */
 
 public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int MAX_DATA = 10;
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;//底部
@@ -40,26 +43,28 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      */
     private MyAdapter.OnItemClickListener onItemClickListener;
 
-    public MyAdapter(List<MySelect> mData, Context context) {
+    public MyAdapter(List<MySelect> data, Context context) {
         //Collections.reverse(mData);
-        this.mData = mData;
+        mData = new ArrayList<>(data);
         this.mContext = context;
     }
 
     public void addData(List<MySelect> data) {
         //Collections.reverse(data);
-        this.mData.addAll(data);
-        notifyItemInserted(getItemCount()+1);
+        mData.addAll(data);
+        notifyDataSetChanged();
+//        notifyItemRangeInserted(mData.size()-data.size(),data.size());
+
     }
 
     public void updateData(List<MySelect> data) {
         //Collections.reverse(data);
-//        if (mData != null) {
-//            mData = null;
-//        }
-        mData.clear();
-        this.mData = data;
-        notifyDataSetChanged();
+        if (mData.size() >= 0) {
+            mData.clear();
+            mData = new ArrayList<>(data);
+            notifyDataSetChanged();
+        }
+        //notifyItemRangeChanged(0,data.size());
     }
 
     @Override
@@ -90,10 +95,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FooterViewHolder) {
+
             ((FooterViewHolder) holder).mEndViewStub.setVisibility(View.VISIBLE);
             ((FooterViewHolder) holder).mLoadingViewStub.setVisibility(View.GONE);
             ((FooterViewHolder) holder).mNetErrViewStub.setVisibility(View.GONE);
         } else if (holder instanceof ViewHolder) {
+
             GildUtils.LoadImage(mContext, mData.get(position).getImg(), ((ViewHolder) holder).mIvImg);
             ((ViewHolder) holder).mTvTitle.setText(mData.get(position).getTitle());
             ((ViewHolder) holder).mTvSource.setText(mData.get(position).getSource());
@@ -102,6 +109,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(final View v) {
                     if (onItemClickListener != null) {
+                        //int pos = ((holder.getLayoutPosition()) % MAX_DATA);
                         int pos = holder.getLayoutPosition();
                         onItemClickListener.onItemClick(holder.itemView, pos);
                     }
@@ -114,6 +122,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //返回View中Item的个数，这个时候，总的个数应该是ListView中Item的个数加上HeaderView和FooterView
     @Override
     public int getItemCount() {
+
         return mData.size()+1;
     }
 
@@ -196,6 +205,10 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public int getMorePageVisable(){
         return mLoadingView.getVisibility();
+    }
+
+    public void hideLoadingView(){
+        mLoadingView.setVisibility(View.GONE);
     }
 
 }
