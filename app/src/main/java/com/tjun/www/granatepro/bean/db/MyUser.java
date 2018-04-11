@@ -1,4 +1,4 @@
-package com.tjun.www.granatepro.bean;
+package com.tjun.www.granatepro.bean.db;
 
 import cn.bmob.v3.BmobUser;
 

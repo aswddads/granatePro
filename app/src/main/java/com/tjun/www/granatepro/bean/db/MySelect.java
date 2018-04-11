@@ -1,6 +1,4 @@
-package com.tjun.www.granatepro.bean;
-
-import java.util.List;
+package com.tjun.www.granatepro.bean.db;
 
 import cn.bmob.v3.BmobObject;
 

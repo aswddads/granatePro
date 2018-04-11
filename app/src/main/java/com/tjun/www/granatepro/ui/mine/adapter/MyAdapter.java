@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tjun.www.granatepro.R;
-import com.tjun.www.granatepro.bean.MySelect;
+import com.tjun.www.granatepro.bean.db.MySelect;
 import com.tjun.www.granatepro.utils.GildUtils;
 
 import java.util.ArrayList;

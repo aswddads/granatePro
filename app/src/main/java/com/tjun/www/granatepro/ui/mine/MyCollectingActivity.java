@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.Constants;
-import com.tjun.www.granatepro.bean.MySelect;
-import com.tjun.www.granatepro.bean.MyUser;
+import com.tjun.www.granatepro.bean.db.MySelect;
+import com.tjun.www.granatepro.bean.db.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
 import com.tjun.www.granatepro.ui.mine.adapter.MyAdapter;

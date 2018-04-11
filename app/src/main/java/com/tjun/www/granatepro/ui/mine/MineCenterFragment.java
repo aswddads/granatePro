@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -24,13 +23,12 @@ import android.widget.TextView;
 
 import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.Constants;
-import com.tjun.www.granatepro.bean.MyUser;
+import com.tjun.www.granatepro.bean.db.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseFragment;
 import com.tjun.www.granatepro.utils.ContextUtils;
 import com.tjun.www.granatepro.utils.PhotoUtils;
 import com.tjun.www.granatepro.utils.SpUtils;
-import com.tjun.www.granatepro.utils.StatusBarUtil;
 import com.tjun.www.granatepro.utils.ToastUtils;
 import com.tjun.www.granatepro.widget.CustomDialog;
 

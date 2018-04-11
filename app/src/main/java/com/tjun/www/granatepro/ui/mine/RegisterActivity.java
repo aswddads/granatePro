@@ -10,7 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.tjun.www.granatepro.R;
-import com.tjun.www.granatepro.bean.MyUser;
+import com.tjun.www.granatepro.bean.db.MyUser;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
 import com.tjun.www.granatepro.utils.DialogHelper;

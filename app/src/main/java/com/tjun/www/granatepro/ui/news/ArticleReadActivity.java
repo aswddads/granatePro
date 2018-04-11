@@ -22,14 +22,12 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.Constants;
-import com.tjun.www.granatepro.bean.MyCollectNewsBeam;
-import com.tjun.www.granatepro.bean.MySelect;
-import com.tjun.www.granatepro.bean.MyUser;
+import com.tjun.www.granatepro.bean.db.MySelect;
+import com.tjun.www.granatepro.bean.db.MyUser;
 import com.tjun.www.granatepro.component.DaggerHttpComponent;
 import com.tjun.www.granatepro.bean.NewsArticleBean;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
-import com.tjun.www.granatepro.ui.mine.MyCollectingActivity;
 import com.tjun.www.granatepro.ui.news.contract.ArticleReadContract;
 import com.tjun.www.granatepro.ui.news.presenter.ArticleReadPresenter;
 import com.tjun.www.granatepro.utils.DateUtil;
@@ -38,8 +36,6 @@ import com.tjun.www.granatepro.utils.SpUtils;
 import com.tjun.www.granatepro.utils.ToastUtils;
 import com.tjun.www.granatepro.widget.ObservableScrollView;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
