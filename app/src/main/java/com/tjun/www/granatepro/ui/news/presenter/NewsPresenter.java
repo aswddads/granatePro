@@ -45,8 +45,8 @@ public class NewsPresenter extends BasePresenter<NewsContract.View> implements N
                 channel.setChannelId(channelId.get(i));
                 channel.setChannelName(channelName.get(i));
                 channel.setChannelType(i < 1 ? 1 : 0);
-                channel.setChannelSelect(i < channelId.size() - 3);
-                if (i < channelId.size() - 3) {
+                channel.setChannelSelect(i < channelId.size() - 8);
+                if (i < channelId.size() - 8) {
                     myChannels.add(channel);
                 } else {
                     otherChannels.add(channel);

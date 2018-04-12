@@ -147,7 +147,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                         view.getHeight();
                         int[] location = new int[2];
                         view.getLocationInWindow(location);
-                        Log.i("JdDetailFragment", "点击的item的高度:" + view.getHeight() + "x值:" + location[0] + "y值" + location[1]);
+                        Log.i("DetailFragment", "点击的item的高度:" + view.getHeight() + "x值:" + location[0] + "y值" + location[1]);
                         if (itemBean.getStyle() == null) return;
                         if (ContextUtils.getSreenWidth(MyApp.getContext()) - 50 - location[1] < ContextUtils.dip2px(MyApp.getContext(), 80)) {
                             newsDelPop
@@ -212,7 +212,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         if (getArguments() == null) return;
         newsid = getArguments().getString("newsid");
         position = getArguments().getInt("position");
-        mPresenter.getData(newsid, NewsApi.ACTION_DEFAULT, 1);
+        mPresenter.getData(newsid, NewsApi.ACTION_DEFAULT, 1);//网络请求
     }
 
     @Override

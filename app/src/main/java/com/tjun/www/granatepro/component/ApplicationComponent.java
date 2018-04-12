@@ -5,7 +5,6 @@ import android.content.Context;
 import com.tjun.www.granatepro.MyApp;
 import com.tjun.www.granatepro.module.ApplicationModule;
 import com.tjun.www.granatepro.module.HttpModule;
-import com.tjun.www.granatepro.net.JanDanApi;
 import com.tjun.www.granatepro.net.NewsApi;
 
 import dagger.Component;
@@ -20,7 +19,6 @@ public interface ApplicationComponent {
 
     NewsApi getNetEaseApi();
 
-    JanDanApi getJanDanApi();
 
     Context getContext();
 

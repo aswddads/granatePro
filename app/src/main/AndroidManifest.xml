@@ -79,18 +79,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".ui.jandan.ReadActivity"
-            android:hardwareAccelerated="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"
-
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".ui.jandan.ImageBrowseActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".ui.mine.LoginActivity"

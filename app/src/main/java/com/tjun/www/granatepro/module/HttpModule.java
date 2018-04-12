@@ -2,8 +2,6 @@ package com.tjun.www.granatepro.module;
 
 import com.tjun.www.granatepro.MyApp;
 import com.tjun.www.granatepro.net.ApiConstants;
-import com.tjun.www.granatepro.net.JanDanApi;
-import com.tjun.www.granatepro.net.JanDanApiService;
 import com.tjun.www.granatepro.net.NewsApi;
 import com.tjun.www.granatepro.net.NewsApiService;
 import com.tjun.www.granatepro.net.RetrofitConfig;
@@ -58,19 +56,6 @@ public class HttpModule {
         return NewsApi.getInstance(retrofitBuilder
                 .baseUrl(ApiConstants.sIFengApi)
                 .build().create(NewsApiService.class));
-    }
-
-    @Provides
-    JanDanApi provideJanDanApis(OkHttpClient.Builder builder) {
-
-        Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(builder.build());
-
-        return JanDanApi.getInstance(retrofitBuilder
-                .baseUrl(ApiConstants.sJanDanApi)
-                .build().create(JanDanApiService.class));
     }
 
 }

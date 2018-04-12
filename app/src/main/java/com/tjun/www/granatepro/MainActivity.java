@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 import com.tjun.www.granatepro.component.ApplicationComponent;
 import com.tjun.www.granatepro.ui.base.BaseActivity;
 import com.tjun.www.granatepro.ui.base.SupportFragment;
-import com.tjun.www.granatepro.ui.jandan.JanDanFragment;
 import com.tjun.www.granatepro.ui.mine.MineCenterFragment;
+import com.tjun.www.granatepro.ui.movie.MovieFragment;
 import com.tjun.www.granatepro.ui.news.NewsFragment;
 import com.tjun.www.granatepro.ui.video.VideoFragment;
 import com.tjun.www.granatepro.utils.StatusBarUtil;
@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity {
         if (savedInstanceState == null) {
             mFragments[0] = NewsFragment.newInstance();
             mFragments[1] = VideoFragment.newInstance();
-            mFragments[2] = JanDanFragment.newInstance();
+            mFragments[2] = MovieFragment.newInstance();
             mFragments[3] = MineCenterFragment.newInstance();
 
             getSupportDelegate().loadMultipleRootFragment(R.id.contentContainer, 0,
@@ -66,13 +66,13 @@ public class MainActivity extends BaseActivity {
         } else {
             mFragments[0] = findFragment(NewsFragment.class);
             mFragments[1] = findFragment(VideoFragment.class);
-            mFragments[2] = findFragment(JanDanFragment.class);
+            mFragments[2] = findFragment(MovieFragment.class);
             mFragments[3] = findFragment(MineCenterFragment.class);
         }
 
         mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_news, "新闻"))
                 .addItem(new BottomBarTab(this, R.drawable.ic_video, "视频"))
-                .addItem(new BottomBarTab(this, R.drawable.ic_jiandan, "影讯"))
+                .addItem(new BottomBarTab(this, R.drawable.ic_movie, "影讯"))
                 .addItem(new BottomBarTab(this, R.drawable.ic_my, "我的"));
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override

@@ -20,13 +20,12 @@
     <string name="news_toast">已为您推荐了%1$s条新资讯</string>
     <string name="finish">完成</string>
     <string name="edit">编辑</string>
-    <string name="willUrl">http://will-ls.top/</string>
-    <string name="githubUrl">https://github.com/Will-Ls</string>
-    <string name="email">liwanglin_001@163.com</string>
 
     <string-array name="news_channel">
         <item>头条</item>
-        <item>娱乐</item>
+        <item>朋友圈热文</item>
+        <item>NBA</item>
+        <item>要文</item>
         <item>军事</item>
         <item>体育</item>
         <item>财经</item>
@@ -34,20 +33,31 @@
         <item>历史</item>
         <item>台湾</item>
         <item>汽车</item>
-        <item>社会</item>
+        <item>公益</item>
         <item>时尚</item>
         <item>国学</item>
         <item>文化</item>
         <item>星座</item>
         <item>读书</item>
         <item>游戏</item>
-        <item>电影</item>
         <item>国际</item>
+        <item>健康</item>
+        <item>青年</item>
+        <item>家居</item>
+        <item>故事</item>
+        <item>收藏</item>
+        <item>奇闻</item>
+        <item>美食</item>
+        <item>区块链</item>
+        <item>港澳</item>
+        <item>跑步</item>
     </string-array>
 
     <string-array name="news_channel_id">
         <item>SYLB10,SYDT10</item>
-        <item>YL53,FOCUSYL53</item>
+        <item>CIRCLEHOT</item>
+        <item>NBAPD,FOCUSNBAPD</item>
+        <item>YAOWEN223</item>
         <item>JS83,FOCUSJS83</item>
         <item>TY43,FOCUSTY43,TYLIVE,TYTOPIC</item>
         <item>CJ33,FOCUSCJ33,HNCJ33</item>
@@ -55,14 +65,34 @@
         <item>LS153,FOCUSLS153</item>
         <item>TW73</item>
         <item>QC45,FOCUSQC45</item>
-        <item>SH133,FOCUSSH133</item>
+        <item>GYPD,FOCUSGYPD</item>
         <item>SS78,FOCUSSS78</item>
         <item>GXPD,FOCUSGXPD</item>
         <item>WH25,FOCUSWH25</item>
         <item>XZ09,FOCUSXZ09</item>
         <item>DS57,FOCUSDS57</item>
         <item>YX11,FOCUSYX11</item>
-        <item>DYPD</item>
         <item>GJPD</item>
+        <item>JK36</item>
+        <item>QN39,FOCUSQN39</item>
+        <item>JJPD,FOCUSJJPD</item>
+        <item>STORY</item>
+        <item>COLLECT</item>
+        <item>ANECD</item>
+        <item>DELIC</item>
+        <item>BLOCKCHAIN,FOCUSBLOCKCHAIN</item>
+        <item>GA18,FOCUSGA18</item>
+        <item>PBPD,PBPDFOCUS</item>
+    </string-array>
+
+
+    <string-array name="movie_channel">
+        <item>电影</item>
+        <item>娱乐</item>
+    </string-array>
+
+    <string-array name="movie_channel_id">
+        <item>DYPD</item>
+        <item>YL53,FOCUSYL53</item>
     </string-array>
 </resources>

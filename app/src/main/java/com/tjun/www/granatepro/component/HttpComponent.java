@@ -1,6 +1,6 @@
 package com.tjun.www.granatepro.component;
 
-import com.tjun.www.granatepro.ui.jandan.JdDetailFragment;
+import com.tjun.www.granatepro.ui.movie.MovieFragment;
 import com.tjun.www.granatepro.ui.news.ArticleReadActivity;
 import com.tjun.www.granatepro.ui.news.ImageBrowseActivity;
 import com.tjun.www.granatepro.ui.news.NewsFragment;
@@ -19,8 +19,6 @@ public interface HttpComponent {
 
     void inject(DetailFragment detailFragment);
 
-    void inject(JdDetailFragment jdDetailFragment);
-
     void inject(ImageBrowseActivity imageBrowseActivity);
 
     void inject( com.tjun.www.granatepro.ui.news.DetailFragment detailFragment);
@@ -28,5 +26,7 @@ public interface HttpComponent {
     void inject(ArticleReadActivity articleReadActivity);
 
     void inject(NewsFragment newsFragment);
+
+    void inject(MovieFragment movieFragment);
 
 }

@@ -28,10 +28,8 @@ public class Constants {
 
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
 
-
-    //864678036850608 如果数据太少，请自行抓包凤凰新闻 获取数据时的参数中的 uid 更换
-    public static final String uid = "864678036850608";
-
+    //99001062666995为本机抓包机uuid 如果数据太少，请自行抓包凤凰新闻 获取数据时的参数中的 uid 更换
+    public static final String uid = "99001062666995";
     //头条
     public static final String TOPNEWS_ID = "SYLB10,SYDT10";
 
