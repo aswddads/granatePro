@@ -1,6 +1,7 @@
 package com.tjun.www.granatepro.ui.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -16,7 +17,6 @@ import java.util.List;
  */
 public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.ItemBean, BaseViewHolder> {
     private Context mContext;
-
 
     public NewsDetailAdapter(List<NewsDetail.ItemBean> data, Context context) {
         super(data);

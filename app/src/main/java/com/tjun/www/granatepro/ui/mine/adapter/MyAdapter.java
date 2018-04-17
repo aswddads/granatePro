@@ -1,6 +1,7 @@
 package com.tjun.www.granatepro.ui.mine.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -147,8 +148,17 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView mTvTitle;//新闻标题
         TextView mTvSource;//新闻出处
 
+        CardView mCardView;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            mCardView = (CardView) itemView.findViewById(R.id.cardView);
+            mCardView.setRadius(8);//设置图片圆角的半径大小
+
+            mCardView.setCardElevation(8);//设置阴影部分大小
+
+            mCardView.setContentPadding(5,5,5,5);//设置图片距离阴影大小
+
             mIvImg = (ImageView) itemView.findViewById(R.id.iv_img);
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             mTvSource = (TextView) itemView.findViewById(R.id.tv_source);

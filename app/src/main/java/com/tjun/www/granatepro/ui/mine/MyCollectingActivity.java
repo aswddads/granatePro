@@ -261,7 +261,7 @@ public class MyCollectingActivity extends BaseActivity {
     @Override
     public void initData() {
         mRecycler.setLayoutManager(mLayoutManager);
-        mRecycler.addItemDecoration(new SimpleDividerDecoration(this));//添加分割线
+        //mRecycler.addItemDecoration(new SimpleDividerDecoration(this));//添加分割线
         // 设置Item添加和移除的动画
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         //mRecycler.setAdapter(mAdapter);

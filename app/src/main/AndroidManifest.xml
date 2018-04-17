@@ -119,6 +119,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.User"/>
 
+        <activity android:name=".ui.news.ShowImgActivity"
+            android:label="图片"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.User"/>
+
 
         <!--处理Android7.0以上调用相机-->
         <!-- grantUriPermissions 属性值为“true”，则该 Provider 内所有的数据都能被授权访问-->

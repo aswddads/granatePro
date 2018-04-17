@@ -93,9 +93,9 @@ dependencies {
     compile 'cn.bmob.android:bmob-sms:1.0.1'
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     compile 'cn.bmob.android:http-legacy:1.0'
-
     //circleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile files('src/main/libs/classes-dex2jar.jar')
 }
 repositories {
     maven {

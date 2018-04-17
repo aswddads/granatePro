@@ -1,5 +1,6 @@
 package com.tjun.www.granatepro.ui.news;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -36,7 +37,10 @@ import com.tjun.www.granatepro.utils.SpUtils;
 import com.tjun.www.granatepro.utils.ToastUtils;
 import com.tjun.www.granatepro.widget.ObservableScrollView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,6 +52,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+
 /**
  * Created by tanjun on 2018/3/15.
  */
@@ -57,6 +62,7 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
     private static final int MAX_COLLECT = 200;
 
     private String id;
+    private ArrayList<String> imgList; //html中所有图片url
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
@@ -127,6 +133,8 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
         mSource = getIntent().getStringExtra("source");
         path = getIntent().getStringExtra("path");
         objectId = getIntent().getStringExtra("myObjectId");
+
+        imgList = new ArrayList<>();
     }
 
     @Override
@@ -185,10 +193,18 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
         });
     }
 
+    @SuppressLint("JavascriptInterface")
     private void setWebViewSetting() {
         addjs(mWebView);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
+
+//        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+//        mWebView.getSettings().setUseWideViewPort(true);
+//        mWebView.getSettings().setLoadWithOverviewMode(true);
+//        //防止中文乱码
+//        mWebView.getSettings().setDefaultTextEncodingName("UTF-8");
+
         mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -199,7 +215,9 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.loadUrl("file:///android_asset/ifeng/post_detail.html");
+       // mWebView.addJavascriptInterface(new JavascriptInterface(this),"imagelistener");
         mWebView.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
@@ -212,6 +230,63 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                 mPresenter.getData(aid);
             }
         });
+    }
+
+//    private void addImageClickListner() {
+//
+//                mWebView.loadUrl("javascript:(function(){" +
+//                        "var objs = document.getElementsByTagName(\"img\");" +
+//                        "for(var i=0;i<objs.length;i++)" +
+//                        "{" +
+//                        "window.imagelistener.readImageUrl(objs[i].src);" +
+//                        "objs[i].onclick=function()" +
+//                        "{" +
+//                        "window.imagelistener.openImage(this.src);" +
+//                        "}" +
+//                        "}" +
+//                        "})()");
+//        //遍历页面中所有img的节点，因为节点里面的图片的url即objs[i].src，保存所有图片的src.
+//        //为每个图片设置点击事件，objs[i].onclick
+//
+//    }
+
+
+//    class JavascriptInterface {
+//        private Context context;
+//        public JavascriptInterface(Context context) {
+//            this.context = context;
+//        }
+//        @android.webkit.JavascriptInterface
+//        public void readImageUrl(String img) {     //把所有图片的url保存在ArrayList<String>中
+//            imgList.add(img);
+//        }
+//        @android.webkit.JavascriptInterface  //对于targetSdkVersion>=17的，要加这个声明
+//        public void openImage(String clickimg)//点击图片所调用到的函数
+//        {
+//            int index = 0;
+//            ArrayList<String> list = addImages();
+//            for(String url:list)
+//                if(url.equals(clickimg)) index = list.indexOf(clickimg);//获取点击图片在整个页面图片中的位置
+//            Intent intent = new Intent();
+//            Bundle bundle = new Bundle();
+//            bundle.putStringArrayList("img_list",list);
+//            bundle.putInt("index", index);
+//            intent.putExtra("bundle", bundle);//将所有图片的url以及点击图片的位置作为参数传给启动的activity
+//            intent.setClass(context, ShowImgActivity.class);
+//            context.startActivity(intent);//启动ViewPagerActivity,用于显示图片
+//        }
+//    }
+
+    //去重复
+    private ArrayList<String> addImages() {
+        ArrayList<String> list = new ArrayList<>();
+        Set set = new HashSet();
+        for (String cd:imgList) {
+            if(set.add(cd)){
+                list.add(cd);
+            }
+        }
+        return list;
     }
 
     @Override
@@ -261,6 +336,7 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                 showSuccess();
             }
         });
+//        addImageClickListner();
     }
 
 
@@ -306,27 +382,7 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                     ToastUtils.showShort(this, "用户需要先登录才能取消文章收藏");
                 }
 
-//                BmobQuery<MySelect> query = new BmobQuery<MySelect>();
-//                MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
-//                //String [] hobby = {"阅读","唱歌"};
-//                query.addWhereEqualTo("author", myUser);
-//                query.findObjects(new FindListener<MySelect>() {
-//
-//                    @Override
-//                    public void done(List<MySelect> object,BmobException e) {
-//                        if(e==null){
-//                            String s = object.get(2).getNews().get(0).getImg();
-//                            ToastUtils.showShort(ArticleReadActivity.this,"数据:"+s);
-//                        }else{
-//                            Log.i("bmob","失败："+e.getMessage());
-//                        }
-//                    }
-//
-//                });
 
-//            case R.id.bt_like:
-//                add();
-//                break;
         }
     }
 
