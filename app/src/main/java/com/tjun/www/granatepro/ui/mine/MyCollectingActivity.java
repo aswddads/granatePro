@@ -13,8 +13,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.florent37.viewanimator.AnimationListener;
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.tjun.www.granatepro.R;
 import com.tjun.www.granatepro.bean.Constants;
 import com.tjun.www.granatepro.bean.db.MySelect;
@@ -57,6 +60,11 @@ public class MyCollectingActivity extends BaseActivity {
 
     @BindView(R.id.tv_no_collect)
     TextView mTvNoCollect;
+
+    @BindView(R.id.rl_top_toast)
+    RelativeLayout mRlTopToast;
+    @BindView(R.id.tv_toast)
+    TextView mTvToast;
 
     private List<MySelect> mList;
 
@@ -216,7 +224,22 @@ public class MyCollectingActivity extends BaseActivity {
                                 onClick(mList);
                                 //mAdapter.updateData(object);
                                 //mAdapter.notifyDataSetChanged();
-                                ToastUtils.showShort(MyCollectingActivity.this, "刷新成功");
+                                mTvToast.setText(String.format(getResources().getString(R.string.news_toast), mList.size() + ""));
+                                mRlTopToast.setVisibility(View.VISIBLE);
+                                ViewAnimator.animate(mRlTopToast)
+                                        .newsPaper()
+                                        .duration(1000)
+                                        .start()
+                                        .onStop(new AnimationListener.Stop() {
+                                            @Override
+                                            public void onStop() {
+                                                ViewAnimator.animate(mRlTopToast)
+                                                        .bounceOut()
+                                                        .duration(1000)
+                                                        .start();
+                                            }
+                                        });
+                                //ToastUtils.showShort(MyCollectingActivity.this, "刷新成功");
                             }
                         }
                     } else {

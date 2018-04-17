@@ -1,68 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/view_bg"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
-        <TextView
-            android:layout_weight="2"
-            android:id="@+id/tv_back"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:drawableLeft="@drawable/ic_read_back"
-            android:gravity="center_vertical"
-            android:text=" 我的收藏"
-            android:textColor="@color/view_bg"
-            android:textSize="18sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.tjun.www.granatepro.widget.MyTextView
-            android:textSize="18sp"
-            android:text="长按取消收藏"
-            android:textStyle="bold"
-            android:layout_weight="3"
-            android:gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="wrap_content"
-        android:id="@+id/swipe_my_collect"
-        android:layout_height="match_parent">
-        <FrameLayout
-            android:background="@color/view_bg"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_my_collect"
-                android:layout_width="match_parent"
-                android:visibility="visible"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
+            android:layout_height="45dp"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_no_collect"
-                android:visibility="gone"
-                android:padding="5dp"
-                android:gravity="center"
-                android:text="您还没有收藏过新闻呢！"
-                android:textSize="16sp"
+                android:id="@+id/tv_back"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:drawableLeft="@drawable/ic_read_back"
+                android:gravity="center_vertical"
+                android:text=" 我的收藏"
+                android:textColor="@color/view_bg"
+                android:textSize="18sp" />
+
+            <com.tjun.www.granatepro.widget.MyTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:text="长按取消收藏"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_my_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:background="@color/view_bg">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_my_collect"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/tv_no_collect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="您还没有收藏过新闻呢！"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
 
-        </FrameLayout>
+            </FrameLayout>
 
+        </android.support.v4.widget.SwipeRefreshLayout>
 
+    </LinearLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_40"
+        android:id="@+id/rl_top_toast"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#D6E9F6"
+        android:visibility="gone">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_toast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/news_toast"
+            android:textColor="#3393D5"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</FrameLayout>
