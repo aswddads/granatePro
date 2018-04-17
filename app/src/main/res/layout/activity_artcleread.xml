@@ -188,13 +188,15 @@
                         <FrameLayout
                             android:layout_marginTop="8dp"
                             android:id="@+id/fl_con_like"
-                            android:layout_width="60dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="15dp">
 
                             <Button
+                                android:textSize="15sp"
+                                android:padding="5dp"
                                 android:id="@+id/btn_con_like"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -205,6 +207,8 @@
                                 android:visibility="visible" />
 
                             <Button
+                                android:textSize="15sp"
+                                android:padding="5dp"
                                 android:id="@+id/btn_con_unlike"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
