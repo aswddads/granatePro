@@ -4,12 +4,12 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
+    android:layout_margin="5dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/view_bg"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="5dp"
     app:cardElevation="8dp"
     app:contentPadding="3dp">
 

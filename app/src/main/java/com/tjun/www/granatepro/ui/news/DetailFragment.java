@@ -144,6 +144,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 NewsDetail.ItemBean itemBean = (NewsDetail.ItemBean) baseQuickAdapter.getItem(i);
                 switch (view.getId()) {
                     case R.id.iv_close:
+
                         view.getHeight();
                         int[] location = new int[2];
                         view.getLocationInWindow(location);
@@ -197,11 +198,13 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 .dismissAnim(new SlideRightExit())
                 .offset(-100, 0)
                 .dimEnabled(true);
+
         newsDelPop.setClickListener(new NewsDelPop.onClickListener() {
             @Override
             public void onClick(int position) {
-                newsDelPop.dismiss();
                 detailAdapter.remove(position);
+                detailAdapter.notifyItemRemoved(position);
+                newsDelPop.dismiss();
                 showToast(0, false);
             }
         });
@@ -331,9 +334,9 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
             case NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG:
                 Intent intent = new Intent(getActivity(), ArticleReadActivity.class);
                 intent.putExtra("aid", itemBean.getDocumentId());
-                intent.putExtra("img",itemBean.getThumbnail());
-                intent.putExtra("title",itemBean.getTitle());
-                intent.putExtra("source",itemBean.getSource());
+                intent.putExtra("img", itemBean.getThumbnail());
+                intent.putExtra("title", itemBean.getTitle());
+                intent.putExtra("source", itemBean.getSource());
                 startActivity(intent);
                 break;
             case NewsDetail.ItemBean.TYPE_SLIDE:

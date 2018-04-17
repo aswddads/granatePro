@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/view_bg"
+    android:orientation="vertical">
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/mPtrFrameLayout"
@@ -13,8 +14,7 @@
         <com.tjun.www.granatepro.widget.SimpleMultiStateView
             android:id="@+id/SimpleMultiStateView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
 
             <android.support.v7.widget.RecyclerView
@@ -22,8 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:scrollbars="vertical"
-                />
+                android:scrollbars="vertical" />
 
         </com.tjun.www.granatepro.widget.SimpleMultiStateView>
 
@@ -44,8 +43,7 @@
             android:layout_centerInParent="true"
             android:text="@string/news_toast"
             android:textColor="#3393D5"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </FrameLayout>

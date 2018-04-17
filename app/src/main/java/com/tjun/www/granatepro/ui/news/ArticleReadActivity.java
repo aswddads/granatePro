@@ -96,6 +96,11 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
     @BindView(R.id.btn_unlike)
     Button mBtnUnLike;
 
+    @BindView(R.id.btn_con_like)
+    Button mBtnConLike;
+    @BindView(R.id.btn_con_unlike)
+    Button mBtnConUnLike;
+
     private String imgString;//item img url
     private String mAid;
     private String mTitle;
@@ -144,6 +149,8 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
             if (path != null && path.equals(PATH) && objectId != null) {
                 mBtnLike.setVisibility(View.GONE);
                 mBtnUnLike.setVisibility(View.VISIBLE);
+                mBtnConLike.setVisibility(View.GONE);
+                mBtnConUnLike.setVisibility(View.VISIBLE);
                 id = objectId;
             } else {
                 if (mBtnLike.getVisibility() == View.VISIBLE) {
@@ -164,6 +171,8 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                                 if (id != null) {
                                     mBtnLike.setVisibility(View.GONE);
                                     mBtnUnLike.setVisibility(View.VISIBLE);
+                                    mBtnConLike.setVisibility(View.GONE);
+                                    mBtnConUnLike.setVisibility(View.VISIBLE);
                                 }
                             } else {
                                 Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -172,6 +181,9 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                     });
                 }
             }
+        } else {
+            mBtnConLike.setVisibility(View.VISIBLE);
+            mBtnLike.setVisibility(View.VISIBLE);
         }
     }
 
@@ -215,7 +227,7 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.loadUrl("file:///android_asset/ifeng/post_detail.html");
-       // mWebView.addJavascriptInterface(new JavascriptInterface(this),"imagelistener");
+        // mWebView.addJavascriptInterface(new JavascriptInterface(this),"imagelistener");
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -281,8 +293,8 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
     private ArrayList<String> addImages() {
         ArrayList<String> list = new ArrayList<>();
         Set set = new HashSet();
-        for (String cd:imgList) {
-            if(set.add(cd)){
+        for (String cd : imgList) {
+            if (set.add(cd)) {
                 list.add(cd);
             }
         }
@@ -359,7 +371,7 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
 
     }
 
-    @OnClick({R.id.iv_back, R.id.btn_like, R.id.btn_unlike})
+    @OnClick({R.id.iv_back, R.id.btn_like, R.id.btn_unlike, R.id.btn_con_unlike, R.id.btn_con_like})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -381,7 +393,23 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                 } else {
                     ToastUtils.showShort(this, "用户需要先登录才能取消文章收藏");
                 }
+            case R.id.btn_con_like:
+                if (SpUtils.getBoolean(this, Constants.IS_LOGIN, false)) {
+                    dialogCollect.show();
+                    check();
+                } else {
+                    ToastUtils.showShort(this, "用户需要先登录才能进行文章收藏");
+                }
+                break;
 
+            case R.id.btn_con_unlike:
+                if (SpUtils.getBoolean(this, Constants.IS_LOGIN, false)) {
+                    dialogUnCollect.show();
+                    delete();
+                } else {
+                    ToastUtils.showShort(this, "用户需要先登录才能取消文章收藏");
+                }
+                break;
 
         }
     }
@@ -400,6 +428,8 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                     dialogUnCollect.hide();
                     mBtnLike.setVisibility(View.VISIBLE);
                     mBtnUnLike.setVisibility(View.GONE);
+                    mBtnConLike.setVisibility(View.VISIBLE);
+                    mBtnConUnLike.setVisibility(View.GONE);
                     //SpUtils.putBoolean(ArticleReadActivity.this, Constants.IS_ADD_NEW, false);
                     ToastUtils.showShort(ArticleReadActivity.this, "取消收藏成功");
 
@@ -455,6 +485,8 @@ public class ArticleReadActivity extends BaseActivity<ArticleReadPresenter> impl
                     dialogCollect.hide();
                     mBtnLike.setVisibility(View.GONE);
                     mBtnUnLike.setVisibility(View.VISIBLE);
+                    mBtnConLike.setVisibility(View.GONE);
+                    mBtnConUnLike.setVisibility(View.VISIBLE);
                     //pUtils.putBoolean(ArticleReadActivity.this, Constants.IS_ADD_NEW, true);
                     id = s;
                     ToastUtils.showShort(ArticleReadActivity.this, "收藏成功");

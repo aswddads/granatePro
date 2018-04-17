@@ -25,6 +25,7 @@ import com.tjun.www.granatepro.ui.mine.adapter.MyAdapter;
 import com.tjun.www.granatepro.ui.mine.inter.EndLessOnScrollListener;
 import com.tjun.www.granatepro.ui.news.ArticleReadActivity;
 import com.tjun.www.granatepro.utils.DialogHelper;
+import com.tjun.www.granatepro.utils.NetUtil;
 import com.tjun.www.granatepro.utils.SpUtils;
 import com.tjun.www.granatepro.utils.ToastUtils;
 import com.tjun.www.granatepro.widget.SimpleDividerDecoration;
@@ -114,9 +115,18 @@ public class MyCollectingActivity extends BaseActivity {
         mSwipeMyCollect.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
+                if (!NetUtil.isNetworkAvailable(MyCollectingActivity.this)) {
+                    ToastUtils.showShort(MyCollectingActivity.this,"兄弟，网络出了问题");
+                    if (mSwipeMyCollect.isRefreshing()){
+                        mSwipeMyCollect.setRefreshing(false);
+                    }
+                    return;
+                }
                 // 开始转动
                 mSwipeMyCollect.setRefreshing(true);
                 getData();
+
                 EndLessOnScrollListener.loading = false;  //给上拉加载更多  设置入口
                 SpUtils.putInt(MyCollectingActivity.this, Constants.CURRENT_PAGE, 0);  //刷新一次，重置页码数量到最前面
             }
