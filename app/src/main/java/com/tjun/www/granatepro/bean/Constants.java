@@ -5,7 +5,7 @@ package com.tjun.www.granatepro.bean;
  * Created by tanjun on 2018/3/11.
  */
 public class Constants {
-    public static final String BOMB_APP_ID = "4c3314e3e41202b18d72da6647a5ac3d";
+    public static final String BOMB_APP_ID = "034fd32cab1f6db9efafccfe5d7ee2e8";//bmob appkey
 
     public static final String IS_LOGIN = "is_login";
 

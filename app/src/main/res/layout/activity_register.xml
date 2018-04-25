@@ -42,7 +42,7 @@
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="密    码"/>
+                android:hint="密码"/>
             <RadioGroup
                 android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/rg_sex"

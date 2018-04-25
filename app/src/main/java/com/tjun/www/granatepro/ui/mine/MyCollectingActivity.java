@@ -224,23 +224,12 @@ public class MyCollectingActivity extends BaseActivity {
                                 onClick(mList);
                                 //mAdapter.updateData(object);
                                 //mAdapter.notifyDataSetChanged();
-                                mTvToast.setText(String.format(getResources().getString(R.string.news_toast), mList.size() + ""));
-                                mRlTopToast.setVisibility(View.VISIBLE);
-                                ViewAnimator.animate(mRlTopToast)
-                                        .newsPaper()
-                                        .duration(1000)
-                                        .start()
-                                        .onStop(new AnimationListener.Stop() {
-                                            @Override
-                                            public void onStop() {
-                                                ViewAnimator.animate(mRlTopToast)
-                                                        .bounceOut()
-                                                        .duration(1000)
-                                                        .start();
-                                            }
-                                        });
+                                setToast(mList.size());
                                 //ToastUtils.showShort(MyCollectingActivity.this, "刷新成功");
                             }
+                        } else {
+                            mRecycler.setVisibility(View.GONE);
+                            mTvNoCollect.setVisibility(View.VISIBLE);
                         }
                     } else {
                         mList = new ArrayList<>(object);
@@ -250,6 +239,9 @@ public class MyCollectingActivity extends BaseActivity {
                             mRecycler.setVisibility(View.GONE);
                             mTvNoCollect.setVisibility(View.VISIBLE);
                         } else {
+
+                            setToast(mList.size());
+
                             mRecycler.setVisibility(View.VISIBLE);
                             mTvNoCollect.setVisibility(View.GONE);
 
@@ -449,5 +441,24 @@ public class MyCollectingActivity extends BaseActivity {
          * setXXX方法返回Dialog对象，因此可以链式设置属性
          */
 
+    }
+
+
+    private void setToast(int num){
+        mTvToast.setText(String.format(getResources().getString(R.string.news_toast_collect), num + ""));
+        mRlTopToast.setVisibility(View.VISIBLE);
+        ViewAnimator.animate(mRlTopToast)
+                .newsPaper()
+                .duration(1000)
+                .start()
+                .onStop(new AnimationListener.Stop() {
+                    @Override
+                    public void onStop() {
+                        ViewAnimator.animate(mRlTopToast)
+                                .bounceOut()
+                                .duration(1000)
+                                .start();
+                    }
+                });
     }
 }

@@ -1,5 +1,6 @@
 package com.tjun.www.granatepro.ui.video;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import com.tjun.www.granatepro.ui.adapter.VideoPagerAdapter;
 import com.tjun.www.granatepro.ui.base.BaseFragment;
 import com.tjun.www.granatepro.ui.video.contract.VideoContract;
 import com.tjun.www.granatepro.ui.video.presenter.VideoPresenter;
+import com.tjun.www.granatepro.utils.DialogHelper;
 
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class VideoFragment extends BaseFragment<VideoPresenter> implements Video
     @BindView(R.id.viewpager)
     ViewPager mViewpager;
     private VideoPagerAdapter mVideoPagerAdapter;
+
+    private Dialog dialog = null;
 
 
     public static VideoFragment newInstance() {
@@ -54,7 +58,6 @@ public class VideoFragment extends BaseFragment<VideoPresenter> implements Video
 
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
-
     }
 
     @Override
