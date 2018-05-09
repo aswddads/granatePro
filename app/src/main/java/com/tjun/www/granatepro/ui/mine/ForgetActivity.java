@@ -1,5 +1,6 @@
 package com.tjun.www.granatepro.ui.mine;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -113,9 +114,11 @@ public class ForgetActivity extends BaseActivity {
                                 ToastUtils.showShort(ForgetActivity.this, "验证码已发送到您手机上");
 
                                 mCompositeDisposable.add(countDown(58).doOnSubscribe(new Consumer<Disposable>() {
+                                    @SuppressLint("ResourceAsColor")
                                     @Override
                                     public void accept(@NonNull Disposable disposable) throws Exception {
                                         mBtnCheck.setClickable(false);
+                                        mBtnCheck.setTextColor(R.color.black_bg);
                                         mBtnCheck.setText("59秒后可重发");
                                         mBtnCheck.setBackgroundResource(R.drawable.btn_number_send);
                                     }
@@ -131,10 +134,12 @@ public class ForgetActivity extends BaseActivity {
 
                                     }
 
+                                    @SuppressLint("ResourceAsColor")
                                     @Override
                                     public void onComplete() {
                                         mBtnCheck.setClickable(true);
                                         mBtnCheck.setText("重新获取验证码");
+                                        mBtnCheck.setTextColor(R.color.colorPrimary);
                                         mBtnCheck.setBackgroundResource(R.drawable.button_bg);
                                     }
                                 }));
@@ -169,6 +174,7 @@ public class ForgetActivity extends BaseActivity {
                                        // SpUtils.putBoolean(ForgetActivity.this,Constants.IS_KEEP_PASS,false);
                                         SpUtils.putBoolean(ForgetActivity.this,Constants.IS_LOGIN,false);
                                         SpUtils.putString(ForgetActivity.this,Constants.PASS_WORD,"");
+                                        ToastUtils.showShort(ForgetActivity.this, "重置密码成功");
                                         startActivity(new Intent(ForgetActivity.this,LoginActivity.class));
                                         dialog.dismiss();
                                         finish();

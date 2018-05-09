@@ -5,7 +5,7 @@
     <corners android:radius="10dp" />
 
     <!--填充-->
-    <solid android:color="@color/tab_unselect" />
+    <solid android:color="@color/view_bg" />
 
     <!-- 矩形的边框的宽度,每段虚线的长度，和两段虚线之间的颜色和颜色 -->
     <stroke

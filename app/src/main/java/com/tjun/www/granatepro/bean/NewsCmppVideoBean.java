@@ -19,22 +19,22 @@ public class NewsCmppVideoBean {
 
     public static class SingleVideoInfoBean {
         /**
-         * videoURLLow : http://ips.ifeng.com/video19.ifeng.com/video09/2017/04/27/3373150-280-068-072537.mp4
-         * videoURLMid : http://ips.ifeng.com/video19.ifeng.com/video09/2017/04/27/3373150-280-068-072537.mp4
+         * videoURLLow : http://ips.ifeng.com/video19.ifeng.com/video09/2018/03/11/3373150-280-068-072537.mp4
+         * videoURLMid : http://ips.ifeng.com/video19.ifeng.com/video09/2018/03/11/3373150-280-068-072537.mp4
          * videoSizeLow : 278
          * videoSizeMid : 278
-         * videoURLHigh : http://ips.ifeng.com/video19.ifeng.com/video09/2017/04/27/3373150-102-009-072537.mp4
+         * videoURLHigh : http://ips.ifeng.com/video19.ifeng.com/video09/2018/03/11/3373150-102-009-072537.mp4
          * videoSizeHigh : 444
-         * audioURL : http://ips.ifeng.com/video19.ifeng.com/video09/2017/04/27/3373150-535-066-072537.mp3
+         * audioURL : http://ips.ifeng.com/video19.ifeng.com/video09/2018/03/11/3373150-535-066-072537.mp3
          * GUID : 01dfe20b-35ac-4c25-85e4-7ef16c291595
          * praise : 0
          * tread : 0
          * playTime : 5939
-         * imgURL : http://d.ifengimg.com/w200_h150/p2.ifengimg.com/a/2017_29/49853f88e91c6c7.jpg
-         * smallImgURL : http://d.ifengimg.com/w120_h90/p2.ifengimg.com/a/2017_29/49853f88e91c6c7.jpg
-         * largeImgURL : http://d.ifengimg.com/w480_h360/p2.ifengimg.com/a/2017_29/49853f88e91c6c7.jpg
+         * imgURL : http://d.ifengimg.com/w200_h150/p2.ifengimg.com/a/2018_29/49853f88e91c6c7.jpg
+         * smallImgURL : http://d.ifengimg.com/w120_h90/p2.ifengimg.com/a/2018_29/49853f88e91c6c7.jpg
+         * largeImgURL : http://d.ifengimg.com/w480_h360/p2.ifengimg.com/a/2018_29/49853f88e91c6c7.jpg
          * richText :
-         * videoPublishTime : 2017-04-14 09:08:29
+         * videoPublishTime : 2018-03-11 09:08:29
          * shareURL : http://share.iclient.ifeng.com/sharenews.f?guid=01dfe20b-35ac-4c25-85e4-7ef16c291595
          * commentsUrl : http://share.iclient.ifeng.com/sharenews.f?guid=01dfe20b-35ac-4c25-85e4-7ef16c291595
          * type : phvideo

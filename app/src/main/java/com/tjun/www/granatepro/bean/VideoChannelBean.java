@@ -13,7 +13,7 @@ public class VideoChannelBean {
      * totalPage : 20
      * currentPage : 1
      * type : list
-     * item : [{"documentId":"video_01bd4842-0410-493f-8f46-500c60663578","title":"美日等4国媒体妄称中国间谍船靠近 中方少将怒了","image":"http://d.ifengimg.com/w640_h360_q80/p2.ifengimg.com/a/2017_30/5187db499a933ad.jpg","thumbnail":"http://d.ifengimg.com/w132_h94_q80/p2.ifengimg.com/a/2017_30/5187db499a933ad.jpg","guid":"01bd4842-0410-493f-8f46-500c60663578","type":"phvideo","duration":115,"shareUrl":"http://share.iclient.ifeng.com/sharenews.f?guid=01bd4842-0410-493f-8f46-500c60663578","commentsUrl":"http://share.iclient.ifeng.com/sharenews.f?guid=01bd4842-0410-493f-8f46-500c60663578","video_url":"http://ips.ifeng.com/video19.ifeng.com/video09/2017/07/25/4710314-102-008-0939.mp4","video_size":7731,"praise":"33","tread":"30","playTime":"55296","commentsall":34}]
+     * item : [{"documentId":"video_01bd4842-0410-493f-8f46-500c60663578","title":"美日等4国媒体妄称中国间谍船靠近 中方少将怒了","image":"http://d.ifengimg.com/w640_h360_q80/p2.ifengimg.com/a/2018_30/5187db499a933ad.jpg","thumbnail":"http://d.ifengimg.com/w132_h94_q80/p2.ifengimg.com/a/2018_30/5187db499a933ad.jpg","guid":"01bd4842-0410-493f-8f46-500c60663578","type":"phvideo","duration":115,"shareUrl":"http://share.iclient.ifeng.com/sharenews.f?guid=01bd4842-0410-493f-8f46-500c60663578","commentsUrl":"http://share.iclient.ifeng.com/sharenews.f?guid=01bd4842-0410-493f-8f46-500c60663578","video_url":"http://ips.ifeng.com/video19.ifeng.com/video09/2018/03/11/4710314-102-008-0939.mp4","video_size":7731,"praise":"33","tread":"30","playTime":"55296","commentsall":34}]
      */
 
     private int totalPage;
@@ -112,14 +112,14 @@ public class VideoChannelBean {
         /**
          * documentId : video_01bd4842-0410-493f-8f46-500c60663578
          * title : 美日等4国媒体妄称中国间谍船靠近 中方少将怒了
-         * image : http://d.ifengimg.com/w640_h360_q80/p2.ifengimg.com/a/2017_30/5187db499a933ad.jpg
-         * thumbnail : http://d.ifengimg.com/w132_h94_q80/p2.ifengimg.com/a/2017_30/5187db499a933ad.jpg
+         * image : http://d.ifengimg.com/w640_h360_q80/p2.ifengimg.com/a/2018_30/5187db499a933ad.jpg
+         * thumbnail : http://d.ifengimg.com/w132_h94_q80/p2.ifengimg.com/a/2018_30/5187db499a933ad.jpg
          * guid : 01bd4842-0410-493f-8f46-500c60663578
          * type : phvideo
          * duration : 115
          * shareUrl : http://share.iclient.ifeng.com/sharenews.f?guid=01bd4842-0410-493f-8f46-500c60663578
          * commentsUrl : http://share.iclient.ifeng.com/sharenews.f?guid=01bd4842-0410-493f-8f46-500c60663578
-         * video_url : http://ips.ifeng.com/video19.ifeng.com/video09/2017/07/25/4710314-102-008-0939.mp4
+         * video_url : http://ips.ifeng.com/video19.ifeng.com/video09/2018/03/11/4710314-102-008-0939.mp4
          * video_size : 7731
          * praise : 33
          * tread : 30

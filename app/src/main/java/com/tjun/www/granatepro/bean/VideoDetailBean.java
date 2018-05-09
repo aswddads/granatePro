@@ -11,7 +11,7 @@ public class VideoDetailBean {
      * totalPage : 2863
      * currentPage : 1
      * type : list
-     * item : [{"documentId":"video_611796","title":"狂甩陈伟霆 刘奕君逆袭成主角？","image":"http://d.ifengimg.com/w640_h360_q80/p0.ifengimg.com/pmop/2017/07/24/40f7fad4-b6a4-4d88-989f-a99eced358e5.jpg","thumbnail":"http://d.ifengimg.com/w132_h94_q80/p0.ifengimg.com/pmop/2017/07/24/40f7fad4-b6a4-4d88-989f-a99eced358e5.jpg","guid":"656e107c-fe02-4c11-8ce8-d7de1111cf8c","type":"phvideo","commentsall":0,"duration":107,"shareUrl":"http://share.iclient.ifeng.com/sharenews.f?guid=656e107c-fe02-4c11-8ce8-d7de1111cf8c","commentsUrl":"http://share.iclient.ifeng.com/sharenews.f?guid=656e107c-fe02-4c11-8ce8-d7de1111cf8c","video_url":"http://ips.ifeng.com/video19.ifeng.com/video09/2017/07/24/5081903-102-9987619-095153.mp4","video_size":7184,"praise":"0","tread":"0","playTime":"6572"}]
+     * item : [{"documentId":"video_611796","title":"狂甩陈伟霆 刘奕君逆袭成主角？","image":"http://d.ifengimg.com/w640_h360_q80/p0.ifengimg.com/pmop/2018/03/11/40f7fad4-b6a4-4d88-989f-a99eced358e5.jpg","thumbnail":"http://d.ifengimg.com/w132_h94_q80/p0.ifengimg.com/pmop/2018/03/11/40f7fad4-b6a4-4d88-989f-a99eced358e5.jpg","guid":"656e107c-fe02-4c11-8ce8-d7de1111cf8c","type":"phvideo","commentsall":0,"duration":107,"shareUrl":"http://share.iclient.ifeng.com/sharenews.f?guid=656e107c-fe02-4c11-8ce8-d7de1111cf8c","commentsUrl":"http://share.iclient.ifeng.com/sharenews.f?guid=656e107c-fe02-4c11-8ce8-d7de1111cf8c","video_url":"http://ips.ifeng.com/video19.ifeng.com/video09/2018/03/11/5081903-102-9987619-095153.mp4","video_size":7184,"praise":"0","tread":"0","playTime":"6572"}]
      */
 
     private int totalPage;
@@ -55,15 +55,15 @@ public class VideoDetailBean {
         /**
          * documentId : video_611796
          * title : 狂甩陈伟霆 刘奕君逆袭成主角？
-         * image : http://d.ifengimg.com/w640_h360_q80/p0.ifengimg.com/pmop/2017/07/24/40f7fad4-b6a4-4d88-989f-a99eced358e5.jpg
-         * thumbnail : http://d.ifengimg.com/w132_h94_q80/p0.ifengimg.com/pmop/2017/07/24/40f7fad4-b6a4-4d88-989f-a99eced358e5.jpg
+         * image : http://d.ifengimg.com/w640_h360_q80/p0.ifengimg.com/pmop/2018/03/11/40f7fad4-b6a4-4d88-989f-a99eced358e5.jpg
+         * thumbnail : http://d.ifengimg.com/w132_h94_q80/p0.ifengimg.com/pmop/2018/03/11/40f7fad4-b6a4-4d88-989f-a99eced358e5.jpg
          * guid : 656e107c-fe02-4c11-8ce8-d7de1111cf8c
          * type : phvideo
          * commentsall : 0
          * duration : 107
          * shareUrl : http://share.iclient.ifeng.com/sharenews.f?guid=656e107c-fe02-4c11-8ce8-d7de1111cf8c
          * commentsUrl : http://share.iclient.ifeng.com/sharenews.f?guid=656e107c-fe02-4c11-8ce8-d7de1111cf8c
-         * video_url : http://ips.ifeng.com/video19.ifeng.com/video09/2017/07/24/5081903-102-9987619-095153.mp4
+         * video_url : http://ips.ifeng.com/video19.ifeng.com/video09/2018/03/11/5081903-102-9987619-095153.mp4
          * video_size : 7184
          * praise : 0
          * tread : 0
